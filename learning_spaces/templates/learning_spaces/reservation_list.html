@@ -2,7 +2,10 @@
 {% extends "home.html" %}
 {% block test %}
 
-    {% for object in object_list %}
+<form method="GET">
+    {{ filter.form }}
+    <div><a class="btn btn-primary" type="submit">Filtern</a></div>
+{% for object in filter.qs %}
 
     <div class="m-2"><a href="{{object.get_absolute_url}}">{{object}}</a></div>
     {% empty %}
@@ -10,4 +13,9 @@
     {% endfor %}
 
 <div><a class="btn btn-primary" href="{% url 'learning_spaces_reservation_create' %}">Reservierung erstellen</a></div>
+</form>
+
+
+
+
 {% endblock %}

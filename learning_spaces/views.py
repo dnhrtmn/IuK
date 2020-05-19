@@ -4,11 +4,19 @@ from . import forms
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from bootstrap_datepicker_plus import DateTimePickerInput
+from .filters import reservationFilter
+
+from .models import reservation
 
 
 class reservationListView(generic.ListView):
     model = models.reservation
     form_class = forms.reservationForm
+
+def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['filter'] = reservationFilter(self.request.GET, queryset=self.object.all())
+    return context
 
 
 class reservationCreateView(generic.CreateView):

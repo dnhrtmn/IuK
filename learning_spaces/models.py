@@ -6,12 +6,13 @@ from django.conf import settings
 
 
 
+
 class reservation(models.Model):
 
     # Fields
     start_time = models.DateField(default=timezone.now)
     room = models.CharField(max_length=5)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete="", null=True, blank=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     # created = models.DateTimeField(default=timezone.now)
 
     class Meta:
@@ -29,6 +30,7 @@ class reservation(models.Model):
 
     def get_update_url(self):
         return reverse("learning_spaces_reservation_update", args=(self.pk,))
+
 
 
 class room(models.Model):

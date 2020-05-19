@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'learning_spaces',
     'widget_tweaks',
     'bootstrap_datepicker_plus',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

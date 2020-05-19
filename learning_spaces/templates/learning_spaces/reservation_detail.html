@@ -5,12 +5,13 @@
     
 <p>
     <a class="btn btn-light" href="{% url 'learning_spaces_reservation_list' %}">
-    reservation Listing
+    Reservierungsansicht
     </a>
 </p>
     
 <table class="table">
     <tr><td>Startzeit</td><td>{{ object.start_time }}</td></tr>
+    <tr><td>Raum</td><td>{{ object.room }}</td></tr>
 {% if user.is_admin %}
     <tr><td>Erstellt von:</td><td>{{ object.created_by }}</td></tr>
 {% endif %}
