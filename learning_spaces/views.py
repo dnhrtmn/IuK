@@ -31,6 +31,7 @@ class reservationListView(generic.ListView):
 class reservationCreateView(generic.CreateView):
     model = models.reservation
     form_class = forms.reservationForm
+
     def get_form(self):
         form = super().get_form()
         form.fields['start_time'].widget = DatePickerInput(format='%d.%m.%Y')

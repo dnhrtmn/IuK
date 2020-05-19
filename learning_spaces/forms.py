@@ -5,14 +5,21 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import User
 
 
+
 class reservationForm(forms.ModelForm):
-    models.start_time = forms.DateField(input_formats=['%d.%m.%Y'])
+    # models.start_time = forms.DateField(input_formats=['%d.%m.%Y'])
+    # models.start_time = forms.DateField(
+    #     widget=DatePickerInput(format='%d.%m.%Y')
+    # )
     class Meta:
         model = models.reservation
         fields = [
-            "start_time",
-            "room",
+            'start_time',
+            'room',
         ]
+        widgets = {
+            'start_time' : DatePickerInput(format='%d.%m.%Y'),
+        }
 
 
 class roomForm(forms.ModelForm):
