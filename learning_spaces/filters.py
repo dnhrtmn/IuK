@@ -5,6 +5,11 @@ from .models import User
 
 class reservationFilter(django_filters.FilterSet):
 
+
+
     class Meta:
         model = reservation
-        fields = ('created_by', 'room',)
+        fields = {
+            'room':['icontains'],
+            }
+

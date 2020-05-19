@@ -11,12 +11,21 @@ from .models import reservation
 
 class reservationListView(generic.ListView):
     model = models.reservation
-    form_class = forms.reservationForm
+    template_name = "learning_spaces/reservation_list.html"
+    # form_class = forms.reservationForm
 
-def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    context['filter'] = reservationFilter(self.request.GET, queryset=self.object.all())
-    return context
+    # Filtert die Reservierungen zuerst nach Status des aktuellen Benutzers (Admin oder nicht). Ist der Benutzer ein Admin,
+    # bekommt er alle Reservierungen angezeigt. Ist der Nutzer kein Admin, so bekommt er nur seine Reservierungen angezeigt.
+    # Alle Nutzer haben die Möglichkeiten nach Räumen zu filtern.
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_admin:
+                context['filter'] = reservationFilter(self.request.GET, queryset=self.object_list.filter())
+                return context
+        else:
+                context['filter'] = reservationFilter(self.request.GET, queryset=self.object_list.filter(created_by=self.request.user))
+                return context
 
 
 class reservationCreateView(generic.CreateView):

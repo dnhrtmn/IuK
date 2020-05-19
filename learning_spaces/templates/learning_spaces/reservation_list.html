@@ -1,21 +1,24 @@
 
 {% extends "home.html" %}
 {% block test %}
-
+    <container>
 <form method="GET">
-    {{ filter.form }}
-    <div><a class="btn btn-primary" type="submit">Filtern</a></div>
-{% for object in filter.qs %}
+    {{  filter.form.as_p }}
+
+    <button type="submit", class="btn btn-primary">Filtern</button>
+
+</form>
+
+    {% for object in filter.qs %}
 
     <div class="m-2"><a href="{{object.get_absolute_url}}">{{object}}</a></div>
     {% empty %}
         <li>Keine Reservierungen vorhanden.</li>
     {% endfor %}
 
-<div><a class="btn btn-primary" href="{% url 'learning_spaces_reservation_create' %}">Reservierung erstellen</a></div>
-</form>
+    <div><a class="btn btn-primary" href="{% url 'learning_spaces_reservation_create' %}">Reservierung erstellen</a></div>
 
-
+    </container>
 
 
 {% endblock %}
