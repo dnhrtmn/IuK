@@ -1,0 +1,20 @@
+html,
+
+
+.table {
+    table-layout: fixed;
+        /*width: 75%;*/
+    text-align: left;
+    }
+.th {
+        text-align: left;
+}
+
+.th {
+    min-width: 200px;
+}
+
+.td {
+        text-align: left;
+    width: auto;
+    }

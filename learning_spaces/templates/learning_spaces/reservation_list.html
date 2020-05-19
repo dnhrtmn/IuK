@@ -1,0 +1,13 @@
+
+{% extends "home.html" %}
+{% block test %}
+
+    {% for object in object_list %}
+
+    <div class="m-2"><a href="{{object.get_absolute_url}}">{{object}}</a></div>
+    {% empty %}
+        <li>Keine Reservierungen vorhanden.</li>
+    {% endfor %}
+
+<div><a class="btn btn-primary" href="{% url 'learning_spaces_reservation_create' %}">Reservierung erstellen</a></div>
+{% endblock %}

@@ -1,0 +1,78 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <body>
+
+
+
+     <section class="jumbotron text-center">
+    <div class="container">
+      <h1>Raumbuchungssystem der HTW Saar</h1>
+      <p class="lead text-muted">Über das Raumbuchungssystem der HTW Saar können Studierende der Hochschule Learning Spaces für einen Lernaufenthalt buchhen.</p>
+      <p>
+        <a href={% url 'login' %} class="btn btn-primary my-2">Login</a>
+      </p>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+
+      <div class="row">
+          {% block test %}
+
+            {% endblock %}
+{##}
+{#        <div class="col-md-4">#}
+{#          <div class="card mb-4 shadow-sm">#}
+{#            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Raum 1</text></svg>#}
+{#            <div class="card-body">#}
+{#              <p class="card-text">Beschreibung für den Raum hier einfügen.</p>#}
+{#              <div class="d-flex justify-content-between align-items-center">#}
+{#                <div class="btn-group">#}
+{#                  <button type="button" class="btn btn-sm btn-outline-secondary">Ansehen</button>#}
+{#                  <button type="button" class="btn btn-sm btn-outline-secondary">Bearbeiten</button>#}
+{#                </div>#}
+{#                <small class="text-muted">xxx freie Blöcke</small>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="col-md-4">#}
+{#          <div class="card mb-4 shadow-sm">#}
+{#            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Raum 2</text></svg>#}
+{#            <div class="card-body">#}
+{#              <p class="card-text">Beschreibung für den Raum hier einfügen.</p>#}
+{#              <div class="d-flex justify-content-between align-items-center">#}
+{#                <div class="btn-group">#}
+{#                  <button type="button" class="btn btn-sm btn-outline-secondary">Ansehen</button>#}
+{#                  <button type="button" class="btn btn-sm btn-outline-secondary">Bearbeiten</button>#}
+{#                </div>#}
+{#                <small class="text-muted">xxx freie Blöcke</small>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="col-md-4">#}
+{#          <div class="card mb-4 shadow-sm">#}
+{#            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Raum 3</text></svg>#}
+{#            <div class="card-body">#}
+{#              <p class="card-text">Beschreibung für den Raum hier einfügen.</p>#}
+{#              <div class="d-flex justify-content-between align-items-center">#}
+{#                <div class="btn-group">#}
+{#                  <button type="button" class="btn btn-sm btn-outline-secondary">Ansehen</button>#}
+{#                  <button type="button" class="btn btn-sm btn-outline-secondary">Bearbeiten</button>#}
+{#                </div>#}
+{#                <small class="text-muted">xxx freie Blöcke</small>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+      </div>
+    </div>
+  </div>
+
+    </body>
+{% endblock %}

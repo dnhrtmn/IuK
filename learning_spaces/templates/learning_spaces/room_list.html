@@ -1,0 +1,26 @@
+{% extends "home.html" %}
+{% load staticfiles %}
+
+{% block test %}
+    <link rel="stylesheet" href="{% static 'css/tables.css' %}">
+
+{% for object in object_list %}
+    <table class="table">
+{#  <div class="m-2"><a href="{{object.get_absolute_url}}">{{object}}</a></div>#}
+    <tr><th>Erstellt</th><td>{{ object.created }}</td></tr>
+    <tr><th>Letztes Update</th><td>{{ object.last_updated }}</td></tr>
+    <tr><th>Beschreibung</th><td>{{ object.description }}</td></tr>
+    <tr><th>Standort</th><td>{{ object.location }}</td></tr>
+    <tr><th>Größe</th><td>{{ object.size }}</td></tr>
+    </table>
+{% endfor %}
+    {% if user.is_authenticated%}
+        {% if user.is_superuser %}
+            <div><a class="btn btn-primary" href="{% url 'learning_spaces_room_create' %}">Raum erstellen</a></div>
+        {% endif %}
+
+        <div><a class="btn btn-primary" href="{% url 'learning_spaces_reservation_create' object.size %}">Reservierung erstellen</a></div>
+        {% else %}
+        <div><a class="btn btn-primary" href="{% url 'login' %}">Login um Raum zu reservieren</a></div>
+    {% endif %}
+{% endblock %}
