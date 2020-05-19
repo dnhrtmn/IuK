@@ -3,7 +3,7 @@ from . import models
 from . import forms
 from django.shortcuts import render, redirect
 from django.utils import timezone
-from bootstrap_datepicker_plus import DateTimePickerInput
+from bootstrap_datepicker_plus import DatePickerInput
 from .filters import reservationFilter
 
 from .models import reservation
@@ -17,7 +17,7 @@ class reservationListView(generic.ListView):
     # Filtert die Reservierungen zuerst nach Status des aktuellen Benutzers (Admin oder nicht). Ist der Benutzer ein Admin,
     # bekommt er alle Reservierungen angezeigt. Ist der Nutzer kein Admin, so bekommt er nur seine Reservierungen angezeigt.
     # Alle Nutzer haben die Möglichkeiten nach Räumen zu filtern.
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_admin:
@@ -33,7 +33,7 @@ class reservationCreateView(generic.CreateView):
     form_class = forms.reservationForm
     def get_form(self):
         form = super().get_form()
-        form.fields['start_time'].widget = DateTimePickerInput()
+        form.fields['start_time'].widget = DatePickerInput(format='%d.%m.%Y')
         return form
 
 def createReservation(request, room):

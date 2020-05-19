@@ -9,31 +9,34 @@
     </a>
 </p>
     
-<form method="POST", class="reservationForm">
-{% csrf_token %}
-  <div class="form-group row">
 
-      {{ form.as_p }}
+    <container>
+        <form method="POST", class="reservationForm">
+        {% csrf_token %}
+            <div class="form-group row">
+
+            {{ form.as_p }}
 {#  <label class="col-sm-2 col-form-label" for="start_time">Startzeit: </label>#}
 {#      <input id="start_time" width="276" />#}
 {#    <script>#}
 {#        $('#start_time').datepicker({format: 'yyyy-mm-dd hh:mm'});#}
 {#    </script>#}
-      <select id="room" width="200">
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-    </select>
+            <select id="room" width="200">
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
     <script>
         $('#room').dropdown();
     </script>
 
   </div>
-{#  <input type="submit" value="Save" class="btn btn-primary">#}
-{#    <a class="btn btn-primary" href="{{object.publish}}">Save</a>#}
+
     <input type="submit" value="Save" class="btn btn-primary">
 
 
-</form>
 
+
+        </form>
+</container>
 {% endblock %}
