@@ -12,14 +12,15 @@
     <tr><th>Beschreibung</th><td>{{ object.description }}</td></tr>
     <tr><th>Standort</th><td>{{ object.location }}</td></tr>
     <tr><th>Größe</th><td>{{ object.size }}</td></tr>
+    <tr><th>Erstellt von</th><td>{{ object.created_by }}</td></tr>
     </table>
 {% endfor %}
     {% if user.is_authenticated%}
-        {% if user.is_superuser %}
+        {% if user.is_admin %}
             <div><a class="btn btn-primary" href="{% url 'learning_spaces_room_create' %}">Raum erstellen</a></div>
         {% endif %}
 
-        <div><a class="btn btn-primary" href="{% url 'learning_spaces_reservation_create' object.size %}">Reservierung erstellen</a></div>
+{#        <div><a class="btn btn-primary" href="{% url 'learning_spaces_reservation_create' object.size %}">Reservierung erstellen</a></div>#}
         {% else %}
         <div><a class="btn btn-primary" href="{% url 'login' %}">Login um Raum zu reservieren</a></div>
     {% endif %}

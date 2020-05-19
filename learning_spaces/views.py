@@ -25,7 +25,8 @@ def createReservation(request, room):
         form = forms.reservationForm(request.POST)
         if form.is_valid():
             reservation = form.save(commit=False)
-            reservation.start_time = request.user
+            reservation.start_time = timezone.now()
+            reservation.created_by = request.user
             # reservation.created = timezone.now()
             reservation.save()
             return redirect('reservation_list', pk=reservation.pk)
@@ -53,6 +54,12 @@ class roomListView(generic.ListView):
 class roomCreateView(generic.CreateView):
     model = models.room
     form_class = forms.roomForm
+
+    def form_valid(self, form):
+        room = form.save(commit=False)
+        room.created_by = self.request.user
+        print(self.request.user)
+        return super().form_valid(form)
 
 
 class roomDetailView(generic.DetailView):
