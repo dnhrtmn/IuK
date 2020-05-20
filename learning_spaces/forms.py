@@ -4,7 +4,8 @@ from bootstrap_datepicker_plus import DatePickerInput
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import User
 
-
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 class reservationForm(forms.ModelForm):
     # models.start_time = forms.DateField(input_formats=['%d.%m.%Y'])
@@ -18,7 +19,7 @@ class reservationForm(forms.ModelForm):
             'room',
         ]
         widgets = {
-            'start_time' : DatePickerInput(format='%d.%m.%Y'),
+            'start_time' : DateInput(),
         }
 
 

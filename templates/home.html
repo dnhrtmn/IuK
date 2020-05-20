@@ -9,9 +9,12 @@
      <section class="jumbotron text-center">
     <div class="container">
       <h1>Raumbuchungssystem der HTW Saar</h1>
-      <p class="lead text-muted">Über das Raumbuchungssystem der HTW Saar können Studierende der Hochschule Learning Spaces für einen Lernaufenthalt buchhen.</p>
+      <p class="lead text-muted">Über das Raumbuchungssystem der HTW Saar können Studierende der Hochschule Learning Spaces für einen Lernaufenthalt buchen.</p>
       <p>
-        <a href={% url 'login' %} class="btn btn-primary my-2">Login</a>
+          {% if user.is_anonymus %}
+              <a href={% url 'login' %} class="btn btn-primary my-2">Login</a>
+          {% endif %}
+
       </p>
     </div>
   </section>

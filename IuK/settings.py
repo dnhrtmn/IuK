@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'bootstrap_datepicker_plus',
     'django_filters',
+    'bootstrap4',
+    'jquery',
 ]
 
 MIDDLEWARE = [

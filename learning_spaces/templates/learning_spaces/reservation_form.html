@@ -1,7 +1,8 @@
 
 {% extends "home.html" %}
 {% load static %}
-
+{% load bootstrap4 %}
+{% bootstrap_jquery %}
 {% block test %}
     
 
@@ -13,32 +14,30 @@
     Reservierungsübersicht
     </a>
 
+
         <form method="POST", class="reservationForm">
         {% csrf_token %}
             <div class="form-group row">
+                {{ form.errors }}
 
-{#            {{ form.as_p }}#}
-{#                {{ form.media }}#}
-  <label class="col-sm-2 col-form-label" for="start_time">Startzeit: </label>
-      <input id="start_time" width="276" />
-    <script>
-        $('#start_time').datepicker({format: 'dd.mm.yyyy'});
-    </script>
-            <select id="room" width="200">
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-    <script>
-        $('#room').dropdown();
-    </script>
+                <div class="fieldWrapper">
+                <label for="{{ form.start_time.id_for_label }}">Für welches Datum möchten Sie einen Space reservieren?:</label>
 
-  </div>
+                {{ form.start_time }}
+                </div>
+                    <div class="fieldWrapper">
+                        <label for="{{ form.room.id_for_label }}">Welchen Space möchten Sie reservieren?:</label>
 
-    <input type="submit" value="Save" class="btn btn-primary">
+                        <select name="room">
+                        {% for element in some_data %}
+                            <option value={{ element.size }}>{{ element.size }}</option>
+                        {% endfor %}
+                        </select>
 
 
-
+                </div>
+            </div>
+            <input type="submit" value="Save" class="btn btn-primary">
 
         </form>
 </container>

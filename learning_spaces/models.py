@@ -11,7 +11,7 @@ class reservation(models.Model):
 
     # Fields
     start_time = models.DateField(default=timezone.now)
-    room = models.CharField(max_length=5)
+    room = models.CharField(max_length=5, blank=True, default='', verbose_name="room")
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     # created = models.DateTimeField(default=timezone.now)
 

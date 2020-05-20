@@ -32,26 +32,41 @@ class reservationCreateView(generic.CreateView):
     model = models.reservation
     form_class = forms.reservationForm
 
-    def get_form(self):
-        form = super().get_form()
-        form.fields['start_time'].widget = DatePickerInput(format='%d.%m.%Y')
-        return form
+    def get_context_data(self, **kwargs):
+        context = super(reservationCreateView, self).get_context_data(**kwargs)
+        some_data = models.room.objects.all()
+        context.update({'some_data':some_data})
+        return context
+        print(context)
 
-def createReservation(request, room):
-    {}.__format__(room)
-    if request.method == "POST":
-        form = forms.reservationForm(request.POST)
-        if form.is_valid():
-            reservation = form.save(commit=False)
-            reservation.start_time = timezone.now()
-            reservation.created_by = request.user
-            # reservation.created = timezone.now()
-            reservation.save()
-            return redirect('reservation_list', pk=reservation.pk)
-    else:
-        form = forms.reservationForm()
-        print(request)
-    return render(request, 'learning_spaces/reservation_form.html', {'form':form})
+
+    def form_valid(self, form):
+        reservation = form.save(commit=False)
+        reservation.created_by = self.request.user
+
+        print(self.request.user)
+        print(models.room.objects.all().values())
+        return super().form_valid(form)
+
+
+
+# def createReservation(request, room):
+#     model = models.reservation
+#     form_class = forms.reservationForm
+#     {}.__format__(room)
+#     if request.method == "POST":
+#         form = forms.reservationForm(request.POST)
+#         if form.is_valid():
+#             reservation = form.save(commit=False)
+#             reservation.start_time = timezone.now()
+#             reservation.created_by = request.user
+#             # reservation.created = timezone.now()
+#             reservation.save()
+#             return redirect('reservation_list', pk=reservation.pk)
+#     else:
+#         form = forms.reservationForm()
+#         print(request)
+#     return render(request, 'learning_spaces/reservation_form.html', {'form':form})
 
 class reservationDetailView(generic.DetailView):
     model = models.reservation
