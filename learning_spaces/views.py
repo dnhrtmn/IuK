@@ -5,9 +5,18 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from bootstrap_datepicker_plus import DatePickerInput
 from .filters import reservationFilter
-
+from django.core import serializers
+from django.http import JsonResponse
 from .models import reservation
 
+
+def checkReservations(request):
+    room = request.GET.get('room', None)
+    date = request.GET.get('date', None)
+
+    queryset = models.reservation.objects.filter(room__iexact=room, start_time__exact=date).values('block')
+    print(queryset)
+    return JsonResponse({"models_to_return": list(queryset)})
 
 class reservationListView(generic.ListView):
     model = models.reservation
@@ -36,17 +45,21 @@ class reservationCreateView(generic.CreateView):
         context = super(reservationCreateView, self).get_context_data(**kwargs)
         some_data = models.room.objects.all()
         context.update({'some_data':some_data})
-        return context
         print(context)
+        return context
+
+
+
 
 
     def form_valid(self, form):
-        reservation = form.save(commit=False)
-        reservation.created_by = self.request.user
+                reservation = form.save(commit=False)
+                reservation.created_by = self.request.user
+                reservation.block = "Block 1"
+                print(self.request.user)
+                print(models.room.objects.all().values())
+                return super().form_valid(form)
 
-        print(self.request.user)
-        print(models.room.objects.all().values())
-        return super().form_valid(form)
 
 
 

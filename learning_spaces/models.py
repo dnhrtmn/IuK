@@ -14,6 +14,7 @@ class reservation(models.Model):
     room = models.CharField(max_length=5, blank=True, default='', verbose_name="room")
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     # created = models.DateTimeField(default=timezone.now)
+    block = models.CharField(max_length=1, blank=True, default='')
 
     class Meta:
         pass

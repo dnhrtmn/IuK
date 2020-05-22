@@ -5,6 +5,10 @@
     <link rel="stylesheet" href="{% static 'css/tables.css' %}">
 
 {% for object in object_list %}
+
+
+
+
     <table class="table">
 
 {#  <div class="m-2"><a href="{{object.get_absolute_url}}">{{object}}</a></div>#}
@@ -16,6 +20,9 @@
     <tr><th>Erstellt von</th><td>{{ object.created_by }}</td></tr>
     <div><a class="btn btn-primary" href="{% url 'learning_spaces_reservation_create' %}">Reservierung erstellen</a></div>
     </table>
+
+    {% empty %}
+    <div> Derzeit keine Räume vorhanden.</div>
 {% endfor %}
     {% if user.is_authenticated%}
         {% if user.is_admin %}

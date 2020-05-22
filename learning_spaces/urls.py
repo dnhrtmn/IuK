@@ -1,5 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
+from django.conf.urls import url
 
 from . import api
 from . import views
@@ -21,4 +22,5 @@ urlpatterns = (
     path("learning_spaces/room/create/", views.roomCreateView.as_view(), name="learning_spaces_room_create"),
     path("learning_spaces/room/detail/<int:pk>/", views.roomDetailView.as_view(), name="learning_spaces_room_detail"),
     path("learning_spaces/room/update/<int:pk>/", views.roomUpdateView.as_view(), name="learning_spaces_room_update"),
+    url(r'^ajax/checkReservations/$', views.checkReservations, name='checkReservations'),
 )

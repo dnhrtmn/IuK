@@ -1,5 +1,6 @@
 from django import forms
 from . import models
+from django.utils import timezone
 from bootstrap_datepicker_plus import DatePickerInput
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import User
@@ -19,8 +20,12 @@ class reservationForm(forms.ModelForm):
             'room',
         ]
         widgets = {
-            'start_time' : DateInput(),
+            'start_time' : DateInput(attrs={'value': timezone.now().strftime("%d.%m.%Y")}),
         }
+
+        def __init__(self, *args, **kwargs):
+            super(reservationForm, self).__init__(*args, **kwargs)
+            self.fields['start_time'].initial = timezone.now()
 
 
 class roomForm(forms.ModelForm):

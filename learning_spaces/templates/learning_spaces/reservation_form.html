@@ -2,11 +2,49 @@
 {% extends "home.html" %}
 {% load static %}
 {% load bootstrap4 %}
-{% bootstrap_jquery %}
 {% block test %}
-    
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#t1').hide();
+        $('#id_room').hide();
+        $('#room-select').hide();
+        $('#id_start_time').change(function () {
+            var date = $('#id_start_time').val();
+            $('#id_room').show()
+        $('#room-select').show();
+            $('#test2').html(date);
+        });
 
-    
+        $('#room-select').change(function () {
+          var room = $(this).val();
+          var date = $('#id_start_time').val();
+            $('#test2').html(date);
+          $('#test').html(room);
+
+
+
+          $.ajax({
+            url: "{% url 'checkReservations' %}",
+            data: {
+              'room': room,
+                'date' : date
+            },
+            dataType: 'json',
+            success: function (data) {
+                $('#t1').show();
+
+                var elements = document.getElementsByTagName("td")
+                for (var i= 0; i < elements.length; i++) {
+                    elements[i].style.color = "red";
+                }
+
+            }
+          });
+        });
+    })
+</script>
+    <link rel="stylesheet" href="{% static 'css/tables.css' %}">
 
     <container>
 
@@ -15,7 +53,7 @@
     </a>
 
 
-        <form method="POST", class="reservationForm">
+        <form method="POST", class="reservationForm" id="reservationForm">
         {% csrf_token %}
             <div class="form-group row">
                 {{ form.errors }}
@@ -26,19 +64,31 @@
                 {{ form.start_time }}
                 </div>
                     <div class="fieldWrapper">
-                        <label for="{{ form.room.id_for_label }}">Welchen Space möchten Sie reservieren?:</label>
+                        <label id="id_room" for="{{ form.room.id_for_label }}">Welchen Space möchten Sie reservieren?:</label>
 
-                        <select name="room">
+                        <select id= "room-select" name="room">
                         {% for element in some_data %}
                             <option value={{ element.size }}>{{ element.size }}</option>
                         {% endfor %}
                         </select>
 
 
-                </div>
+                    </div>
             </div>
+         <table id="t1" class="table" >
+            <tr>
+                <td> <button type="submit" name="save_block1" value="Save&Home">Block 1</button></td>
+                <td><a href="#"> Block 2</a></td></b>
+                <td> <a href="#"> Block 3</a></td>
+                <td> <a href="#"> Block 4</a></td>
+                <td> <a href="#"> Block 5</a></td>
+                <td> <a href="#"> Block 6</a></td>
+                <td> <a href="#"> Block 7</a></td>
+            </tr>
+        </table>
             <input type="submit" value="Save" class="btn btn-primary">
-
+        <div id="test">TEST</div>
+        <div id="test2">TEST</div>
         </form>
 </container>
 {% endblock %}
