@@ -10,10 +10,12 @@
 </p>
     
 <table class="table">
-    <tr><td>Startzeit</td><td>{{ object.start_time }}</td></tr>
+    <tr><td>Datum</td><td>{{ object.start_time }}</td></tr>
+    <tr><td>Block</td><td>Block {{ object.block }}</td></tr>
     <tr><td>Raum</td><td>{{ object.room }}</td></tr>
 {% if user.is_admin %}
     <tr><td>Erstellt von:</td><td>{{ object.created_by }}</td></tr>
+
 {% endif %}
 </table>
 <a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>

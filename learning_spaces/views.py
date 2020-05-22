@@ -49,14 +49,23 @@ class reservationCreateView(generic.CreateView):
         print(context)
         return context
 
-
-
-
-
     def form_valid(self, form):
                 reservation = form.save(commit=False)
                 reservation.created_by = self.request.user
-                reservation.block = "Block 1"
+                if 'save_block1' in self.request.POST:
+                    reservation.block = 1
+                elif 'save_block2' in self.request.POST:
+                    reservation.block = 2
+                elif 'save_block3' in self.request.POST:
+                    reservation.block = 3
+                elif 'save_block4' in self.request.POST:
+                    reservation.block = 4
+                elif 'save_block5' in self.request.POST:
+                    reservation.block = 5
+                elif 'save_block6' in self.request.POST:
+                    reservation.block = 6
+                elif 'save_block7' in self.request.POST:
+                    reservation.block = 7
                 print(self.request.user)
                 print(models.room.objects.all().values())
                 return super().form_valid(form)

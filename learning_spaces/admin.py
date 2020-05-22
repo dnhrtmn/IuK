@@ -19,6 +19,8 @@ class reservationAdmin(admin.ModelAdmin):
     form = reservationAdminForm
     list_display = [
         "start_time",
+        "room",
+        "block",
 
     ]
     readonly_fields = [
