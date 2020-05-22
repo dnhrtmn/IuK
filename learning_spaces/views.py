@@ -6,7 +6,7 @@ from django.utils import timezone
 from bootstrap_datepicker_plus import DatePickerInput
 from .filters import reservationFilter
 from django.core import serializers
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .models import reservation
 
 
@@ -14,8 +14,9 @@ def checkReservations(request):
     room = request.GET.get('room', None)
     date = request.GET.get('date', None)
 
-    queryset = models.reservation.objects.filter(room__iexact=room, start_time__exact=date).values('block')
-    print(queryset)
+    queryset = models.reservation.objects.filter(room__iexact=room, start_time__exact=date).values("block")
+
+
     return JsonResponse({"models_to_return": list(queryset)})
 
 class reservationListView(generic.ListView):

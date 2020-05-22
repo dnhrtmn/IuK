@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django_filters',
     'bootstrap4',
     'jquery',
+    'simplejson',
 ]
 
 MIDDLEWARE = [
