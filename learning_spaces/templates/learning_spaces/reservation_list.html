@@ -2,14 +2,17 @@
 {% extends "home.html" %}
 {% load staticfiles %}
 {% block test %}
-<div class="row">
-        <form method="GET">
-            {{  filter.form.as_p }}
-            <div><button type="submit", class="btn btn-sm btn-outline-primary">Filtern</button></div>
-        </form>
-        <div><a class="btn btn-sm btn-outline-primary" href="{% url 'learning_spaces_reservation_create' %}">Reservierung erstellen</a></div>
 
-</div>
+        <div class="m-2">
+            <form method="GET">
+                    {{  filter.form.as_p }}
+                    <div class="m-2"><button type="submit", class="btn btn-sm btn-outline-primary">Filtern</button></div>
+            </form>
+        </div>
+
+        <div class="m-2"><a class="btn btn-sm btn-outline-primary" href="{% url 'learning_spaces_reservation_create' %}">Reservierung erstellen</a></div>
+
+
 
 
     <div class="row">

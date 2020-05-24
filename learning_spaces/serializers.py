@@ -6,7 +6,7 @@ from . import models
 class reservationSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = models.reservation
+        model = models.Reservation
         fields = [
             "last_updated",
             "end_time",
@@ -17,7 +17,7 @@ class reservationSerializer(serializers.ModelSerializer):
 class roomSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = models.room
+        model = models.Room
         fields = [
             "created",
             "last_updated",

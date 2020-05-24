@@ -27,8 +27,8 @@ from learning_spaces.views import login_view
 
 
 router = routers.DefaultRouter()
-router.register("reservation", api.reservationViewSet)
-router.register("room", api.roomViewSet)
+router.register("Reservation", api.reservationViewSet)
+router.register("Room", api.roomViewSet)
 
 urlpatterns = [
     path("api/v1/", include(router.urls)),

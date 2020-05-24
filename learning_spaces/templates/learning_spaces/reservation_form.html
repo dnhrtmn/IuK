@@ -7,9 +7,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#t1').hide();
+        $('#table_label').hide();
         $('#id_room').hide();
         $('#room-select').hide();
-        $('#table_label').hide();
+
 
         $('#id_start_time').change(function () {
             var room = $('#room-select').val();
@@ -49,6 +50,13 @@
         $('#room-select').change(function () {
           var room = $(this).val();
           var date = $('#id_start_time').val();
+
+          if (room == "") {
+              $('#t1').hide();
+              $('#table_label').hide();
+
+              return;
+          }
           var x = document.getElementById("t1").getElementsByTagName("td");
           for (i = 0; i < 7; i++) {
                             x[i].style.backgroundColor = "green";
@@ -65,6 +73,7 @@
             dataType:   'json',
             success: function (data) {
 
+                console.log(data)
                 $('#t1').show();
                 $('#table_label').show();
 
@@ -80,6 +89,7 @@
         });
 
         function createTable(value, index, array) {
+            console.log(array)
 
                         var x = document.getElementById("t1").getElementsByTagName("td");
                         for (i = 0; i < array.length; i++) {
@@ -114,7 +124,9 @@
             <p>
                 <label id="id_room" for="{{ form.room.id_for_label }}">Welchen Space möchten Sie reservieren?:</label>
                 <select id= "room-select" name="room">
+                <option value="">Select</option>
                 {% for element in some_data %}
+
                     <option value={{ element.size }}>{{ element.size }}</option>
                 {% endfor %}
                 </select>
@@ -124,13 +136,13 @@
             <label id="table_label"> Wählen Sie nun bitte den gewünschten Block aus:</label>
             <table id="t1" class="table" >
             <tr>
-                <td style="background-color: green; text-align: center"> <button type="submit" id="block1" name="save_block1" value="Save&Home">Block 1</button></td>
-                <td style="background-color: green; text-align: center"> <button type="submit" id="block2" name="save_block2" value="Save&Home">Block 2</button></td>
-                <td style="background-color: green; text-align: center"> <button type="submit" id="block3" name="save_block3" value="Save&Home">Block 3</button></td>
-                <td style="background-color: green; text-align: center"> <button type="submit" id="block4" name="save_block4" value="Save&Home">Block 4</button></td>
-                <td style="background-color: green; text-align: center"> <button type="submit" id="block5" name="save_block5" value="Save&Home">Block 5</button></td>
-                <td style="background-color: green; text-align: center"> <button type="submit" id="block6" name="save_block6" value="Save&Home">Block 6</button></td>
-                <td style="background-color: green; text-align: center"> <button type="submit" id="block7" name="save_block7" value="Save&Home">Block 7</button></td>
+                <td style="background-color: green; text-align: center"> <button class="btn btn-block btn-outline-success" type="submit" id="block1" name="save_block1" value="Save&Home">Block 1</button></td>
+                <td style="background-color: green; text-align: center"> <button class="btn btn-block btn-outline-success"type="submit" id="block2" name="save_block2" value="Save&Home">Block 2</button></td>
+                <td style="background-color: green; text-align: center"> <button class="btn btn-block btn-outline-success"type="submit" id="block3" name="save_block3" value="Save&Home">Block 3</button></td>
+                <td style="background-color: green; text-align: center"> <button class="btn btn-block btn-outline-success"type="submit" id="block4" name="save_block4" value="Save&Home">Block 4</button></td>
+                <td style="background-color: green; text-align: center"> <button class="btn btn-block btn-outline-success"type="submit" id="block5" name="save_block5" value="Save&Home">Block 5</button></td>
+                <td style="background-color: green; text-align: center"> <button class="btn btn-block btn-outline-success"type="submit" id="block6" name="save_block6" value="Save&Home">Block 6</button></td>
+                <td style="background-color: green; text-align: center"> <button class="btn btn-block btn-outline-success"type="submit" id="block7" name="save_block7" value="Save&Home">Block 7</button></td>
             </tr>
         </table>
         </div>

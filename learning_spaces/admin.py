@@ -11,7 +11,7 @@ from .models import User
 class reservationAdminForm(forms.ModelForm):
 
     class Meta:
-        model = models.reservation
+        model = models.Reservation
         fields = "__all__"
 
 
@@ -31,7 +31,7 @@ class reservationAdmin(admin.ModelAdmin):
 class roomAdminForm(forms.ModelForm):
 
     class Meta:
-        model = models.room
+        model = models.Room
         fields = "__all__"
 
 
@@ -44,6 +44,7 @@ class roomAdmin(admin.ModelAdmin):
         "location",
         "size",
         "created_by",
+        "identifier",
     ]
     readonly_fields = [
         "created",
@@ -54,8 +55,8 @@ class roomAdmin(admin.ModelAdmin):
     ]
 
 
-admin.site.register(models.reservation, reservationAdmin)
-admin.site.register(models.room, roomAdmin)
+admin.site.register(models.Reservation, reservationAdmin)
+admin.site.register(models.Room, roomAdmin)
 
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances

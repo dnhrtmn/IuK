@@ -19,7 +19,7 @@
 {% endif %}
 </table>
 <a class="btn btn-sm btn-outline-primary" href="{{object.get_update_url}}">Edit</a>
-<form action="{% url 'delete_reservation' pk=object.id %}" method="POST">
+<form action="{% url 'delete_reservation' pk=object.identifier %}" method="POST">
 {% csrf_token %}
 <input class="btn btn-sm btn-danger" type="submit" value="Delete">
 </form>

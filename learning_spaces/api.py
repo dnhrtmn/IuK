@@ -5,16 +5,16 @@ from . import models
 
 
 class reservationViewSet(viewsets.ModelViewSet):
-    """ViewSet for the reservation class"""
+    """ViewSet for the Reservation class"""
 
-    queryset = models.reservation.objects.all()
+    queryset = models.Reservation.objects.all()
     serializer_class = serializers.reservationSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
 class roomViewSet(viewsets.ModelViewSet):
-    """ViewSet for the room class"""
+    """ViewSet for the Room class"""
 
-    queryset = models.room.objects.all()
+    queryset = models.Room.objects.all()
     serializer_class = serializers.roomSerializer
     permission_classes = [permissions.IsAuthenticated]

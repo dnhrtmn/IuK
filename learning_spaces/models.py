@@ -3,18 +3,17 @@ from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser, User)
 from django.conf import settings
+import uuid
 
 
-
-
-class reservation(models.Model):
-
+class Reservation(models.Model):
     # Fields
     start_time = models.DateField(default=timezone.now)
-    room = models.CharField(max_length=5, blank=True, default='', verbose_name="room")
+    room = models.CharField(max_length=5, blank=True, default='', verbose_name="Room")
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     # created = models.DateTimeField(default=timezone.now)
     block = models.CharField(max_length=1, blank=True, default='')
+    identifier = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     class Meta:
         pass
@@ -33,11 +32,7 @@ class reservation(models.Model):
         return reverse("learning_spaces_reservation_update", args=(self.pk,))
 
 
-
-
-
-class room(models.Model):
-
+class Room(models.Model):
     # Fields
     created = models.DateTimeField(default=timezone.now)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
@@ -45,10 +40,10 @@ class room(models.Model):
     location = models.TextField()
     size = models.TextField(max_length=3, editable=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete="", null=True, blank=True)
+    identifier = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     class Meta:
         pass
-
 
     def __str__(self):
         return str(self.pk)
@@ -64,47 +59,47 @@ class room(models.Model):
         return reverse("learning_spaces_room_update", args=(self.pk,))
 
 
-
 class UserManager(BaseUserManager):
-        def create_user(self, email, password=None):
-            """
+    def create_user(self, email, password=None):
+        """
             Creates and saves a User with the given email and password.
             """
-            if not email:
-                raise ValueError('Users must have an email address')
+        if not email:
+            raise ValueError('Users must have an email address')
 
-            user = self.model(
-                email=self.normalize_email(email),
-            )
+        user = self.model(
+            email=self.normalize_email(email),
+        )
 
-            user.set_password(password)
-            user.save(using=self._db)
-            return user
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-        def create_staffuser(self, email, password):
-            """
+    def create_staffuser(self, email, password):
+        """
             Creates and saves a staff user with the given email and password.
             """
-            user = self.create_user(
-                email,
-                password=password,
-            )
-            user.staff = True
-            user.save(using=self._db)
-            return user
+        user = self.create_user(
+            email,
+            password=password,
+        )
+        user.staff = True
+        user.save(using=self._db)
+        return user
 
-        def create_superuser(self, email, password):
-            """
+    def create_superuser(self, email, password):
+        """
             Creates and saves a superuser with the given email and password.
             """
-            user = self.create_user(
-                email,
-                password=password,
-            )
-            user.staff = True
-            user.admin = True
-            user.save(using=self._db)
-            return user
+        user = self.create_user(
+            email,
+            password=password,
+        )
+        user.staff = True
+        user.admin = True
+        user.save(using=self._db)
+        return user
+
 
 class User(AbstractBaseUser):
     email = models.EmailField(
@@ -113,12 +108,12 @@ class User(AbstractBaseUser):
         unique=True,
     )
     active = models.BooleanField(default=True)
-    staff = models.BooleanField(default=False) # a admin user; non super-user
-    admin = models.BooleanField(default=False) # a superuser
+    staff = models.BooleanField(default=False)  # a admin user; non super-user
+    admin = models.BooleanField(default=False)  # a superuser
     # notice the absence of a "Password field", that is built in.
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = [] # Email & Password are required by default.
+    REQUIRED_FIELDS = []  # Email & Password are required by default.
 
     def get_full_name(self):
         # The user is identified by their email address
@@ -128,7 +123,7 @@ class User(AbstractBaseUser):
         # The user is identified by their email address
         return self.email
 
-    def __str__(self):              # __unicode__ on Python 2
+    def __str__(self):  # __unicode__ on Python 2
         return self.email
 
     def has_perm(self, perm, obj=None):

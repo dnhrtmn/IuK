@@ -7,7 +7,7 @@ from bootstrap_datepicker_plus import DatePickerInput
 from .filters import reservationFilter
 from django.core import serializers
 from django.http import JsonResponse, HttpResponse
-from .models import reservation
+from .models import Reservation
 from django.views.generic.edit import DeleteView, FormMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -15,19 +15,19 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 
 
-
 def checkReservations(request):
     room = request.GET.get('room', None)
     date = request.GET.get('date', None)
 
-    queryset = models.reservation.objects.filter(room__iexact=room, start_time__exact=date).values("block")
-
+    queryset = models.Reservation.objects.filter(room__iexact=room, start_time__exact=date).values("block")
 
     return JsonResponse({"models_to_return": list(queryset)})
 
+
 class reservationListView(generic.ListView):
-    model = models.reservation
+    model = models.Reservation
     template_name = "learning_spaces/reservation_list.html"
+
     # form_class = forms.reservationForm
 
     # Filtert die Reservierungen zuerst nach Status des aktuellen Benutzers (Admin oder nicht). Ist der Benutzer ein Admin,
@@ -37,85 +37,81 @@ class reservationListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_admin:
-                context['filter'] = reservationFilter(self.request.GET, queryset=self.object_list.filter())
-                return context
+            context['filter'] = reservationFilter(self.request.GET, queryset=self.object_list.filter())
+            return context
         else:
-                context['filter'] = reservationFilter(self.request.GET, queryset=self.object_list.filter(created_by=self.request.user))
-                return context
+            context['filter'] = reservationFilter(self.request.GET,
+                                                  queryset=self.object_list.filter(created_by=self.request.user))
+            return context
 
 
 class reservationCreateView(generic.CreateView):
-    model = models.reservation
+    model = models.Reservation
     form_class = forms.reservationForm
 
     def get_context_data(self, **kwargs):
         context = super(reservationCreateView, self).get_context_data(**kwargs)
-        some_data = models.room.objects.all()
-        context.update({'some_data':some_data})
+        some_data = models.Room.objects.all()
+        context.update({'some_data': some_data})
         print(context)
         return context
 
     def form_valid(self, form):
-                reservation = form.save(commit=False)
-                reservation.created_by = self.request.user
-                if 'save_block1' in self.request.POST:
-                    reservation.block = 1
-                elif 'save_block2' in self.request.POST:
-                    reservation.block = 2
-                elif 'save_block3' in self.request.POST:
-                    reservation.block = 3
-                elif 'save_block4' in self.request.POST:
-                    reservation.block = 4
-                elif 'save_block5' in self.request.POST:
-                    reservation.block = 5
-                elif 'save_block6' in self.request.POST:
-                    reservation.block = 6
-                elif 'save_block7' in self.request.POST:
-                    reservation.block = 7
-                print(self.request.user)
-                print(models.room.objects.all().values())
-                return super().form_valid(form)
-
+        reservation = form.save(commit=False)
+        reservation.created_by = self.request.user
+        if 'save_block1' in self.request.POST:
+            reservation.block = 1
+        elif 'save_block2' in self.request.POST:
+            reservation.block = 2
+        elif 'save_block3' in self.request.POST:
+            reservation.block = 3
+        elif 'save_block4' in self.request.POST:
+            reservation.block = 4
+        elif 'save_block5' in self.request.POST:
+            reservation.block = 5
+        elif 'save_block6' in self.request.POST:
+            reservation.block = 6
+        elif 'save_block7' in self.request.POST:
+            reservation.block = 7
+        print(self.request.user)
+        print(models.Room.objects.all().values())
+        return super().form_valid(form)
 
 
 class reservationDetailView(generic.DetailView):
-    model = models.reservation
+    model = models.Reservation
     form_class = forms.reservationForm
 
 
-
 class reservationUpdateView(generic.UpdateView):
-    model = models.reservation
+    model = models.Reservation
     form_class = forms.reservationForm
     pk_url_kwarg = "pk"
 
 
 class reservationDeleteView(SuccessMessageMixin, generic.DeleteView):
-    model = models.reservation
+    model = models.Reservation
     success_url = '/'
     success_message = "'%(id) deleted..."
     pk_url_kwarg = "pk"
 
-
-
-
     def delete(self, request, *args, **kwargs):
-
-        reservation_id = self.request.object.value('id')
-        request.session['reservation_id'] = reservation_id
-        message = 'Reservation: ' + request.session['object'] + ' deleted successfully'
-        message.success(self.request, message)
+        self.object = self.get_object()
+        # identifier = self.object.identifier
+        # identifier_str = str(identifier)
+        # request.session['identifier'] = identifier_str
+        # message = 'Reservation: ' + request.session['identifier'] + ' deleted successfully'
+        # message.success(self.request, message)
         return super(reservationDeleteView, self).delete(request, *args, **kwargs)
 
 
-
 class roomListView(generic.ListView):
-    model = models.room
+    model = models.Room
     form_class = forms.roomForm
 
 
 class roomCreateView(generic.CreateView):
-    model = models.room
+    model = models.Room
     form_class = forms.roomForm
 
     def form_valid(self, form):
@@ -126,22 +122,24 @@ class roomCreateView(generic.CreateView):
 
 
 class roomDetailView(generic.DetailView):
-    model = models.room
+    model = models.Room
     form_class = forms.roomForm
 
 
 class roomUpdateView(generic.UpdateView):
-    model = models.room
+    model = models.Room
     form_class = forms.roomForm
     pk_url_kwarg = "pk"
+
 
 class homeView(generic.TemplateView):
     template_name = "home.html"
 
 
 def home_view(request, *args, **kwargs):
-        print(request.user)
-        return render(request, "home.html", {})
+    print(request.user)
+    return render(request, "home.html", {})
+
 
 def login_view(request, *args, **kwargs):
     print(request.user)

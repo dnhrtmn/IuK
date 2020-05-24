@@ -14,7 +14,7 @@ class reservationForm(forms.ModelForm):
     #     widget=DatePickerInput(format='%d.%m.%Y')
     # )
     class Meta:
-        model = models.reservation
+        model = models.Reservation
         fields = [
             'start_time',
             'room',
@@ -30,7 +30,7 @@ class reservationForm(forms.ModelForm):
 
 class roomForm(forms.ModelForm):
     class Meta:
-        model = models.room
+        model = models.Room
         fields = [
             "description",
             "location",

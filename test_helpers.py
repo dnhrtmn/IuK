@@ -64,11 +64,11 @@ def create_learning_spaces_reservation(**kwargs):
     defaults["end_time"] = datetime.now()
     defaults["start_time"] = datetime.now()
     defaults.update(**kwargs)
-    return learning_spaces_models.reservation.objects.create(**defaults)
+    return learning_spaces_models.Reservation.objects.create(**defaults)
 def create_learning_spaces_room(**kwargs):
     defaults = {}
     defaults["description"] = ""
     defaults["location"] = ""
     defaults["size"] = ""
     defaults.update(**kwargs)
-    return learning_spaces_models.room.objects.create(**defaults)
+    return learning_spaces_models.Room.objects.create(**defaults)
