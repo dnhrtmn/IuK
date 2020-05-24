@@ -1,9 +1,11 @@
 {% extends "home.html" %}
 {% block test %}
-    {% if user.is_authenticated %}
-        <div class="m-2"><a class="btn btn-primary" href="{% url 'learning_spaces_reservation_list' %}">Reservierungsübersicht</a></div>
-    {% endif %}
 
-<div class="m-2"><a class="btn btn-primary" href="{% url 'learning_spaces_room_list' %}">Raumübersicht</a></div>
+        <div class="row">
+            {% if user.is_authenticated %}
+                <div class="m-2"><a class="btn btn-outline-primary" href="{% url 'learning_spaces_reservation_list' %}">Reservierungsübersicht</a></div>
+            {% endif %}
+            <div class="m-2"><a class="btn btn-outline-primary" href="{% url 'learning_spaces_room_list' %}">Raumübersicht</a></div>
+        </div>
 
 {% endblock %}

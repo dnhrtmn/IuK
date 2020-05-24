@@ -4,8 +4,8 @@
 {% block test %}
     
 <p>
-    <a class="btn btn-light" href="{% url 'learning_spaces_reservation_list' %}">
-    Reservierungsansicht
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'learning_spaces_reservation_list' %}">
+    Zurück zur Reservierungsansicht
     </a>
 </p>
     
@@ -18,6 +18,11 @@
 
 {% endif %}
 </table>
-<a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>
+<a class="btn btn-sm btn-outline-primary" href="{{object.get_update_url}}">Edit</a>
+<form action="{% url 'delete_reservation' pk=object.id %}" method="POST">
+{% csrf_token %}
+<input class="btn btn-sm btn-danger" type="submit" value="Delete">
+</form>
+
 
 {% endblock %}

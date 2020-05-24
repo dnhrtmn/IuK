@@ -8,6 +8,12 @@ from .filters import reservationFilter
 from django.core import serializers
 from django.http import JsonResponse, HttpResponse
 from .models import reservation
+from django.views.generic.edit import DeleteView, FormMixin
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+
 
 
 def checkReservations(request):
@@ -72,34 +78,35 @@ class reservationCreateView(generic.CreateView):
 
 
 
-
-# def createReservation(request, room):
-#     model = models.reservation
-#     form_class = forms.reservationForm
-#     {}.__format__(room)
-#     if request.method == "POST":
-#         form = forms.reservationForm(request.POST)
-#         if form.is_valid():
-#             reservation = form.save(commit=False)
-#             reservation.start_time = timezone.now()
-#             reservation.created_by = request.user
-#             # reservation.created = timezone.now()
-#             reservation.save()
-#             return redirect('reservation_list', pk=reservation.pk)
-#     else:
-#         form = forms.reservationForm()
-#         print(request)
-#     return render(request, 'learning_spaces/reservation_form.html', {'form':form})
-
 class reservationDetailView(generic.DetailView):
     model = models.reservation
     form_class = forms.reservationForm
+
 
 
 class reservationUpdateView(generic.UpdateView):
     model = models.reservation
     form_class = forms.reservationForm
     pk_url_kwarg = "pk"
+
+
+class reservationDeleteView(SuccessMessageMixin, generic.DeleteView):
+    model = models.reservation
+    success_url = '/'
+    success_message = "'%(id) deleted..."
+    pk_url_kwarg = "pk"
+
+
+
+
+    def delete(self, request, *args, **kwargs):
+
+        reservation_id = self.request.object.value('id')
+        request.session['reservation_id'] = reservation_id
+        message = 'Reservation: ' + request.session['object'] + ' deleted successfully'
+        message.success(self.request, message)
+        return super(reservationDeleteView, self).delete(request, *args, **kwargs)
+
 
 
 class roomListView(generic.ListView):
@@ -131,7 +138,7 @@ class roomUpdateView(generic.UpdateView):
 class homeView(generic.TemplateView):
     template_name = "home.html"
 
-    
+
 def home_view(request, *args, **kwargs):
         print(request.user)
         return render(request, "home.html", {})
