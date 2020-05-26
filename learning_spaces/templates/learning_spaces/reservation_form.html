@@ -107,7 +107,7 @@
 
     <container>
 
-    <h1><a class="btn btn-primary" href="{% url 'learning_spaces_reservation_list' %}"> Reservierungsübersicht </a></h1>
+    <h1><a class="btn btn-outline-primary" href="{% url 'learning_spaces_reservation_list' %}"> Reservierungsübersicht </a></h1>
 
 
         <form method="POST", class="reservationForm" id="reservationForm">
@@ -115,7 +115,7 @@
 
                 {{ form.errors }}
 
-            <p>
+            <p style="font-family: 'Helvetica Neue' ">
             <label for="{{ form.start_time.id_for_label }}">Für welches Datum möchten Sie einen Space reservieren?:</label>
 
             {{ form.start_time }}
@@ -148,5 +148,10 @@
         </div>
 
         </form>
+
+    <p> Legende:
+    Roter Block: Block belegt
+    Grüner Block: Block frei
+    </p>
 </container>
 {% endblock %}

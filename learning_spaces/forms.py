@@ -4,6 +4,8 @@ from django.utils import timezone
 from bootstrap_datepicker_plus import DatePickerInput
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import User
+from datetime import datetime, timedelta
+from django.forms import ValidationError
 
 class DateInput(forms.DateInput):
     input_type = 'date'
@@ -20,12 +22,24 @@ class reservationForm(forms.ModelForm):
             'room',
         ]
         widgets = {
-            'start_time' : DateInput(attrs={'value': timezone.now().strftime("%d.%m.%Y")}),
+            'start_time' : DateInput(attrs={'value': timezone.now().strftime("%d.%m.%Y"),
+                                            'min': datetime.now(),
+                                            'max': datetime.now()
+
+                                            }),
         }
 
         def __init__(self, *args, **kwargs):
             super(reservationForm, self).__init__(*args, **kwargs)
             self.fields['start_time'].initial = timezone.now()
+
+        def clean_start_time(self):
+            date = self.cleaned_data['start_time']
+            if date < datetime.today():
+                raise forms.ValidationError("The date cannot be in the past!")
+            return date
+
+
 
 
 class roomForm(forms.ModelForm):

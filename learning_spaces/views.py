@@ -1,6 +1,7 @@
 from django.views import generic
 from . import models
 from . import forms
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from bootstrap_datepicker_plus import DatePickerInput
@@ -13,6 +14,7 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+import datetime
 
 
 def checkReservations(request):
@@ -59,6 +61,8 @@ class reservationCreateView(generic.CreateView):
     def form_valid(self, form):
         reservation = form.save(commit=False)
         reservation.created_by = self.request.user
+
+
         if 'save_block1' in self.request.POST:
             reservation.block = 1
         elif 'save_block2' in self.request.POST:
