@@ -54,6 +54,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'IuK.urls'
 STATIC_ROOT = '/Users/danielhartmann/Downloads/IuK/learning_spaces/static/css'
+DATE_FORMAT = '%m.%d.%y'
 
 TEMPLATES = [
     {

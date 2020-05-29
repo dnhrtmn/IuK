@@ -3,18 +3,46 @@
 {% load static %}
 {% load bootstrap4 %}
 {% block test %}
-<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+{#<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>#}
+{#<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>#}
+{##}
+{##}
+{#<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>#}
+
+
+<script src="https://momentjs.com/downloads/moment.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/de.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+
 <script type="text/javascript">
+    $(function () {
+        $('#datepicker12').datetimepicker({
+            daysOfWeekDisabled: [0],
+            locale: 'de',
+            format: 'DD.MM.YYYY',
+            minDate: moment(),
+            maxDate: moment().add(7, 'days'),
+
+        });
+    });
+</script>
+<script type="text/javascript">
+
     $(document).ready(function () {
         $('#t1').hide();
         $('#table_label').hide();
         $('#id_room').hide();
         $('#room-select').hide();
 
-
-        $('#id_start_time').change(function () {
+        $('#datepicker12').datetimepicker().on('dp.change', function (e) {
             var room = $('#room-select').val();
-            var date = $('#id_start_time').val();
+            var date = $('#datepickerValue').val();
+            date = moment(date, 'DD.MM.YYYY', true).format('L');
+            date = date.split('.').reverse().join('-')
+            console.log(date)
             var x = document.getElementById("t1").getElementsByTagName("td");
             for (i = 0; i < 7; i++) {
                             x[i].style.backgroundColor = "green";
@@ -47,9 +75,48 @@
           });
         });
 
+
+        {#$('#testid').change(function () {#}
+        {#    var room = $('#room-select').val();#}
+        {#    var date = $('#testid').val();#}
+        {#    var x = document.getElementById("t1").getElementsByTagName("td");#}
+        {#    for (i = 0; i < 7; i++) {#}
+        {#                    x[i].style.backgroundColor = "green";#}
+        {#                    var id = "block" + (i+1);#}
+        {#                    document.getElementById(id).disabled = false;#}
+        {#    }#}
+        {##}
+        {#    $('#id_room').show()#}
+        {#    $('#room-select').show();#}
+        {##}
+        {#    $.ajax({#}
+        {#    url:"{% url 'checkReservations' %}",#}
+        {#    data:{#}
+        {#        'room': room,#}
+        {#        'date' : date#}
+        {#    },#}
+        {#    dataType:   'json',#}
+        {#    success: function (data) {#}
+        {##}
+        {#        var MyTable = document.getElementById('t1');#}
+        {#        var rows = MyTable.getElementsByTagName('tr');#}
+        {##}
+        {#        for (var key in data) {#}
+        {#            for (var key in data) {#}
+        {#            let result = data[key].map(a => a.block);#}
+        {#            result.forEach(createTable);#}
+        {#            }#}
+        {#        }#}
+        {#    }#}
+        {#  });#}
+        {#);#}
+
         $('#room-select').change(function () {
           var room = $(this).val();
-          var date = $('#id_start_time').val();
+          var date = $('#datepickerValue').val();
+          date = moment(date, 'DD.MM.YYYY', true).format('L');
+            date = date.split('.').reverse().join('-')
+            console.log(date)
 
           if (room == "") {
               $('#t1').hide();
@@ -103,6 +170,9 @@
 
     })
 </script>
+
+
+
     <link rel="stylesheet" href="{% static 'css/tables.css' %}">
 
     <container>
@@ -115,10 +185,16 @@
 
                 {{ form.errors }}
 
-            <p style="font-family: 'Helvetica Neue' ">
+            <p>
             <label for="{{ form.start_time.id_for_label }}">Für welches Datum möchten Sie einen Space reservieren?:</label>
+                <div class='input-group date' id='datepicker12'>
+                  <input type='text' class="form-control" id="datepickerValue" name="start_time"/>
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
 
-            {{ form.start_time }}
+{#            {{ form.start_time }}#}
             </p>
 
             <p>

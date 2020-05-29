@@ -6,14 +6,23 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import User
 from datetime import datetime, timedelta
 from django.forms import ValidationError
+from .widgets import BootstrapDateTimePickerInput
 
 class DateInput(forms.DateInput):
-    input_type = 'date'
+    input_type = 'date',
+    input_format = '%d.%m.%y'
+
+class DateForm(forms.Form):
+    date = forms.DateTimeField(
+        input_formats=['%d/%m/%Y %H:%M'],
+        widget=BootstrapDateTimePickerInput()
+    )
 
 class reservationForm(forms.ModelForm):
     # models.start_time = forms.DateField(input_formats=['%d.%m.%Y'])
-    # models.start_time = forms.DateField(
-    #     widget=DatePickerInput(format='%d.%m.%Y')
+    # models.start_time = forms.DateTimeField(
+    #     input_formats=['%d.%m.%Y'],
+    #     widget=BootstrapDateTimePickerInput()
     # )
     class Meta:
         model = models.Reservation
@@ -22,22 +31,16 @@ class reservationForm(forms.ModelForm):
             'room',
         ]
         widgets = {
-            'start_time' : DateInput(attrs={'value': timezone.now().strftime("%d.%m.%Y"),
-                                            'min': datetime.now(),
-                                            'max': datetime.now()
+            'start_time' : forms.DateInput(attrs={'id': 'datepicker12'}),
 
-                                            }),
+
         }
 
         def __init__(self, *args, **kwargs):
             super(reservationForm, self).__init__(*args, **kwargs)
             self.fields['start_time'].initial = timezone.now()
 
-        def clean_start_time(self):
-            date = self.cleaned_data['start_time']
-            if date < datetime.today():
-                raise forms.ValidationError("The date cannot be in the past!")
-            return date
+
 
 
 
