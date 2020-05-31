@@ -6,17 +6,12 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import User
 from datetime import datetime, timedelta
 from django.forms import ValidationError
-from .widgets import BootstrapDateTimePickerInput
+
 
 class DateInput(forms.DateInput):
     input_type = 'date',
     input_format = '%d.%m.%y'
 
-class DateForm(forms.Form):
-    date = forms.DateTimeField(
-        input_formats=['%d/%m/%Y %H:%M'],
-        widget=BootstrapDateTimePickerInput()
-    )
 
 class reservationForm(forms.ModelForm):
     # models.start_time = forms.DateField(input_formats=['%d.%m.%Y'])

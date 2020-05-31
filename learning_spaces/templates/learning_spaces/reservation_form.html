@@ -3,32 +3,36 @@
 {% load static %}
 {% load bootstrap4 %}
 {% block test %}
-{#<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>#}
-{#<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>#}
-{##}
-{##}
-{#<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>#}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <script src="https://momentjs.com/downloads/moment.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/de.js"></script>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
 
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+
+
+
+{# Initialisierung des Datepickers #}
 <script type="text/javascript">
-    $(function () {
-        $('#datepicker12').datetimepicker({
-            daysOfWeekDisabled: [0],
-            locale: 'de',
-            format: 'DD.MM.YYYY',
-            minDate: moment(),
-            maxDate: moment().add(7, 'days'),
+        $(function () {
+            $('#datepicker12').datetimepicker({
+                format: 'L',
+                daysOfWeekDisabled: [0],
+                minDate: moment(),
+                maxDate: moment().add(7, 'days'),
 
+
+            });
         });
-    });
 </script>
+
+{# JavaScript Function zur Steuerung der Anzeige der einzelnen Felder, ohne Datum wird kein Raum angezeigt usw. #}
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -37,12 +41,12 @@
         $('#id_room').hide();
         $('#room-select').hide();
 
-        $('#datepicker12').datetimepicker().on('dp.change', function (e) {
+        $('#datepicker12').on('change.datetimepicker', function (e) {
             var room = $('#room-select').val();
-            var date = $('#datepickerValue').val();
-            date = moment(date, 'DD.MM.YYYY', true).format('L');
-            date = date.split('.').reverse().join('-')
-            console.log(date)
+            var date = $('#dateValue').val();
+
+            date = date.split('.').reverse().join('-');
+            console.log(date);
             var x = document.getElementById("t1").getElementsByTagName("td");
             for (i = 0; i < 7; i++) {
                             x[i].style.backgroundColor = "green";
@@ -50,7 +54,7 @@
                             document.getElementById(id).disabled = false;
             }
 
-            $('#id_room').show()
+            $('#id_room').show();
             $('#room-select').show();
 
             $.ajax({
@@ -76,44 +80,9 @@
         });
 
 
-        {#$('#testid').change(function () {#}
-        {#    var room = $('#room-select').val();#}
-        {#    var date = $('#testid').val();#}
-        {#    var x = document.getElementById("t1").getElementsByTagName("td");#}
-        {#    for (i = 0; i < 7; i++) {#}
-        {#                    x[i].style.backgroundColor = "green";#}
-        {#                    var id = "block" + (i+1);#}
-        {#                    document.getElementById(id).disabled = false;#}
-        {#    }#}
-        {##}
-        {#    $('#id_room').show()#}
-        {#    $('#room-select').show();#}
-        {##}
-        {#    $.ajax({#}
-        {#    url:"{% url 'checkReservations' %}",#}
-        {#    data:{#}
-        {#        'room': room,#}
-        {#        'date' : date#}
-        {#    },#}
-        {#    dataType:   'json',#}
-        {#    success: function (data) {#}
-        {##}
-        {#        var MyTable = document.getElementById('t1');#}
-        {#        var rows = MyTable.getElementsByTagName('tr');#}
-        {##}
-        {#        for (var key in data) {#}
-        {#            for (var key in data) {#}
-        {#            let result = data[key].map(a => a.block);#}
-        {#            result.forEach(createTable);#}
-        {#            }#}
-        {#        }#}
-        {#    }#}
-        {#  });#}
-        {#);#}
-
         $('#room-select').change(function () {
           var room = $(this).val();
-          var date = $('#datepickerValue').val();
+          var date = $('#dateValue').val();
           date = moment(date, 'DD.MM.YYYY', true).format('L');
             date = date.split('.').reverse().join('-')
             console.log(date)
@@ -155,6 +124,7 @@
           });
         });
 
+        {# Diese Funktion erstellt die Tabelle zur Block Anzeige #}
         function createTable(value, index, array) {
             console.log(array)
 
@@ -186,26 +156,41 @@
                 {{ form.errors }}
 
             <p>
-            <label for="{{ form.start_time.id_for_label }}">Für welches Datum möchten Sie einen Space reservieren?:</label>
-                <div class='input-group date' id='datepicker12'>
-                  <input type='text' class="form-control" id="datepickerValue" name="start_time"/>
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="{{ form.start_time.id_for_label }}">Für welches Datum möchten Sie einen Space reservieren?:</label>
+                </div>
+                <div class="col-sm-auto">
+                    <div class="form-group">
+                        <div class="input-group date" id="datepicker12" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#datepicker12" id="dateValue" name="start_time"/>
+                            <div class="input-group-append" data-target="#datepicker12" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-{#            {{ form.start_time }}#}
+            </div>
             </p>
 
             <p>
-                <label id="id_room" for="{{ form.room.id_for_label }}">Welchen Space möchten Sie reservieren?:</label>
-                <select id= "room-select" name="room">
-                <option value="">Select</option>
-                {% for element in some_data %}
 
-                    <option value={{ element.size }}>{{ element.size }}</option>
-                {% endfor %}
-                </select>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label id="id_room" for="{{ form.room.id_for_label }}">Welchen Space möchten Sie reservieren?:</label>
+                </div>
+                <div class="col-sm-auto">
+                    <select id= "room-select" name="room" class="form-control">
+                    <option value="">Select</option>
+
+                    {% for element in some_data %}
+
+                        <option value={{ element.size }}>{{ element.size }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+            </div>
             </p>
 
         <div class="fieldWrapper">

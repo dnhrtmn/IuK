@@ -6,7 +6,8 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from bootstrap_datepicker_plus import DatePickerInput
 from .filters import reservationFilter
-from django.core import serializers
+from django.core import serializers, mail
+from django.test import TestCase
 from django.http import JsonResponse, HttpResponse
 from .models import Reservation
 from django.views.generic.edit import DeleteView, FormMixin
@@ -14,6 +15,7 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+from django.template.loader import render_to_string
 import datetime
 
 
@@ -77,9 +79,27 @@ class reservationCreateView(generic.CreateView):
             reservation.block = 6
         elif 'save_block7' in self.request.POST:
             reservation.block = 7
-        print(self.request.user)
-        print(models.Room.objects.all().values())
+
+        subject = render_to_string(
+            template_name='email/subject.txt'
+        ).strip()
+        from_email = 'admin@learning-spaces.com'
+        recipient = [reservation.created_by.email]
+
+
+
+        message = render_to_string(
+        'email/email.txt', {'user': reservation.created_by.email}
+        )
+        html_message = render_to_string(
+            'email/email.html', {'user': reservation.created_by.email, 'id': reservation.identifier, 'date': reservation.start_time, 'block':reservation.block, 'room':reservation.room}
+        )
+
+
+        mail.send_mail(subject, message, from_email, recipient, html_message=html_message)
+
         return super().form_valid(form)
+
 
 
 class reservationDetailView(generic.DetailView):

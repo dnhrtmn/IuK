@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'jquery',
     'simplejson',
+    'tempus_dominus',
 ]
 
 MIDDLEWARE = [
@@ -133,5 +134,13 @@ STATIC_URL = '/static/'
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = '07f9f36954befd'
+EMAIL_HOST_PASSWORD = '57a4c0a1feab11'
+EMAIL_PORT = '2525'
+
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 
 
