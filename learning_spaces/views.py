@@ -10,6 +10,7 @@ from django.core import serializers, mail
 from django.test import TestCase
 from django.http import JsonResponse, HttpResponse
 from .models import Reservation
+from django.views.generic import TemplateView
 from django.views.generic.edit import DeleteView, FormMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -168,3 +169,19 @@ def home_view(request, *args, **kwargs):
 def login_view(request, *args, **kwargs):
     print(request.user)
     return render(request, "login.html", {})
+
+class roomReservationsView(TemplateView):
+    model = models.Room
+    pk_url_kwarg = "pk"
+    template_name = 'room_reservations.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(roomReservationsView, self).get_context_data(**kwargs)
+        some_data = models.Room.objects.all()
+        context.update({'some_data': some_data})
+        print(context)
+        return context
+
+
+
+

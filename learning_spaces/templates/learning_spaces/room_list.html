@@ -2,7 +2,9 @@
 {% load staticfiles %}
 
 {% block test %}
-    <div class="row"
+    <a class="btn btn-outline-secondary" href="{% url 'learning_spaces_room_reservations' %}">Belegung anzeigen</a>
+    <div class="row">
+
     <link rel="stylesheet" href="{% static 'css/tables.css' %}">
 
 {% for object in object_list %}

@@ -25,4 +25,5 @@ urlpatterns = (
     url(r'^ajax/checkReservations/$', views.checkReservations, name='checkReservations'),
     # url(r'^delete-entry/(?P<pk>\d+)/$', views.reservationDeleteView.as_view(), name='delete_reservation'),
     path("learning_spaces/Reservation/delete/<uuid:pk>/", views.reservationDeleteView.as_view(), name='delete_reservation'),
+    path("room/reservations/", views.roomReservationsView.as_view(), name='learning_spaces_room_reservations'),
 )
