@@ -177,10 +177,17 @@ class roomReservationsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(roomReservationsView, self).get_context_data(**kwargs)
-        some_data = models.Room.objects.all()
-        context.update({'some_data': some_data})
+        room_data = models.Room.objects.all()
+        context.update({'room_data': room_data})
         print(context)
         return context
+
+    def getReservations(request):
+        room = request.GET.get('room', None)
+
+        queryset = models.Reservation.objects.filter(room__iexact=room).values()
+
+        return JsonResponse({"models_to_return": list(queryset)})
 
 
 
