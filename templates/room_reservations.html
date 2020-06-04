@@ -1,19 +1,23 @@
 {% extends "base.html" %}
 {% load static %}
+{% load bootstrap4 %}
 
 
 {% block content %}
+    <body>
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <script src="https://momentjs.com/downloads/moment.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/de.js"></script>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script><link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 <script type="text/javascript">
         $(document).ready(function () {
             getDates();
-            $('#calendar').hide();
+            {#$('#calendar').hide();#}
 
 
             $('#room-select').change(function () {
@@ -21,21 +25,21 @@
                 $('#calendar').show();
 
 
-                if (room == "") {
-                  $('#calendar').hide();
+                {#if (room == "") {#}
+                {#  $('#calendar').hide();#}
+                {##}
+                {##}
+                {#  return;#}
+                {##}
 
+                for (i = 1; i <= 6; i++) {
 
-                  return;
+                    for (z = 1; z <= 7; z++) {
+                        var x = document.getElementById("t" + i + z);
+                        x.style.backgroundColor = "white";
+                    }
                 }
 
-                for (i = 1; i < 7; i++) {
-                        var x = document.getElementById("t" + i).getElementsByTagName("tr");
-                        for (z = 0; z < 7; z++){
-                          x[z].style.backgroundColor = "white";
-                        }
-
-
-                }
                 $.ajax({
                     url:"{% url 'getReservations' %}",
                     data:{
@@ -48,8 +52,8 @@
                         $('#t1').show();
                         $('#table_label').show();
 
-                        var MyTable = document.getElementById('t1');
-                        var rows = MyTable.getElementsByTagName('tr');
+                        {#var MyTable = document.getElementById('t1');#}
+                        {#var rows = MyTable.getElementsByTagName('tr');#}
 
                         let datum = new Date;
 
@@ -65,7 +69,7 @@
                             var day = moment(first).add(k, 'day').format('YYYY-MM-DD');
                             var reservations =  data.models_to_return.filter(e => e.start_time.includes(day));
                             console.log("RESERVIERUNGEN am " + day + " fuer Raum " + room + ": " + reservations.length);
-                            {#reservations.forEach(createTable);#}
+
                             for (let value of Object.values(reservations)) {
                                   createTable(value)
                             }
@@ -90,7 +94,7 @@
             {# Diese Funktion generiert die jeweiligen Daten für die aktuelle Woche #}
             function getDates() {
 
-                for (let k = 1; k <= 7; k++) {
+                for (let k = 1; k <= 6; k++) {
                     var id = "day" + k;
                     var dayText = document.getElementById(id);
                     let curr = moment();
@@ -106,12 +110,116 @@
 </script>
 
 
-   <link rel="stylesheet" href="{% static 'css/tables.css' %}">
-    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
 
-    <title>Title</title>
+{#    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">#}
+{#   <div class="row">#}
+{#       <div class="col-sm-auto">#}
+{#            <label>Raum auswählen:</label>#}
+{#        </div>#}
+{#        <div class="col-sm-3">#}
+{#            <select id= "room-select" name="room" class="form-control">#}
+{#                    <option value="">Select</option>#}
+{##}
+{#                    {% for element in room_data %}#}
+{##}
+{#                        <option value={{ element.size }}>{{ element.size }}</option>#}
+{#                    {% endfor %}#}
+{#                    </select>#}
+{#        </div>#}
+{##}
+{#   </div>#}
 
-    <select id= "room-select" name="room" class="form-control">
+
+{#<div class="calendar-container">#}
+{##}
+{#<div class="calendar" id="calendar">#}
+{#    <span></span>#}
+{#    <span class="day-name" id="">Mon</span>#}
+{#    <span class="day-name" id="">Die</span>#}
+{#    <span class="day-name" id="">Mit</span>#}
+{#    <span class="day-name" id="">Don</span>#}
+{#    <span class="day-name" id="">Fre</span>#}
+{#    <span class="day-name" id="">Sat</span>#}
+{#    <span class="day-name" id="">Son</span>#}
+{#<div class="day">#}
+{#    <tr>08:15 - 09:45</tr>#}
+{#    <tr>10:00 - 11:30</tr>#}
+{#    <tr>11:45 - 13:15</tr>#}
+{#    <tr>14:15 - 15:45</tr>#}
+{#    <tr>16:00 - 17:30</tr>#}
+{#    <tr>17:45 - 19:15</tr>#}
+{#    <tr>19:30 - 21:00</tr>#}
+{#</div>#}
+{#<div class="day">#}
+{#    <table id="t1" class="center" >#}
+{#        <tr><td> <a class="btn btn-block btn-outline-secondary" id="t11" href="{% url 'index' %}">Block 1</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-secondary" id="t12" href="{% url 'index' %}">Block 2</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-secondary" id="t13" href="{% url 'index' %}">Block 3</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-secondary" id="t14" href="{% url 'index' %}">Block 4</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-secondary" id="t15" href="{% url 'index' %}">Block 5</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-secondary" id="t16" href="{% url 'index' %}">Block 6</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-secondary" id="t17" href="{% url 'index' %}">Block 7</a></td></tr>#}
+{#        </table>#}
+{#</div>#}
+{#<div class="day"><table id="t2" class="center" >#}
+{#        <tr><td> <a class="btn btn-block btn-outline-secondary" id="t21" href="{% url 'index' %}">Block 1</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-secondary" id="t22" href="{% url 'index' %}">Block 2</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-secondary" id="t23" href="{% url 'index' %}">Block 3</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-secondary" id="t24" href="{% url 'index' %}">Block 4</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-secondary" id="t25" href="{% url 'index' %}">Block 5</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-secondary" id="t26" href="{% url 'index' %}">Block 6</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-secondary" id="t27" href="{% url 'index' %}">Block 7</a></td></tr>#}
+{#        </table></div>#}
+{#<div class="day"><table id="t3" class="center" >#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t31" href="{% url 'index' %}">Block 1</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t32" href="{% url 'index' %}">Block 2</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t33" href="{% url 'index' %}">Block 3</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t34" href="{% url 'index' %}">Block 4</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t35" href="{% url 'index' %}">Block 5</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t36" href="{% url 'index' %}">Block 6</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t37" href="{% url 'index' %}">Block 7</a></td></tr>#}
+{#        </table></div>#}
+{#<div class="day"><table id="t4" class="center" >#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t41" href="{% url 'index' %}">Block 1</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t42" href="{% url 'index' %}">Block 2</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t43" href="{% url 'index' %}">Block 3</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t44" href="{% url 'index' %}">Block 4</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t45" href="{% url 'index' %}">Block 5</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t46" href="{% url 'index' %}">Block 6</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t47" href="{% url 'index' %}">Block 7</a></td></tr>#}
+{#        </table></div>#}
+{#<div class="day"><table id="t5" class="center" >#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="" href="{% url 'index' %}">Block 1</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t52" href="{% url 'index' %}">Block 2</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t53" href="{% url 'index' %}">Block 3</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t54" href="{% url 'index' %}">Block 4</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t55" href="{% url 'index' %}">Block 5</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t56" href="{% url 'index' %}">Block 6</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t57" href="{% url 'index' %}">Block 7</a></td></tr>#}
+{#        </table></div>#}
+{#<div class="day"><table id="t6" class="center" >#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t61" href="{% url 'index' %}">Block 1</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t62" href="{% url 'index' %}">Block 2</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t63" href="{% url 'index' %}">Block 3</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t64" href="{% url 'index' %}">Block 4</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t65" href="{% url 'index' %}">Block 5</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t66" href="{% url 'index' %}">Block 6</a></td></tr>#}
+{#        <tr><td> <a class="btn btn-block btn-outline-success" id="t67" href="{% url 'index' %}">Block 7</a></td></tr>#}
+{#        </table></div>#}
+{#<div class="day--disabled">7</div>#}
+{#</div>#}
+{#</div>#}
+
+    <table class="table table-striped table-bordered" id="calendar">
+        <caption>Grüne Felder sind frei, Rote Felder sind belegt.</caption>
+  <thead>
+    <tr class="text-left">
+      <th scope="col" id=""><div class="row">
+
+            Raum auswählen:
+
+        <div >
+            <select id= "room-select" name="room" class="">
                     <option value="">Select</option>
 
                     {% for element in room_data %}
@@ -119,84 +227,90 @@
                         <option value={{ element.size }}>{{ element.size }}</option>
                     {% endfor %}
                     </select>
-
-<div class="calendar-container">
-
-<div class="calendar" id="calendar">
-    <span class="day-name" id="day1">Mon</span>
-    <span class="day-name" id="day2">Tue</span>
-    <span class="day-name" id="day3">Wed</span>
-    <span class="day-name" id="day4">Thu</span>
-    <span class="day-name" id="day5">Fri</span>
-    <span class="day-name" id="day6">Sat</span>
-    <span class="day-name" id="day7">Sun</span>
-<div class="day">
-    <table id="t1" class="center" >
-        <tr id="t11" style="background-color: white"><td><a class="btn btn-block btn-outline-success" href="{% url 'index' %}">Block 1</a></td></tr>
-        <tr id="t12"><td><button class="btn btn-block btn-outline-success"type="submit" id="block2" name="save_block2" value="Save&Home">Block 2</button></td></tr>
-        <tr id="t13"><td><button class="btn btn-block btn-outline-success"type="submit" id="block3" name="save_block3" value="Save&Home">Block 3</button></td></tr>
-        <tr id="t14"><td><button class="btn btn-block btn-outline-success"type="submit" id="block4" name="save_block4" value="Save&Home">Block 4</button></td></tr>
-        <tr id="t15"><td><button class="btn btn-block btn-outline-success"type="submit" id="block5" name="save_block5" value="Save&Home">Block 5</button></td></tr>
-        <tr id="t16"><td><button class="btn btn-block btn-outline-success"type="submit" id="block6" name="save_block6" value="Save&Home">Block 6</button></td></tr>
-        <tr id="t17"><td><button class="btn btn-block btn-outline-success"type="submit" id="block7" name="save_block7" value="Save&Home">Block 7</button></td></tr>
-        </table>
-</div>
-<div class="day"><table id="t2" class="center" >
-        <tr id="t21"><td> <a class="btn btn-block btn-outline-success" href="{% url 'index' %}">Block 1</a></td></tr>
-        <tr id="t22"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block2" name="save_block2" value="Save&Home">Block 2</button></td></tr>
-        <tr id="t23"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block3" name="save_block3" value="Save&Home">Block 3</button></td></tr>
-        <tr id="t24"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block4" name="save_block4" value="Save&Home">Block 4</button></td></tr>
-        <tr id="t25"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block5" name="save_block5" value="Save&Home">Block 5</button></td></tr>
-        <tr id="t26"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block6" name="save_block6" value="Save&Home">Block 6</button></td></tr>
-        <tr id="t27"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block7" name="save_block7" value="Save&Home">Block 7</button></td></tr>
-        </table></div>
-<div class="day"><table id="t3" class="center" >
-        <tr id="t31"><td> <a class="btn btn-block btn-outline-success" href="{% url 'index' %}">Block 1</a></td></tr>
-        <tr id="t32"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block2" name="save_block2" value="Save&Home">Block 2</button></td></tr>
-        <tr id="t33"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block3" name="save_block3" value="Save&Home">Block 3</button></td></tr>
-        <tr id="t34"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block4" name="save_block4" value="Save&Home">Block 4</button></td></tr>
-        <tr id="t35"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block5" name="save_block5" value="Save&Home">Block 5</button></td></tr>
-        <tr id="t36"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block6" name="save_block6" value="Save&Home">Block 6</button></td></tr>
-        <tr id="t37"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block7" name="save_block7" value="Save&Home">Block 7</button></td></tr>
-        </table></div>
-<div class="day"><table id="t4" class="center" >
-        <tr id="t41"><td> <a class="btn btn-block btn-outline-success" href="{% url 'index' %}">Block 1</a></td></tr>
-        <tr id="t42"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block2" name="save_block2" value="Save&Home">Block 2</button></td></tr>
-        <tr id="t43"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block3" name="save_block3" value="Save&Home">Block 3</button></td></tr>
-        <tr id="t44"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block4" name="save_block4" value="Save&Home">Block 4</button></td></tr>
-        <tr id="t45"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block5" name="save_block5" value="Save&Home">Block 5</button></td></tr>
-        <tr id="t46"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block6" name="save_block6" value="Save&Home">Block 6</button></td></tr>
-        <tr id="t47"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block7" name="save_block7" value="Save&Home">Block 7</button></td></tr>
-        </table></div>
-<div class="day"><table id="t5" class="center" >
-        <tr id="t51"><td> <a class="btn btn-block btn-outline-success" href="{% url 'index' %}">Block 1</a></td></tr>
-        <tr id="t52"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block2" name="save_block2" value="Save&Home">Block 2</button></td></tr>
-        <tr id="t53"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block3" name="save_block3" value="Save&Home">Block 3</button></td></tr>
-        <tr id="t54"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block4" name="save_block4" value="Save&Home">Block 4</button></td></tr>
-        <tr id="t55"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block5" name="save_block5" value="Save&Home">Block 5</button></td></tr>
-        <tr id="t56"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block6" name="save_block6" value="Save&Home">Block 6</button></td></tr>
-        <tr id="t57"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block7" name="save_block7" value="Save&Home">Block 7</button></td></tr>
-        </table></div>
-<div class="day"><table id="t6" class="center" >
-        <tr id="t61" style="background-color: white"><td> <a class="btn btn-block btn-outline-success" href="{% url 'index' %}">Block 1</a></td></tr>
-        <tr id="t62" style="background-color: white"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block2" name="save_block2" value="Save&Home">Block 2</button></td></tr>
-        <tr id="t63" style="background-color: white"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block3" name="save_block3" value="Save&Home">Block 3</button></td></tr>
-        <tr id="t64" style="background-color: white"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block4" name="save_block4" value="Save&Home">Block 4</button></td></tr>
-        <tr id="t65" style="background-color: white"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block5" name="save_block5" value="Save&Home">Block 5</button></td></tr>
-        <tr id="t66" style="background-color: white"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block6" name="save_block6" value="Save&Home">Block 6</button></td></tr>
-        <tr id="t67" style="background-color: white"><td> <button class="btn btn-block btn-outline-success"type="submit" id="block7" name="save_block7" value="Save&Home">Block 7</button></td></tr>
-        </table></div>
-<div class="day--disabled">7</div>
-{#<section class="task task--warning">Projects</section>#}
-{#<section class="task task--danger">Design Sprint</section>#}
-{#<section class="task task--primary">Product Checkup 1#}
-{#<div class="task__detail">#}
-{#<h2>Product Checkup 1</h2>#}
-{#<p>15-17th November</p>#}
-{#</div>#}
-{#</section>#}
-{#<section class="task task--info">Product Checkup 2</section>#}
-</div>
-</div>
-
+        </div>
+        </div>
+      </th>
+      <th scope="col" id="day1">Mon</th>
+      <th scope="col" id="day2">Die</th>
+      <th scope="col" id="day3">Mit</th>
+      <th scope="col" id="day4">Don</th>
+      <th scope="col" id="day5">Fre</th>
+      <th scope="col" id="day6">Sam</th>
+{#      <th scope="col" id="day7">Son</th>#}
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">08:15 - 09:45</th>
+      <td><a class="btn btn-sm btn-outline-success" id="t11" href="{% url 'index' %}">Block 1</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t21" href="{% url 'index' %}">Block 1</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t31" href="{% url 'index' %}">Block 1</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t41" href="{% url 'index' %}">Block 1</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t51" href="{% url 'index' %}">Block 1</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t61" href="{% url 'index' %}">Block 1</a></td>
+{#      <td><a class="btn btn-sm btn-outline-success" id="t71" href="{% url 'index' %}">Block 1</a></td>#}
+    </tr>
+    <tr>
+      <th scope="row">10:00 - 11:30</th>
+      <td><a class="btn btn-sm btn-outline-success" id="t12" href="{% url 'index' %}">Block 2</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t22" href="{% url 'index' %}">Block 2</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t32" href="{% url 'index' %}">Block 2</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t42" href="{% url 'index' %}">Block 2</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t52" href="{% url 'index' %}">Block 2</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t62" href="{% url 'index' %}">Block 2</a></td>
+{#      <td><a class="btn btn-sm btn-outline-success" id="t72" href="{% url 'index' %}">Block 2</a></td>#}
+    </tr>
+    <tr>
+      <th scope="row">11:45 - 13:15</th>
+      <td><a class="btn btn-sm btn-outline-success" id="t13" href="{% url 'index' %}">Block 3</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t23" href="{% url 'index' %}">Block 3</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t33" href="{% url 'index' %}">Block 3</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t43" href="{% url 'index' %}">Block 3</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t53" href="{% url 'index' %}">Block 3</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t63" href="{% url 'index' %}">Block 3</a></td>
+{#      <td><a class="btn btn-sm btn-outline-success" id="t73" href="{% url 'index' %}">Block 3</a></td>#}
+    </tr>
+    <tr>
+      <th scope="row">14:15 - 15:45</th>
+      <td><a class="btn btn-sm btn-outline-success" id="t14" href="{% url 'index' %}">Block 4</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t24" href="{% url 'index' %}">Block 4</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t34" href="{% url 'index' %}">Block 4</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t44" href="{% url 'index' %}">Block 4</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t54" href="{% url 'index' %}">Block 4</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t64" href="{% url 'index' %}">Block 4</a></td>
+{#      <td><a class="btn btn-sm btn-outline-success" id="t74" href="{% url 'index' %}">Block 4</a></td>#}
+    </tr>
+    <tr>
+      <th scope="row">16:00 - 17:30</th>
+      <td><a class="btn btn-sm btn-outline-success" id="t15" href="{% url 'index' %}">Block 5</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t25" href="{% url 'index' %}">Block 5</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t35" href="{% url 'index' %}">Block 5</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t45" href="{% url 'index' %}">Block 5</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t55" href="{% url 'index' %}">Block 5</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t65" href="{% url 'index' %}">Block 5</a></td>
+{#      <td><a class="btn btn-sm btn-outline-success" id="t75" href="{% url 'index' %}">Block 5</a></td>#}
+    </tr>
+    <tr>
+      <th scope="row">17:45 - 19:15</th>
+      <td><a class="btn btn-sm btn-outline-success" id="t16" href="{% url 'index' %}">Block 6</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t26" href="{% url 'index' %}">Block 6</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t36" href="{% url 'index' %}">Block 6</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t46" href="{% url 'index' %}">Block 6</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t56" href="{% url 'index' %}">Block 6</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t66" href="{% url 'index' %}">Block 6</a></td>
+{#      <td><a class="btn btn-sm btn-outline-success" id="t76" href="{% url 'index' %}">Block 6</a></td>#}
+    </tr>
+    <tr>
+      <th scope="row">19:30 - 21:00</th>
+      <td><a class="btn btn-sm btn-outline-success" id="t17" href="{% url 'index' %}">Block 7</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t27" href="{% url 'index' %}">Block 7</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t37" href="{% url 'index' %}">Block 7</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t47" href="{% url 'index' %}">Block 7</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t57" href="{% url 'index' %}">Block 7</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t67" href="{% url 'index' %}">Block 7</a></td>
+{#      <td><a class="btn btn-sm btn-outline-success" id="t77" href="{% url 'index' %}">Block 7</a></td>#}
+    </tr>
+  </tbody>
+</table>
+</body>
 {% endblock %}
