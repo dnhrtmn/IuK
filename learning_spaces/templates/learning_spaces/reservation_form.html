@@ -71,7 +71,7 @@
             },
             dataType:   'json',
             success: function (data) {
-
+                console.log(data)
                 var MyTable = document.getElementById('t1');
                 var rows = MyTable.getElementsByTagName('tr');
 
@@ -81,6 +81,14 @@
                     result.forEach(createTable);
                     }
                 }
+            },
+            error: function (request, status, error) {
+               var userHasReservation = document.getElementById("userHasReservation");
+               userHasReservation.style.display = "block";
+                $('#id_room').hide();
+            $('#room-select').hide();
+               return
+
             }
           });
         });
@@ -165,6 +173,7 @@
              var modalReservedInquiry = document.getElementById("modalReservedInquiry");
              var modalReservedOverbooking = document.getElementById("modalReservedOverbooking");
              var modalFree = document.getElementById("modalFree");
+             var userHasReservation = document.getElementById("userHasReservation");
              // Get the <span> element that closes the modal
              var span = document.getElementById("close");
 
@@ -208,6 +217,7 @@
                  modalReservedInquiry.style.display = "none";
                  modalReservedOverbooking.style.display = "none";
                  modalFree.style.display = "none";
+                 userHasReservation.style.display = "none";
              }
 
              // When the user clicks anywhere outside of the modal, close it
@@ -218,6 +228,8 @@
                      modalFree.style.display = "none";
                  } else if (event.target == modalReservedOverbooking) {
                      modalReservedOverbooking.style.display = "none";
+                 } else if (event.target == userHasReservation) {
+                     userHasReservation.style.display = "none";
                  }
              }
 
@@ -272,6 +284,14 @@
                     <label>Leider ist der von Ihnen gewünschte Raum zu diesem Zeitraum schon belegt. Sie haben jedoch die Möglichkeit, eine Anfrage an den Beleger zu senden, mit der Bitte Ihnen den Space zu überlassen. Der Nutzer hat danach 24 Stunden Zeit zu antworten. Tut er dies nicht, wird Ihre Anfrage abgelehnt. Möchten Sie dies tun?</label>
                     <button class="btn btn-sm btn-outline-secondary" type="submit">Anfragen</button>
 
+              </div>
+            </div>
+
+            <div id="userHasReservation" class="modal">
+              <!-- Modal content -->
+              <div class="modal-content">
+                <span id="close" class="close" onclick="closeFunction()">&times;</span>
+                    <label>Sie haben in den kommenden 7 Tagen bereits eine Buchung. Sie können lediglich eine Buchung zur gleichen Zeit haben.</label>
               </div>
             </div>
 

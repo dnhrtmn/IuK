@@ -23,10 +23,17 @@ import datetime
 def checkReservations(request):
     room = request.GET.get('room', None)
     date = request.GET.get('date', None)
-
-    queryset = models.Reservation.objects.filter(room__iexact=room, start_time__exact=date).values("block")
-
-    return JsonResponse({"models_to_return": list(queryset)})
+    print(request.user)
+    reservations = models.Reservation.objects.filter(created_by__exact=request.user)
+    print(reservations)
+    reservations = reservations.filter(start_time__gt=datetime.date.today())
+    print(reservations)
+    if not reservations:
+        print("empty")
+        return
+    else:
+        queryset = models.Reservation.objects.filter(room__iexact=room, start_time__exact=date).values("block")
+        return JsonResponse({"models_to_return": list(queryset)})
 
 
 class reservationListView(generic.ListView):
