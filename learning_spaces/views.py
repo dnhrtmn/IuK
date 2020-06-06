@@ -28,6 +28,10 @@ def checkReservations(request):
 
     return JsonResponse({"models_to_return": list(queryset)})
 
+def getUser(request):
+    user = request.GET.user
+    print(user)
+    return JsonResponse({"models_to_return": user})
 
 class reservationListView(generic.ListView):
     model = models.Reservation
@@ -57,6 +61,7 @@ class reservationCreateView(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super(reservationCreateView, self).get_context_data(**kwargs)
         some_data = models.Room.objects.all()
+
         context.update({'some_data': some_data})
         print(context)
         return context
@@ -64,7 +69,7 @@ class reservationCreateView(generic.CreateView):
     def form_valid(self, form):
         reservation = form.save(commit=False)
         reservation.created_by = self.request.user
-
+        print(self.request.POST)
 
         if 'save_block1' in self.request.POST:
             reservation.block = 1
@@ -82,7 +87,7 @@ class reservationCreateView(generic.CreateView):
             reservation.block = 7
 
         subject = render_to_string(
-            template_name='email/subject.txt'
+            template_name='email/subjectConfirmation.txt'
         ).strip()
         from_email = 'admin@learning-spaces.com'
         recipient = [reservation.created_by.email]
@@ -90,7 +95,8 @@ class reservationCreateView(generic.CreateView):
 
 
         message = render_to_string(
-        'email/email.txt', {'user': reservation.created_by.email}
+        'email/emailConfirmation.txt', {'user': reservation.created_by.email, 'id': reservation.identifier, 'date': reservation.start_time,
+             'block': reservation.block, 'room': reservation.room}
         )
         html_message = render_to_string(
             'email/email.html', {'user': reservation.created_by.email, 'id': reservation.identifier, 'date': reservation.start_time, 'block':reservation.block, 'room':reservation.room}
@@ -122,11 +128,28 @@ class reservationDeleteView(SuccessMessageMixin, generic.DeleteView):
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
-        # identifier = self.object.identifier
-        # identifier_str = str(identifier)
-        # request.session['identifier'] = identifier_str
-        # message = 'Reservation: ' + request.session['identifier'] + ' deleted successfully'
-        # message.success(self.request, message)
+
+        subject = render_to_string(
+            template_name='email/subjectDelete.txt'
+
+        ).strip()
+        from_email = 'admin@learning-spaces.com'
+        recipient = [self.object.created_by.email]
+
+        message = render_to_string(
+            'email/emailDelete.txt', {'user': self.object.created_by.email, 'userDelete': self.request.user.email, 'id': self.object.identifier, 'date': self.object.start_time,
+             'block': self.object.block, 'room': self.object.room}
+        )
+        html_message = render_to_string(
+            'email/emailDelete.html',
+            {'user': self.object.created_by.email, 'id': self.object.identifier, 'date': self.object.start_time,
+             'block': self.object.block, 'room': self.object.room}
+        )
+
+        mail.send_mail(subject, message, from_email, recipient, html_message=html_message)
+
+
+
         return super(reservationDeleteView, self).delete(request, *args, **kwargs)
 
 
@@ -188,6 +211,47 @@ class roomReservationsView(TemplateView):
         queryset = models.Reservation.objects.filter(room__iexact=room).values()
 
         return JsonResponse({"models_to_return": list(queryset)})
+
+def contactForm(request):
+
+    subject = ""
+    message = ""
+
+
+    form = forms.contactForm(request.POST or None)
+    if form.is_valid():
+        cd = form.cleaned_data
+        message = cd.get('message')
+        subject = cd.get('subject')
+        print(request, cd, message, subject)
+        context = {'form': form}
+
+        # subject = render_to_string(
+        #     template_name='email/subjectContactForm.txt'
+        # ).strip()
+        from_email = request.user.email
+        recipient = ['admin@learning-spaces.com']
+
+        message = render_to_string(
+            'email/emailContactForm.txt', {'user': request.user.email, 'subject': subject, 'message': message}
+        )
+        html_message = render_to_string(
+            'email/emailContact.html',
+            {'user': request.user.email,'subject': subject, 'message': message}
+        )
+
+        mail.send_mail(subject, message, from_email, recipient, html_message=html_message)
+
+        return render(request, 'learning_spaces/contact.html', context)
+
+    else:
+        context = {'form': form}
+        return render(request, 'learning_spaces/contact.html', context)
+
+
+
+
+
 
 
 

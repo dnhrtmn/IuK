@@ -51,11 +51,17 @@
             for (i = 0; i < 7; i++) {
                             x[i].style.backgroundColor = "green";
                             var id = "block" + (i+1);
-                            document.getElementById(id).disabled = false;
+                            var btn = document.getElementById(id)
+                            btn.disabled = false;
+                            if (btn) {
+                                btn.value = "frei"
+                            }
+
             }
 
             $('#id_room').show();
             $('#room-select').show();
+
 
             $.ajax({
             url:"{% url 'checkReservations' %}",
@@ -97,7 +103,12 @@
           for (i = 0; i < 7; i++) {
                             x[i].style.backgroundColor = "green";
                             var id = "block" + (i+1);
-                            document.getElementById(id).disabled = false;
+                            var btn = document.getElementById(id);
+                            btn.disabled = false;
+                            if (btn) {
+                                btn.value = "frei"
+                            }
+
           }
 
           $.ajax({
@@ -112,6 +123,8 @@
                 console.log(data)
                 $('#t1').show();
                 $('#table_label').show();
+
+
 
                 var MyTable = document.getElementById('t1');
                 var rows = MyTable.getElementsByTagName('tr');
@@ -128,16 +141,15 @@
         function createTable(value, index, array) {
             console.log(array)
 
-                        var x = document.getElementById("t1").getElementsByTagName("td");
-                        for (i = 0; i < array.length; i++) {
-                            x[value - 1].style.backgroundColor = "red";
-                            var id = "block" + value;
-                            document.getElementById(id).disabled = true;
+                var x = document.getElementById("t1").getElementsByTagName("td");
+                for (i = 0; i < array.length; i++) {
+                    x[value - 1].style.backgroundColor = "red";
+                    var id = "block" + value;
+                    document.getElementById(id).value = "belegt";
+                    {#document.getElementById(id).disabled = true;#}
 
-                        }
+                }
         }
-
-
     })
 </script>
 
@@ -146,12 +158,120 @@
     <link rel="stylesheet" href="{% static 'css/tables.css' %}">
 
     <container>
+    <a hidden id="user"> {{ user.is_student }}</a>
+    <script>
+         $(document).ready(function () {
+             // Get the modal
+             var modalReservedInquiry = document.getElementById("modalReservedInquiry");
+             var modalReservedOverbooking = document.getElementById("modalReservedOverbooking");
+             var modalFree = document.getElementById("modalFree");
+             // Get the <span> element that closes the modal
+             var span = document.getElementById("close");
+
+
+
+
+            });
+
+             // When the user clicks on the button, open the modal
+             function buttonFunction(elem) {
+                 if (elem.value === "belegt") {
+                     var isUserStudent = document.getElementById("user").innerHTML
+                     var room = $('#room-select').val();
+                     var date = $('#dateValue').val();
+                     console.log(isUserStudent)
+                     if (isUserStudent) {
+                         modalReservedInquiry.style.display = "block";
+                     } else {
+                         modalReservedOverbooking.style.display = "block";
+                     }
+
+
+
+                 } else if (elem.value === "frei") {
+                     var room = $('#room-select').val();
+                     var date = $('#dateValue').val();
+
+                     document.getElementById("dateLabel").innerHTML = "Datum: " + date;
+                     document.getElementById("roomLabel").innerHTML = "Space: " + room;
+                     document.getElementById("blockLabel").innerHTML = elem.innerText;
+                     document.getElementById("checkButton").name = elem.name;
+                     console.log(modalFree);
+                     modalFree.style.display = "block";
+                 }
+             }
+
+             // When the user clicks on <span> (x), close the modal
+             function closeFunction() {
+                 modalReservedInquiry.style.display = "none";
+                 modalReservedOverbooking.style.display = "none";
+                 modalFree.style.display = "none";
+             }
+
+             // When the user clicks anywhere outside of the modal, close it
+             window.onclick = function (event) {
+                 if (event.target == modalReservedInquiry) {
+                     modalReservedInquiry.style.display = "none";
+                 } else if (event.target == modalFree) {
+                     modalFree.style.display = "none";
+                 } else if (event.target == modalReservedOverbooking) {
+                     modalReservedOverbooking.style.display = "none";
+                 }
+             }
+
+     </script>
+
+
+
+
+
+
 
     <h1><a class="btn btn-outline-primary" href="{% url 'learning_spaces_reservation_list' %}"> Reservierungsübersicht </a></h1>
 
 
         <form method="POST", class="reservationForm" id="reservationForm">
         {% csrf_token %}
+        <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+            <!-- The Modal -->
+            <div id="modalFree" class="modal">
+              <!-- Modal content -->
+              <div class="modal-content">
+                <span class="close" onclick="closeFunction()">&times;</span>
+
+                    <label> Möchten Sie den Space mit den unten aufgeführten Daten reservieren?</label>
+                    <label id="dateLabel"></label>
+                    <label id="roomLabel"></label>
+                    <label id="blockLabel"></label>
+                    <button class="btn btn-sm btn-outline-secondary" id="checkButton" name="block{{ th }}">Bestätigen</button>
+
+              </div>
+            </div>
+
+            <div id="modalReservedOverbooking" class="modal">
+              <!-- Modal content -->
+              <div class="modal-content">
+                <span class="close" onclick="closeFunction()">&times;</span>
+
+                    <label>Leider ist der von Ihnen gewünschte Raum zu diesem Zeitraum schon belegt. Als Dozent bzw. Mitarbeiter der HTW haben Sie jedoch das Recht, eine Reservierung zu überbuchen. Möchten Sie dies tun?</label>
+                    <label id="dateLabel"></label>
+                    <label id="roomLabel"></label>
+                    <label id="blockLabel"></label>
+                    <button class="btn btn-sm btn-outline-secondary">Überbuchen</button>
+
+              </div>
+            </div>
+
+            <div id="modalReservedInquiry" class="modal">
+              <!-- Modal content -->
+              <div class="modal-content">
+                <span id="close" class="close" onclick="closeFunction()">&times;</span>
+
+                    <label>Leider ist der von Ihnen gewünschte Raum zu diesem Zeitraum schon belegt. Sie haben jedoch die Möglichkeit, eine Anfrage an den Beleger zu senden, mit der Bitte Ihnen den Space zu überlassen. Der Nutzer hat danach 24 Stunden Zeit zu antworten. Tut er dies nicht, wird Ihre Anfrage abgelehnt. Möchten Sie dies tun?</label>
+                    <button class="btn btn-sm btn-outline-secondary" type="submit">Anfragen</button>
+
+              </div>
+            </div>
 
                 {{ form.errors }}
 
@@ -197,13 +317,13 @@
             <label id="table_label"> Wählen Sie nun bitte den gewünschten Block aus:</label>
             <table id="t1" class="table" >
             <tr>
-                <td style="background-color: green; text-align: center"> <button class="btn btn-block btn-outline-success" type="submit" id="block1" name="save_block1" value="Save&Home">Block 1</button></td>
-                <td style="background-color: green; text-align: center"> <button class="btn btn-block btn-outline-success"type="submit" id="block2" name="save_block2" value="Save&Home">Block 2</button></td>
-                <td style="background-color: green; text-align: center"> <button class="btn btn-block btn-outline-success"type="submit" id="block3" name="save_block3" value="Save&Home">Block 3</button></td>
-                <td style="background-color: green; text-align: center"> <button class="btn btn-block btn-outline-success"type="submit" id="block4" name="save_block4" value="Save&Home">Block 4</button></td>
-                <td style="background-color: green; text-align: center"> <button class="btn btn-block btn-outline-success"type="submit" id="block5" name="save_block5" value="Save&Home">Block 5</button></td>
-                <td style="background-color: green; text-align: center"> <button class="btn btn-block btn-outline-success"type="submit" id="block6" name="save_block6" value="Save&Home">Block 6</button></td>
-                <td style="background-color: green; text-align: center"> <button class="btn btn-block btn-outline-success"type="submit" id="block7" name="save_block7" value="Save&Home">Block 7</button></td>
+                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block1" onclick="buttonFunction(this)" name="save_block1" value="Save&Home">Block 1</button></td>
+                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block2" onclick="buttonFunction(this)" name="save_block2" value="Save&Home">Block 2</button></td>
+                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block3" onclick="buttonFunction(this)" name="save_block3" value="Save&Home">Block 3</button></td>
+                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block4" onclick="buttonFunction(this)" name="save_block4" value="Save&Home">Block 4</button></td>
+                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block5" onclick="buttonFunction(this)" name="save_block5" value="Save&Home">Block 5</button></td>
+                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block6" onclick="buttonFunction(this)" name="save_block6" value="Save&Home">Block 6</button></td>
+                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block7" onclick="buttonFunction(this)" name="save_block7" value="Save&Home">Block 7</button></td>
             </tr>
         </table>
         </div>

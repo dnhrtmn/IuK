@@ -1,0 +1,9 @@
+Sehr geehrter Admin,
+
+Sie haben folgende Anfrage von {{ user }} erhalten.
+
+Betreff: {{ subject }}
+Nachricht: {{ message }}
+
+
+Viele Grüße

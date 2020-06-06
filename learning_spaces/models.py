@@ -100,6 +100,18 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    def create_studentuser(self, email, password, ):
+        """
+            Creates and saves a superuser with the given email and password.
+            """
+        user = self.create_user(
+            email,
+            password=password,
+        )
+        user.student = True
+        user.save(using=self._db)
+        return user
+
 
 class User(AbstractBaseUser):
     email = models.EmailField(
@@ -107,9 +119,15 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
+    first_name = models.CharField(max_length=25, default="")
+    last_name = models.CharField(max_length=25, default="")
+    postalcode = models.IntegerField(default=0, blank=True)
+    city = models.CharField(max_length=25, default="")
+    adress = models.CharField(max_length=25, default="")
     active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)  # a admin user; non super-user
     admin = models.BooleanField(default=False)  # a superuser
+    student = models.BooleanField(default=False) # a user who is a student
     # notice the absence of a "Password field", that is built in.
 
     USERNAME_FIELD = 'email'
@@ -150,5 +168,10 @@ class User(AbstractBaseUser):
     def is_active(self):
         "Is the user active?"
         return self.active
+
+    @property
+    def is_student(self):
+        "Is the user a student?"
+        return self.student
 
     object = UserManager()

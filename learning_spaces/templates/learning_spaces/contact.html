@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Kontaktformular</h1>
+<form action="{% url 'contactForm' %}" method="POST">
+    {% csrf_token %}
+  <div class="form-group">
+    <label for="formGroupExampleInput">Betreff</label>
+    <input type="text"  name="subject" class="form-control" id="formGroupExampleInput" placeholder="Hier bitte den Betreff eingeben">
+
+    <label for="exampleFormControlTextarea1">Ihre Nachricht</label>
+    <textarea class="form-control" name="message" id="exampleFormControlTextarea1" rows="3" placeholder="Beschreiben Sie hier bitte Ihr Problem"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Senden</button>
+</form>
+{% endblock %}

@@ -1,0 +1,9 @@
+Stornierungsbestätigung für Reservierung {{ id }}
+
+Ihre Stornierung wurde storniert von {{ userDelete }}.
+
+Daten der Reservierung:
+
+Datum: {{ date }}
+Raum: {{ room }}
+Block: {{ block }}

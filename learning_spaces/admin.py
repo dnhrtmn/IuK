@@ -21,6 +21,7 @@ class reservationAdmin(admin.ModelAdmin):
         "start_time",
         "room",
         "block",
+        "created_by"
 
     ]
     readonly_fields = [
@@ -69,9 +70,9 @@ class UserAdmin(BaseUserAdmin):
     list_display = ('email', 'admin')
     list_filter = ('admin',)
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'password', 'first_name', 'last_name', 'postalcode', 'city', 'adress')}),
         ('Personal info', {'fields': ()}),
-        ('Permissions', {'fields': ('admin',)}),
+        ('Permissions', {'fields': ('admin', 'staff', 'student')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.

@@ -1,0 +1,11 @@
+Sehr geehrter {{ user }},
+
+Sie haben folgenden Raum reserviert.
+
+Reservierungs-ID: {{ id }}
+Datum: {{ date }}
+Raum: {{ room }}
+Block: {{ block }}
+
+
+Viele Grüße

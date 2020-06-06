@@ -51,7 +51,7 @@ class roomForm(forms.ModelForm):
 
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Passwort bestätigen', widget=forms.PasswordInput)
 
     class Meta:
         model = User
@@ -61,7 +61,7 @@ class RegisterForm(forms.ModelForm):
         email = self.cleaned_data.get('email')
         qs = User.objects.filter(email=email)
         if qs.exists():
-            raise forms.ValidationError("email is taken")
+            raise forms.ValidationError("Email ist bereits registriert")
         return email
 
     def clean_password2(self):
@@ -69,7 +69,7 @@ class RegisterForm(forms.ModelForm):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
+            raise forms.ValidationError("Passwörter stimmen nicht überein")
         return password2
 
 
@@ -118,3 +118,12 @@ class UserAdminChangeForm(forms.ModelForm):
         # This is done here, rather than on the field, because the
         # field does not have access to the initial value
         return self.initial["password"]
+
+
+class contactForm(forms.Form):
+    subject = forms.CharField(max_length = 20)
+    message = forms.CharField(label='', widget=forms.Textarea(
+        attrs={'placeholder': 'Beschreiben Sie hier bitte Ihr Problem'}))
+
+
+
