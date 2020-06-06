@@ -24,10 +24,8 @@ urlpatterns = (
     path("learning_spaces/room/update/<uuid:pk>/", views.roomUpdateView.as_view(), name="learning_spaces_room_update"),
     url(r'^ajax/checkReservations/$', views.checkReservations, name='checkReservations'),
     url(r'^ajax/getReservations/$', views.roomReservationsView.getReservations, name='getReservations'),
-    url(r'^ajax/getUser/$', views.getUser, name='getUser'),
-
-    # url(r'^delete-entry/(?P<pk>\d+)/$', views.reservationDeleteView.as_view(), name='delete_reservation'),
     path("learning_spaces/Reservation/delete/<uuid:pk>/", views.reservationDeleteView.as_view(), name='delete_reservation'),
     path("room/reservations/", views.roomReservationsView.as_view(), name='learning_spaces_room_reservations'),
-    path("contact/", views.contactForm, name='contactForm'),
+    path("contact/", views.contactForm.as_view(), name='contactForm'),
+    path("dashboard/", views.user_dashboard.as_view(), name='user_dashboard'),
 )

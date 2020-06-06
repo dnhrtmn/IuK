@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>Kontaktformular</h1>
-<form action="{% url 'contactForm' %}" method="POST">
+<form method="post">
     {% csrf_token %}
   <div class="form-group">
     <label for="formGroupExampleInput">Betreff</label>

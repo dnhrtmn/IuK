@@ -175,3 +175,13 @@ class User(AbstractBaseUser):
         return self.student
 
     object = UserManager()
+
+class contactRequests(models.Model):
+    subject = models.CharField(max_length=50)
+    message = models.CharField(max_length=400)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete="", null=True, blank=True)
+    identifier = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    def get_absolute_url(self):
+        return reverse("contactForm")
+

@@ -158,7 +158,7 @@
     <link rel="stylesheet" href="{% static 'css/tables.css' %}">
 
     <container>
-    <a hidden id="user"> {{ user.is_student }}</a>
+    <a hidden id="user"> {{user.is_student}}</a>
     <script>
          $(document).ready(function () {
              // Get the modal
@@ -176,13 +176,15 @@
              // When the user clicks on the button, open the modal
              function buttonFunction(elem) {
                  if (elem.value === "belegt") {
-                     var isUserStudent = document.getElementById("user").innerHTML
+                     var isUserStudent = document.getElementById("user").innerHTML.toLowerCase().trim()
                      var room = $('#room-select').val();
                      var date = $('#dateValue').val();
                      console.log(isUserStudent)
-                     if (isUserStudent) {
+                     if (isUserStudent == "true") {
+                         console.log("is student")
                          modalReservedInquiry.style.display = "block";
                      } else {
+                         console.log("isn't student")
                          modalReservedOverbooking.style.display = "block";
                      }
 

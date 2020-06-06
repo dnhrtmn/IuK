@@ -1,0 +1,21 @@
+{% extends "home.html" %}
+
+{% block test %}
+    <div class="btn-group-vertical">
+        <h4>Ihre aktuelle Reservierung:</h4>
+        {% for object in reservation_data %}
+            <a> {{ object.start_time }}</a>
+            <a>Space: {{ object.room }}</a>
+            <a>Block: {{ object.block }}</a>
+            {% empty %}
+            <a>Sie haben derzeit keine offenen Reservierungen.</a>
+        {% endfor %}
+<h4>Ihre aktuellen Kontaktanfragen:</h4>
+    {% for object in contact_data %}
+        <a> {{ object.subject }}</a>
+        {% empty %}
+        <a>Sie haben derzeit keine offenen Anfragen.</a>
+    {% endfor %}
+    </div>
+
+{% endblock %}

@@ -3,7 +3,8 @@
 
     <div class="btn-group-vertical">
         {% if user.is_authenticated %}
-            <a class="btn btn-outline-primary" href="{% url 'learning_spaces_reservation_list' %}">Reservierungsübersicht</a></div>
+            <a class="btn btn-outline-primary" href="{% url 'learning_spaces_reservation_list' %}">Reservierungsübersicht</a>
+            <a class="btn btn-outline-primary" href="{% url 'user_dashboard' %}">Dashboard</a>
         {% endif %}
             <a class="btn btn-outline-primary" href="{% url 'learning_spaces_room_list' %}">Raumübersicht</a></div>
     </div>

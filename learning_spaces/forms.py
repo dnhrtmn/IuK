@@ -120,10 +120,14 @@ class UserAdminChangeForm(forms.ModelForm):
         return self.initial["password"]
 
 
-class contactForm(forms.Form):
-    subject = forms.CharField(max_length = 20)
-    message = forms.CharField(label='', widget=forms.Textarea(
-        attrs={'placeholder': 'Beschreiben Sie hier bitte Ihr Problem'}))
+class contactForm(forms.ModelForm):
+
+    class Meta:
+        model = models.contactRequests
+        fields = ('message', 'subject')
+    # subject = forms.CharField(max_length = 20)
+    # message = forms.CharField(label='', widget=forms.Textarea(
+    #     attrs={'placeholder': 'Beschreiben Sie hier bitte Ihr Problem'}))
 
 
 

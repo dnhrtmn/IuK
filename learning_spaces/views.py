@@ -28,10 +28,6 @@ def checkReservations(request):
 
     return JsonResponse({"models_to_return": list(queryset)})
 
-def getUser(request):
-    user = request.GET.user
-    print(user)
-    return JsonResponse({"models_to_return": user})
 
 class reservationListView(generic.ListView):
     model = models.Reservation
@@ -165,7 +161,6 @@ class roomCreateView(generic.CreateView):
     def form_valid(self, form):
         room = form.save(commit=False)
         room.created_by = self.request.user
-        print(self.request.user)
         return super().form_valid(form)
 
 
@@ -185,12 +180,10 @@ class homeView(generic.TemplateView):
 
 
 def home_view(request, *args, **kwargs):
-    print(request.user)
     return render(request, "home.html", {})
 
 
 def login_view(request, *args, **kwargs):
-    print(request.user)
     return render(request, "login.html", {})
 
 class roomReservationsView(TemplateView):
@@ -202,7 +195,6 @@ class roomReservationsView(TemplateView):
         context = super(roomReservationsView, self).get_context_data(**kwargs)
         room_data = models.Room.objects.all()
         context.update({'room_data': room_data})
-        print(context)
         return context
 
     def getReservations(request):
@@ -212,41 +204,52 @@ class roomReservationsView(TemplateView):
 
         return JsonResponse({"models_to_return": list(queryset)})
 
-def contactForm(request):
+class contactForm(generic.CreateView):
+    model = models.contactRequests
+    form_class = forms.contactForm
+    template_name = "learning_spaces/contact.html"
 
-    subject = ""
-    message = ""
 
+    def form_valid(self, form):
+        contactRequest = form.save(commit=False)
+        contactRequest.created_by = self.request.user
 
-    form = forms.contactForm(request.POST or None)
-    if form.is_valid():
-        cd = form.cleaned_data
-        message = cd.get('message')
-        subject = cd.get('subject')
-        print(request, cd, message, subject)
-        context = {'form': form}
 
         # subject = render_to_string(
         #     template_name='email/subjectContactForm.txt'
         # ).strip()
-        from_email = request.user.email
+        from_email = self.request.user.email
         recipient = ['admin@learning-spaces.com']
 
         message = render_to_string(
-            'email/emailContactForm.txt', {'user': request.user.email, 'subject': subject, 'message': message}
+            'email/emailContactForm.txt', {'user': self.request.user.email, 'subject': contactRequest.subject, 'message': contactRequest.message}
         )
         html_message = render_to_string(
             'email/emailContact.html',
-            {'user': request.user.email,'subject': subject, 'message': message}
+            {'user': self.request.user.email,'subject': contactRequest.subject, 'message': message}
         )
 
-        mail.send_mail(subject, message, from_email, recipient, html_message=html_message)
+        mail.send_mail(contactRequest.subject, message, from_email, recipient, html_message=html_message)
 
-        return render(request, 'learning_spaces/contact.html', context)
+        return super().form_valid(form)
 
-    else:
-        context = {'form': form}
-        return render(request, 'learning_spaces/contact.html', context)
+
+
+class user_dashboard(TemplateView):
+    template_name = "learning_spaces/user_dashboard.html"
+
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        context = super(user_dashboard, self).get_context_data(**kwargs)
+        reservation_data = models.Reservation.objects.filter(created_by__exact=user, start_time__gte=datetime.date.today())
+        contact_data = models.contactRequests.objects.filter(created_by__exact=user)
+        context['reservation_data'] = reservation_data
+        context['contact_data'] = contact_data
+        return context
+
+
+
 
 
 
