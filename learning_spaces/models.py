@@ -113,6 +113,8 @@ class UserManager(BaseUserManager):
         return user
 
 
+
+
 class User(AbstractBaseUser):
     email = models.EmailField(
         verbose_name='email address',
@@ -128,6 +130,9 @@ class User(AbstractBaseUser):
     staff = models.BooleanField(default=False)  # a admin user; non super-user
     admin = models.BooleanField(default=False)  # a superuser
     student = models.BooleanField(default=False) # a user who is a student
+    identifier = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, blank=True)
+
+
     # notice the absence of a "Password field", that is built in.
 
     USERNAME_FIELD = 'email'
@@ -173,6 +178,12 @@ class User(AbstractBaseUser):
     def is_student(self):
         "Is the user a student?"
         return self.student
+
+    def get_update_url(self):
+        return reverse("user_update", args=(self.pk,))
+
+    def get_absolute_url(self):
+        return reverse("user_update", args=(self.pk,))
 
     object = UserManager()
 

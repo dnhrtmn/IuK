@@ -17,6 +17,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.template.loader import render_to_string
+from django.utils.translation import gettext
 import datetime
 
 
@@ -29,11 +30,12 @@ def checkReservations(request):
     reservations = reservations.filter(start_time__gt=datetime.date.today())
     print(reservations)
     if not reservations:
-        print("empty")
-        return
-    else:
         queryset = models.Reservation.objects.filter(room__iexact=room, start_time__exact=date).values("block")
         return JsonResponse({"models_to_return": list(queryset)})
+
+    else:
+        print("empty")
+        return
 
 
 class reservationListView(generic.ListView):
@@ -187,7 +189,8 @@ class homeView(generic.TemplateView):
 
 
 def home_view(request, *args, **kwargs):
-    return render(request, "home.html", {})
+    output = gettext('Das ist ein Test')
+    return render(request, "home.html", {}, output)
 
 
 def login_view(request, *args, **kwargs):
@@ -249,11 +252,26 @@ class user_dashboard(TemplateView):
     def get_context_data(self, **kwargs):
         user = self.request.user
         context = super(user_dashboard, self).get_context_data(**kwargs)
+        userObject = models.User.object.all()
         reservation_data = models.Reservation.objects.filter(created_by__exact=user, start_time__gte=datetime.date.today())
         contact_data = models.contactRequests.objects.filter(created_by__exact=user)
         context['reservation_data'] = reservation_data
         context['contact_data'] = contact_data
+        context['userObject'] = userObject
         return context
+
+class UserUpdateView(generic.UpdateView):
+    model = models.User
+    form_class = forms.UserAdminChangeForm
+    template_name = "learning_spaces/user_detail.html"
+
+
+
+    def form_valid(self, form):
+        print(self.request)
+        user = form.save(commit=True)
+        user.save()
+        return super().form_valid(form)
 
 
 

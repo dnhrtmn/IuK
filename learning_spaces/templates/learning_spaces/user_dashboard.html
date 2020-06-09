@@ -2,11 +2,16 @@
 
 {% block test %}
     <div class="btn-group-vertical">
+        {% for object in userObject %}
+            <a>User: {{ object.identifier }}</a>
+        <a class="btn btn-outline-secondary" href="{{ object.get_update_url }}">Userdaten ansehen</a>
+{% endfor %}
         <h4>Ihre aktuelle Reservierung:</h4>
         {% for object in reservation_data %}
             <a> {{ object.start_time }}</a>
             <a>Space: {{ object.room }}</a>
             <a>Block: {{ object.block }}</a>
+            <a class="btn btn-outline-secondary" href="{{ object.get_update_url }}">Reservierung ansehen</a>
             {% empty %}
             <a>Sie haben derzeit keine offenen Reservierungen.</a>
         {% endfor %}

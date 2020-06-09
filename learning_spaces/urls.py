@@ -28,4 +28,5 @@ urlpatterns = (
     path("room/reservations/", views.roomReservationsView.as_view(), name='learning_spaces_room_reservations'),
     path("contact/", views.contactForm.as_view(), name='contactForm'),
     path("dashboard/", views.user_dashboard.as_view(), name='user_dashboard'),
+    path("dashboard/user/detail/<uuid:pk>", views.UserUpdateView.as_view(), name='user_update'),
 )
