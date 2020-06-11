@@ -1,0 +1,341 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-11 12:47+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: base.html:5
+msgid "Roomoverview"
+msgstr ""
+
+#: base.html:34
+#: templates/learning_spaces/contact.html:4
+msgid "Kontaktformular"
+msgstr "Contact"
+
+#: home.html:11
+msgid "Raumbuchungssystem der HTW Saar"
+msgstr "Room reservation system of the htw Saar"
+
+#: home.html:12
+msgid ""
+"Über das Raumbuchungssystem der HTW Saar können Studierende und Angehörige "
+"der Hochschule Learning Spaces für einen Aufenthalt buchen."
+msgstr "Via the room booking system of the HTW Saar, students and members of the university can book Learning Spaces for a stay"
+
+#: home.html:15
+msgid "Hallo"
+msgstr "Hello"
+
+#: index.html:7
+#: templates/learning_spaces/reservation_form.html:244
+msgid "Reservierungsübersicht"
+msgstr "Reservationoverview"
+
+#: index.html:8
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: index.html:10
+#: templates/learning_spaces/room_detail.html:7
+#: templates/learning_spaces/room_form.html:8
+msgid "Raumübersicht"
+msgstr "Roomoverview"
+
+#: room_reservations.html:113
+#: templates/learning_spaces/reservation_form.html:355
+msgid "Grüne Felder sind frei, Rote Felder sind belegt."
+msgstr "Green fields are free, red fields are occupied."
+
+#: room_reservations.html:118
+msgid "Raum auswählen:"
+msgstr "Select room"
+
+#: room_reservations.html:132
+msgid "Mon"
+msgstr "Mon"
+
+#: room_reservations.html:133
+msgid "Die"
+msgstr "Tue"
+
+#: room_reservations.html:134
+msgid "Mit"
+msgstr "Wed"
+
+#: room_reservations.html:135
+msgid "Don"
+msgstr "Thu"
+
+#: room_reservations.html:136
+msgid "Fre"
+msgstr "Fri"
+
+#: room_reservations.html:137
+msgid "Sam"
+msgstr "Sat"
+
+#: room_reservations.html:144 room_reservations.html:145
+#: room_reservations.html:146 room_reservations.html:147
+#: room_reservations.html:148 room_reservations.html:149
+msgid "Block 1"
+msgstr ""
+
+#: room_reservations.html:154 room_reservations.html:155
+#: room_reservations.html:156 room_reservations.html:157
+#: room_reservations.html:158 room_reservations.html:159
+msgid "Block 2"
+msgstr ""
+
+#: room_reservations.html:164 room_reservations.html:165
+#: room_reservations.html:166 room_reservations.html:167
+#: room_reservations.html:168 room_reservations.html:169
+msgid "Block 3"
+msgstr ""
+
+#: room_reservations.html:174 room_reservations.html:175
+#: room_reservations.html:176 room_reservations.html:177
+#: room_reservations.html:178 room_reservations.html:179
+msgid "Block 4"
+msgstr ""
+
+#: room_reservations.html:184 room_reservations.html:185
+#: room_reservations.html:186 room_reservations.html:187
+#: room_reservations.html:188 room_reservations.html:189
+msgid "Block 5"
+msgstr ""
+
+#: room_reservations.html:194 room_reservations.html:195
+#: room_reservations.html:196 room_reservations.html:197
+#: room_reservations.html:198 room_reservations.html:199
+msgid "Block 6"
+msgstr ""
+
+#: room_reservations.html:204 room_reservations.html:205
+#: room_reservations.html:206 room_reservations.html:207
+#: room_reservations.html:208 room_reservations.html:209
+#: templates/learning_spaces/reservation_form.html:348
+msgid "Block 7"
+msgstr ""
+
+
+
+#: templates/learning_spaces/contact.html:8
+msgid "Betreff"
+msgstr "Subject"
+
+#: templates/learning_spaces/contact.html:9
+msgid "Hier bitte den Betreff eingeben"
+msgstr "Please enter the subject here"
+
+#: templates/learning_spaces/contact.html:11
+msgid "Ihre Nachricht"
+msgstr "Your message"
+
+#: templates/learning_spaces/contact.html:12
+msgid "Beschreiben Sie hier bitte Ihr Problem"
+msgstr "Please describe your problem here"
+
+#: templates/learning_spaces/contact.html:15
+msgid "Senden"
+msgstr "Send"
+
+#: templates/learning_spaces/reservation_confirm_delete.html:6
+msgid "Reservierung stornieren"
+msgstr "Cancel Reservation"
+
+#: templates/learning_spaces/reservation_confirm_delete.html:7
+msgid "Reservierung wurde storniert"
+msgstr "Reservation has been canceled"
+
+#: templates/learning_spaces/reservation_detail.html:8
+msgid "Zurück zur Reservierungsübersicht"
+msgstr "Back to reservationoverview"
+
+#: templates/learning_spaces/reservation_detail.html:13
+msgid "Datum"
+msgstr "Date"
+
+#: templates/learning_spaces/reservation_detail.html:14
+#: templates/learning_spaces/reservation_list.html:27
+msgid "Block"
+msgstr ""
+
+#: templates/learning_spaces/reservation_detail.html:15
+#: templates/learning_spaces/reservation_list.html:26
+msgid "Raum"
+msgstr "Room"
+
+#: templates/learning_spaces/reservation_detail.html:17
+msgid "Erstellt von:"
+msgstr "Created by:"
+
+#: templates/learning_spaces/reservation_detail.html:21
+#: templates/learning_spaces/reservation_list.html:33
+#: templates/learning_spaces/room_detail.html:19
+msgid "Bearbeiten"
+msgstr "Edit"
+
+
+#: templates/learning_spaces/reservation_form.html:256
+msgid "Möchten Sie den Space mit den unten aufgeführten Daten reservieren?"
+msgstr "Do you want to reservate the space with the following data?"
+
+#: templates/learning_spaces/reservation_form.html:260
+msgid "Bestätigen"
+msgstr "Confirm"
+
+#: templates/learning_spaces/reservation_form.html:270
+msgid ""
+"Leider ist der von Ihnen gewünschte Raum zu diesem Zeitraum schon belegt. "
+"Als Dozent bzw. Mitarbeiter der HTW haben Sie jedoch das Recht, eine "
+"Reservierung zu überbuchen. Möchten Sie dies tun?"
+msgstr "Unfortunately, the room you requested is already occupied at this time. However, as a lecturer or employee of the HTW, you have the right to overbook a reservation. Would you like to do this?"
+
+#: templates/learning_spaces/reservation_form.html:274
+msgid "Überbuchen"
+msgstr "Overbook"
+
+#: templates/learning_spaces/reservation_form.html:284
+msgid ""
+"Leider ist der von Ihnen gewünschte Raum zu diesem Zeitraum schon belegt. Sie haben jedoch die Möglichkeit, eine Anfrage an den Beleger zu senden, mit der Bitte Ihnen den Space zu überlassen. Der Nutzer hat danach 24 Stunden Zeit zu antworten. Tut er dies nicht, wird Ihre Anfrage abgelehnt. Möchten Sie dies tun?"
+msgstr "Unfortunately, the room you requested is already occupied at this time. However, you have the possibility to send a request to the occupant with the request to leave the space to you. The user will then have 24 hours to respond. If it does not, your request will be rejected. Would you like to do this?"
+
+#: templates/learning_spaces/reservation_form.html:285
+msgid "Anfragen"
+msgstr "Request"
+
+#: templates/learning_spaces/reservation_form.html:294
+msgid "Sie haben in den kommenden 7 Tagen bereits eine Buchung. Sie können lediglich eine Buchung zur gleichen Zeit haben."
+msgstr "You already have a booking for the next 7 days. You can only have one booking at a time."
+
+#: templates/learning_spaces/reservation_form.html:303
+msgid "Für welches Datum möchten Sie einen Space reservieren?:"
+msgstr "For which date would you like to reserve a Space?"
+
+#: templates/learning_spaces/reservation_form.html:323
+msgid "Welchen Space möchten Sie reservieren?:"
+msgstr "Which space do you want to reservate?"
+
+#: templates/learning_spaces/reservation_form.html:339
+msgid "Wählen Sie nun bitte den gewünschten Block aus:"
+msgstr "Please select the space you want:"
+
+
+
+
+#: templates/learning_spaces/reservation_list.html:9
+msgid "Filtern"
+msgstr "Filter"
+
+#: templates/learning_spaces/reservation_list.html:13
+#: templates/learning_spaces/room_list.html:23
+msgid "Reservierung erstellen"
+msgstr "Create reservation"
+
+#: templates/learning_spaces/reservation_list.html:31
+#: templates/learning_spaces/room_list.html:20
+msgid "Ansehen"
+msgstr "View"
+
+#: templates/learning_spaces/reservation_list.html:44
+msgid "Keine Reservierungen vorhanden."
+msgstr "No reservations available."
+
+
+
+#: templates/learning_spaces/room_detail.html:12
+msgid "Erstellt"
+msgstr "Created"
+
+#: templates/learning_spaces/room_detail.html:13
+msgid "Letztes Update"
+msgstr "Last update"
+
+#: templates/learning_spaces/room_detail.html:14
+msgid "Beschreibung"
+msgstr "Description"
+
+#: templates/learning_spaces/room_detail.html:15
+#: templates/learning_spaces/room_form.html:27
+msgid "Standort"
+msgstr "Location"
+
+#: templates/learning_spaces/room_detail.html:16
+#: templates/learning_spaces/room_form.html:31
+msgid "Größe"
+msgstr "Size"
+
+#: templates/learning_spaces/room_form.html:15
+msgid "Erstellt:"
+msgstr "Created:"
+
+#: templates/learning_spaces/room_form.html:19
+msgid "Letztes Update:"
+msgstr "Last update:"
+
+#: templates/learning_spaces/room_form.html:23
+msgid "Beschreibung:"
+msgstr "Description:"
+
+#: templates/learning_spaces/room_list.html:5
+msgid "Belegung anzeigen"
+msgstr "Display occupancy"
+
+#: templates/learning_spaces/room_list.html:25
+msgid "Login für Reservierung"
+msgstr "Login to reservate"
+
+#: templates/learning_spaces/room_list.html:28
+msgid "Plätze"
+msgstr "Seats"
+
+#: templates/learning_spaces/room_list.html:35
+msgid "Derzeit keine Räume vorhanden."
+msgstr "There are no rooms at the time."
+
+#: templates/learning_spaces/user_dashboard.html:7
+msgid "Userdaten ansehen"
+msgstr "Show user data"
+
+#: templates/learning_spaces/user_dashboard.html:9
+msgid "Ihre aktuelle Reservierung:"
+msgstr "Your current reservation:"
+
+#: templates/learning_spaces/user_dashboard.html:14
+msgid "Reservierung ansehen"
+msgstr "Show reservation"
+
+#: templates/learning_spaces/user_dashboard.html:16
+msgid "Sie haben derzeit keine offenen Reservierungen."
+msgstr "You currently don't have any reservations."
+
+#: templates/learning_spaces/user_dashboard.html:18
+msgid "Ihre aktuellen Kontaktanfragen:"
+msgstr "Your current contact requests:"
+
+#: templates/learning_spaces/user_dashboard.html:22
+msgid "Sie haben derzeit keine offenen Anfragen."
+msgstr "You currently don't have an contact requests"
+
+#: templates/learning_spaces/user_detail.html:34
+msgid "Für das Ändern der gesperrten Felder wenden Sie sich bitte an den Studierendenservice"
+msgstr "To change the disabled fields, please contact the study service"
+
+#: views.py:192
+msgid "Das ist ein Test"
+msgstr ""

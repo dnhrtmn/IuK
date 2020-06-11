@@ -2,23 +2,24 @@
 {% extends "home.html" %}
 {% load static %}
 {% block test %}
+    {% load i18n %}
     
 <p>
     <a class="btn btn-sm btn-outline-primary" href="{% url 'learning_spaces_reservation_list' %}">
-    Zurück zur Reservierungsansicht
+    {% trans 'Zurück zur Reservierungsübersicht' %}
     </a>
 </p>
     
 <table class="table">
-    <tr><td>Datum</td><td>{{ object.start_time }}</td></tr>
-    <tr><td>Block</td><td>Block {{ object.block }}</td></tr>
-    <tr><td>Raum</td><td>{{ object.room }}</td></tr>
+    <tr><td>{% trans 'Datum' %}</td><td>{{ object.start_time }}</td></tr>
+    <tr><td>{% trans 'Block' %}</td><td>Block {{ object.block }}</td></tr>
+    <tr><td>{% trans 'Raum' %}</td><td>{{ object.room }}</td></tr>
 {% if user.is_admin %}
-    <tr><td>Erstellt von:</td><td>{{ object.created_by }}</td></tr>
+    <tr><td>{% trans 'Erstellt von:' %}</td><td>{{ object.created_by }}</td></tr>
 
 {% endif %}
 </table>
-<a class="btn btn-sm btn-outline-primary" href="{{object.get_update_url}}">Edit</a>
+<a class="btn btn-sm btn-outline-primary" href="{{object.get_update_url}}">{% trans 'Bearbeiten' %}</a>
 <form action="{% url 'delete_reservation' pk=object.identifier %}" method="POST">
 {% csrf_token %}
 <input class="btn btn-sm btn-danger" type="submit" value="Delete">

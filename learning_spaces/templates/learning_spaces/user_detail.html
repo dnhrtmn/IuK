@@ -1,4 +1,5 @@
 {% extends "home.html" %}
+{% load i18n %}
 
 {% block test %}
 <form action="" method="post">
@@ -31,5 +32,5 @@
 
     <input type="submit"class="btn btn-outline-primary" value="Update">
 </form>
-    <caption>Für das Ändern der gesperrten Felder wenden Sie sich bitte an den Studierendenservice</caption>
+    <caption>{% trans 'Für das Ändern der gesperrten Felder wenden Sie sich bitte an den Studierendenservice' %}</caption>
 {% endblock %}

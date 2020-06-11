@@ -13,7 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, i18n
+from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
@@ -30,15 +31,22 @@ router = routers.DefaultRouter()
 router.register("Reservation", api.reservationViewSet)
 router.register("Room", api.roomViewSet)
 
-urlpatterns = [
+
+
+urlpatterns = i18n.i18n_patterns(
+
     path("api/v1/", include(router.urls)),
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
     path('', TemplateView.as_view(template_name='home.html'), name='homeView'),
     url(r'^home/', home_view, name='home'),
     url(r'^login/', login_view, name='login'),
     path('learning_spaces/', include('learning_spaces.urls')),
-    path('admin/', admin.site.urls),
+    url('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
 
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
+urlpatterns += [
+    path('i18n/', include('django.conf.urls.i18n')),
+]

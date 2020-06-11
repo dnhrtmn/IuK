@@ -1,22 +1,22 @@
-
 {% extends "home.html" %}
+{% load i18n %}
 {% load static %}
 {% block test %}
     
 <p>
     <a class="btn btn-light" href="{% url 'learning_spaces_room_list' %}">
-    Raumübersicht
+    {% trans 'Raumübersicht' %}
     </a>
 </p>
     {% for object in object_list %}
 <table class="table">
-    <tr><td>Erstellt</td><td>{{ object.created }}</td></tr>
-    <tr><td>Letztes Update</td><td>{{ object.last_updated }}</td></tr>
-    <tr><td>Beschreibung</td><td>{{ object.description }}</td></tr>
-    <tr><td>Standort</td><td>{{ object.location }}</td></tr>
-    <tr><td>Größe</td><td>{{ object.size }}</td></tr>
+    <tr><td>{% trans 'Erstellt' %}</td><td>{{ object.created }}</td></tr>
+    <tr><td>{% trans 'Letztes Update' %}</td><td>{{ object.last_updated }}</td></tr>
+    <tr><td>{% trans 'Beschreibung' %}</td><td>{{ object.description }}</td></tr>
+    <tr><td>{% trans 'Standort' %}</td><td>{{ object.location }}</td></tr>
+    <tr><td>{% trans 'Größe' %}</td><td>{{ object.size }}</td></tr>
 </table>
     {% endfor %}
-<a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>
+<a class="btn btn-primary" href="{{object.get_update_url}}">{% trans 'Bearbeiten' %}</a>
 
 {% endblock %}

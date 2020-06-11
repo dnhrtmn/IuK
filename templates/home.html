@@ -1,5 +1,6 @@
 
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
     <body>
@@ -8,11 +9,11 @@
 
      <section class="jumbotron text-center">
     <div class="container">
-      <h1>Raumbuchungssystem der HTW Saar</h1>
-      <p class="lead text-muted">Über das Raumbuchungssystem der HTW Saar können Studierende der Hochschule Learning Spaces für einen Lernaufenthalt buchen.</p>
+      <h1>{% trans 'Raumbuchungssystem der HTW Saar'%}</h1>
+      <p class="lead text-muted">{% trans 'Über das Raumbuchungssystem der HTW Saar können Studierende und Angehörige der Hochschule Learning Spaces für einen Aufenthalt buchen.' %}</p>
       <p>
           {% if user.is_authenticated %}
-              <a> Hallo {{ user.first_name }}!</a>
+              <a> {% trans 'Hallo' %}{{ user.first_name }}!</a>
               {% else %}
               <a href={% url 'login' %} class="btn btn-outline-primary">Login</a>
           {% endif %}

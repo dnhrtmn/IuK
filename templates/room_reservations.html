@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 {% load bootstrap4 %}
 
@@ -110,12 +111,12 @@
 </script>
 
     <table class="table table-striped table-bordered" id="calendar">
-        <caption>Grüne Felder sind frei, Rote Felder sind belegt.</caption>
+        <caption>{% trans 'Grüne Felder sind frei, Rote Felder sind belegt.' %}</caption>
   <thead>
     <tr class="text-center">
       <th scope="col" id=""><div class="row">
 
-            <label for="colFormLabel" class="col-auto col-form-label">Raum auswählen: </label>
+            <label for="colFormLabel" class="col-auto col-form-label">{% trans 'Raum auswählen:' %} </label>
 
         <div >
             <select id= "room-select" name="room" class="">
@@ -129,84 +130,84 @@
         </div>
         </div>
       </th>
-      <th scope="col" id="day1">Mon</th>
-      <th scope="col" id="day2">Die</th>
-      <th scope="col" id="day3">Mit</th>
-      <th scope="col" id="day4">Don</th>
-      <th scope="col" id="day5">Fre</th>
-      <th scope="col" id="day6">Sam</th>
+      <th scope="col" id="day1">{% trans 'Mon' %}</th>
+      <th scope="col" id="day2">{% trans 'Die' %}</th>
+      <th scope="col" id="day3">{% trans 'Mit' %}</th>
+      <th scope="col" id="day4">{% trans 'Don' %}</th>
+      <th scope="col" id="day5">{% trans 'Fre' %}</th>
+      <th scope="col" id="day6">{% trans 'Sam' %}</th>
 {#      <th scope="col" id="day7">Son</th>#}
     </tr>
   </thead>
   <tbody>
     <tr class="text-center">
       <th scope="row">08:15 - 09:45</th>
-      <td><a class="btn btn-sm btn-outline-success" id="t11" href="{% url 'index' %}">Block 1</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t21" href="{% url 'index' %}">Block 1</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t31" href="{% url 'index' %}">Block 1</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t41" href="{% url 'index' %}">Block 1</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t51" href="{% url 'index' %}">Block 1</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t61" href="{% url 'index' %}">Block 1</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t11" href="{% url 'index' %}">{% trans 'Block 1' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t21" href="{% url 'index' %}">{% trans 'Block 1' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t31" href="{% url 'index' %}">{% trans 'Block 1' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t41" href="{% url 'index' %}">{% trans 'Block 1' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t51" href="{% url 'index' %}">{% trans 'Block 1' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t61" href="{% url 'index' %}">{% trans 'Block 1' %}</a></td>
 {#      <td><a class="btn btn-sm btn-outline-success" id="t71" href="{% url 'index' %}">Block 1</a></td>#}
     </tr>
     <tr class="text-center">
       <th scope="row">10:00 - 11:30</th>
-      <td><a class="btn btn-sm btn-outline-success" id="t12" href="{% url 'index' %}">Block 2</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t22" href="{% url 'index' %}">Block 2</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t32" href="{% url 'index' %}">Block 2</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t42" href="{% url 'index' %}">Block 2</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t52" href="{% url 'index' %}">Block 2</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t62" href="{% url 'index' %}">Block 2</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t12" href="{% url 'index' %}">{% trans 'Block 2' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t22" href="{% url 'index' %}">{% trans 'Block 2' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t32" href="{% url 'index' %}">{% trans 'Block 2' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t42" href="{% url 'index' %}">{% trans 'Block 2' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t52" href="{% url 'index' %}">{% trans 'Block 2' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t62" href="{% url 'index' %}">{% trans 'Block 2' %}</a></td>
 {#      <td><a class="btn btn-sm btn-outline-success" id="t72" href="{% url 'index' %}">Block 2</a></td>#}
     </tr>
     <tr class="text-center">
       <th scope="row">11:45 - 13:15</th>
-      <td><a class="btn btn-sm btn-outline-success" id="t13" href="{% url 'index' %}">Block 3</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t23" href="{% url 'index' %}">Block 3</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t33" href="{% url 'index' %}">Block 3</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t43" href="{% url 'index' %}">Block 3</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t53" href="{% url 'index' %}">Block 3</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t63" href="{% url 'index' %}">Block 3</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t13" href="{% url 'index' %}">{% trans 'Block 3' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t23" href="{% url 'index' %}">{% trans 'Block 3' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t33" href="{% url 'index' %}">{% trans 'Block 3' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t43" href="{% url 'index' %}">{% trans 'Block 3' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t53" href="{% url 'index' %}">{% trans 'Block 3' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t63" href="{% url 'index' %}">{% trans 'Block 3' %}</a></td>
 {#      <td><a class="btn btn-sm btn-outline-success" id="t73" href="{% url 'index' %}">Block 3</a></td>#}
     </tr>
     <tr class="text-center">
       <th scope="row">14:15 - 15:45</th>
-      <td><a class="btn btn-sm btn-outline-success" id="t14" href="{% url 'index' %}">Block 4</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t24" href="{% url 'index' %}">Block 4</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t34" href="{% url 'index' %}">Block 4</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t44" href="{% url 'index' %}">Block 4</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t54" href="{% url 'index' %}">Block 4</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t64" href="{% url 'index' %}">Block 4</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t14" href="{% url 'index' %}">{% trans 'Block 4' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t24" href="{% url 'index' %}">{% trans 'Block 4' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t34" href="{% url 'index' %}">{% trans 'Block 4' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t44" href="{% url 'index' %}">{% trans 'Block 4' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t54" href="{% url 'index' %}">{% trans 'Block 4' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t64" href="{% url 'index' %}">{% trans 'Block 4' %}</a></td>
 {#      <td><a class="btn btn-sm btn-outline-success" id="t74" href="{% url 'index' %}">Block 4</a></td>#}
     </tr>
     <tr class="text-center">
       <th scope="row">16:00 - 17:30</th>
-      <td><a class="btn btn-sm btn-outline-success" id="t15" href="{% url 'index' %}">Block 5</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t25" href="{% url 'index' %}">Block 5</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t35" href="{% url 'index' %}">Block 5</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t45" href="{% url 'index' %}">Block 5</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t55" href="{% url 'index' %}">Block 5</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t65" href="{% url 'index' %}">Block 5</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t15" href="{% url 'index' %}">{% trans 'Block 5' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t25" href="{% url 'index' %}">{% trans 'Block 5' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t35" href="{% url 'index' %}">{% trans 'Block 5' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t45" href="{% url 'index' %}">{% trans 'Block 5' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t55" href="{% url 'index' %}">{% trans 'Block 5' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t65" href="{% url 'index' %}">{% trans 'Block 5' %}</a></td>
 {#      <td><a class="btn btn-sm btn-outline-success" id="t75" href="{% url 'index' %}">Block 5</a></td>#}
     </tr>
     <tr class="text-center">
       <th scope="row">17:45 - 19:15</th>
-      <td><a class="btn btn-sm btn-outline-success" id="t16" href="{% url 'index' %}">Block 6</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t26" href="{% url 'index' %}">Block 6</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t36" href="{% url 'index' %}">Block 6</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t46" href="{% url 'index' %}">Block 6</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t56" href="{% url 'index' %}">Block 6</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t66" href="{% url 'index' %}">Block 6</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t16" href="{% url 'index' %}">{% trans 'Block 6' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t26" href="{% url 'index' %}">{% trans 'Block 6' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t36" href="{% url 'index' %}">{% trans 'Block 6' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t46" href="{% url 'index' %}">{% trans 'Block 6' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t56" href="{% url 'index' %}">{% trans 'Block 6' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t66" href="{% url 'index' %}">{% trans 'Block 6' %}</a></td>
 {#      <td><a class="btn btn-sm btn-outline-success" id="t76" href="{% url 'index' %}">Block 6</a></td>#}
     </tr>
     <tr class="text-center">
       <th scope="row">19:30 - 21:00</th>
-      <td><a class="btn btn-sm btn-outline-success" id="t17" href="{% url 'index' %}">Block 7</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t27" href="{% url 'index' %}">Block 7</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t37" href="{% url 'index' %}">Block 7</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t47" href="{% url 'index' %}">Block 7</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t57" href="{% url 'index' %}">Block 7</a></td>
-      <td><a class="btn btn-sm btn-outline-success" id="t67" href="{% url 'index' %}">Block 7</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t17" href="{% url 'index' %}">{% trans 'Block 7' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t27" href="{% url 'index' %}">{% trans 'Block 7' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t37" href="{% url 'index' %}">{% trans 'Block 7' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t47" href="{% url 'index' %}">{% trans 'Block 7' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t57" href="{% url 'index' %}">{% trans 'Block 7' %}</a></td>
+      <td><a class="btn btn-sm btn-outline-success" id="t67" href="{% url 'index' %}">{% trans 'Block 7' %}</a></td>
 {#      <td><a class="btn btn-sm btn-outline-success" id="t77" href="{% url 'index' %}">Block 7</a></td>#}
     </tr>
   </tbody>

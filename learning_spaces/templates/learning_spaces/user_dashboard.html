@@ -1,25 +1,26 @@
 {% extends "home.html" %}
+{% load i18n %}
 
 {% block test %}
     <div class="btn-group-vertical">
         {% for object in userObject %}
             <a>User: {{ object.identifier }}</a>
-        <a class="btn btn-outline-secondary" href="{{ object.get_update_url }}">Userdaten ansehen</a>
+        <a class="btn btn-outline-secondary" href="{{ object.get_update_url }}">{% trans 'Userdaten ansehen' %}</a>
 {% endfor %}
-        <h4>Ihre aktuelle Reservierung:</h4>
+        <h4>{% trans 'Ihre aktuelle Reservierung:' %}</h4>
         {% for object in reservation_data %}
             <a> {{ object.start_time }}</a>
             <a>Space: {{ object.room }}</a>
             <a>Block: {{ object.block }}</a>
-            <a class="btn btn-outline-secondary" href="{{ object.get_update_url }}">Reservierung ansehen</a>
+            <a class="btn btn-outline-secondary" href="{{ object.get_update_url }}">{% trans 'Reservierung ansehen' %}</a>
             {% empty %}
-            <a>Sie haben derzeit keine offenen Reservierungen.</a>
+            <a>{% trans 'Sie haben derzeit keine offenen Reservierungen.' %}</a>
         {% endfor %}
-<h4>Ihre aktuellen Kontaktanfragen:</h4>
+<h4>{% trans 'Ihre aktuellen Kontaktanfragen:' %}</h4>
     {% for object in contact_data %}
         <a> {{ object.subject }}</a>
         {% empty %}
-        <a>Sie haben derzeit keine offenen Anfragen.</a>
+        <a>{% trans 'Sie haben derzeit keine offenen Anfragen.' %}</a>
     {% endfor %}
     </div>
 

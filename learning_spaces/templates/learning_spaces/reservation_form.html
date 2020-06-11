@@ -1,5 +1,6 @@
 
 {% extends "home.html" %}
+{% load i18n %}
 {% load static %}
 {% load bootstrap4 %}
 {% block test %}
@@ -241,7 +242,7 @@
 
 
 
-    <h1><a class="btn btn-outline-primary" href="{% url 'learning_spaces_reservation_list' %}"> Reservierungsübersicht </a></h1>
+    <h1><a class="btn btn-outline-primary" href="{% url 'learning_spaces_reservation_list' %}"> {% trans 'Reservierungsübersicht' %}</a></h1>
 
 
         <form method="POST", class="reservationForm" id="reservationForm">
@@ -253,11 +254,11 @@
               <div class="modal-content">
                 <span class="close" onclick="closeFunction()">&times;</span>
 
-                    <label> Möchten Sie den Space mit den unten aufgeführten Daten reservieren?</label>
+                    <label> {% trans 'Möchten Sie den Space mit den unten aufgeführten Daten reservieren?' %}</label>
                     <label id="dateLabel"></label>
                     <label id="roomLabel"></label>
                     <label id="blockLabel"></label>
-                    <button class="btn btn-sm btn-outline-secondary" id="checkButton" name="block{{ th }}">Bestätigen</button>
+                    <button class="btn btn-sm btn-outline-secondary" id="checkButton" name="block{{ th }}">{% trans 'Bestätigen' %}</button>
 
               </div>
             </div>
@@ -267,11 +268,11 @@
               <div class="modal-content">
                 <span class="close" onclick="closeFunction()">&times;</span>
 
-                    <label>Leider ist der von Ihnen gewünschte Raum zu diesem Zeitraum schon belegt. Als Dozent bzw. Mitarbeiter der HTW haben Sie jedoch das Recht, eine Reservierung zu überbuchen. Möchten Sie dies tun?</label>
+                    <label>{% trans 'Leider ist der von Ihnen gewünschte Raum zu diesem Zeitraum schon belegt. Als Dozent bzw. Mitarbeiter der HTW haben Sie jedoch das Recht, eine Reservierung zu überbuchen. Möchten Sie dies tun?' %}</label>
                     <label id="dateLabel"></label>
                     <label id="roomLabel"></label>
                     <label id="blockLabel"></label>
-                    <button class="btn btn-sm btn-outline-secondary">Überbuchen</button>
+                    <button class="btn btn-sm btn-outline-secondary">{% trans 'Überbuchen' %}</button>
 
               </div>
             </div>
@@ -281,8 +282,8 @@
               <div class="modal-content">
                 <span id="close" class="close" onclick="closeFunction()">&times;</span>
 
-                    <label>Leider ist der von Ihnen gewünschte Raum zu diesem Zeitraum schon belegt. Sie haben jedoch die Möglichkeit, eine Anfrage an den Beleger zu senden, mit der Bitte Ihnen den Space zu überlassen. Der Nutzer hat danach 24 Stunden Zeit zu antworten. Tut er dies nicht, wird Ihre Anfrage abgelehnt. Möchten Sie dies tun?</label>
-                    <button class="btn btn-sm btn-outline-secondary" type="submit">Anfragen</button>
+                    <label>{% trans 'Leider ist der von Ihnen gewünschte Raum zu diesem Zeitraum schon belegt. Sie haben jedoch die Möglichkeit, eine Anfrage an den Beleger zu senden, mit der Bitte Ihnen den Space zu überlassen. Der Nutzer hat danach 24 Stunden Zeit zu antworten. Tut er dies nicht, wird Ihre Anfrage abgelehnt. Möchten Sie dies tun?'%}</label>
+                    <button class="btn btn-sm btn-outline-secondary" type="submit">{% trans 'Anfragen' %}</button>
 
               </div>
             </div>
@@ -291,7 +292,7 @@
               <!-- Modal content -->
               <div class="modal-content">
                 <span id="close" class="close" onclick="closeFunction()">&times;</span>
-                    <label>Sie haben in den kommenden 7 Tagen bereits eine Buchung. Sie können lediglich eine Buchung zur gleichen Zeit haben.</label>
+                    <label>{% trans 'Sie haben in den kommenden 7 Tagen bereits eine Buchung. Sie können lediglich eine Buchung zur gleichen Zeit haben.' %}</label>
               </div>
             </div>
 
@@ -300,7 +301,7 @@
             <p>
             <div class="row">
                 <div class="col-sm-6">
-                    <label for="{{ form.start_time.id_for_label }}">Für welches Datum möchten Sie einen Space reservieren?:</label>
+                    <label for="{{ form.start_time.id_for_label }}">{% trans 'Für welches Datum möchten Sie einen Space reservieren?:' %}</label>
                 </div>
                 <div class="col-sm-auto">
                     <div class="form-group">
@@ -320,7 +321,7 @@
 
             <div class="row">
                 <div class="col-sm-6">
-                    <label id="id_room" for="{{ form.room.id_for_label }}">Welchen Space möchten Sie reservieren?:</label>
+                    <label id="id_room" for="{{ form.room.id_for_label }}">{% trans 'Welchen Space möchten Sie reservieren?:' %}</label>
                 </div>
                 <div class="col-sm-auto">
                     <select id= "room-select" name="room" class="form-control">
@@ -336,25 +337,22 @@
             </p>
 
         <div class="fieldWrapper">
-            <label id="table_label"> Wählen Sie nun bitte den gewünschten Block aus:</label>
+            <label id="table_label">{% trans 'Wählen Sie nun bitte den gewünschten Block aus:' %}</label>
             <table id="t1" class="table" >
             <tr>
-                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block1" onclick="buttonFunction(this)" name="save_block1" value="Save&Home">Block 1</button></td>
-                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block2" onclick="buttonFunction(this)" name="save_block2" value="Save&Home">Block 2</button></td>
-                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block3" onclick="buttonFunction(this)" name="save_block3" value="Save&Home">Block 3</button></td>
-                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block4" onclick="buttonFunction(this)" name="save_block4" value="Save&Home">Block 4</button></td>
-                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block5" onclick="buttonFunction(this)" name="save_block5" value="Save&Home">Block 5</button></td>
-                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block6" onclick="buttonFunction(this)" name="save_block6" value="Save&Home">Block 6</button></td>
-                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block7" onclick="buttonFunction(this)" name="save_block7" value="Save&Home">Block 7</button></td>
+                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block1" onclick="buttonFunction(this)" name="save_block1" value="Save&Home">{% trans 'Block 1' %}</button></td>
+                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block2" onclick="buttonFunction(this)" name="save_block2" value="Save&Home">{% trans 'Block 2' %}</button></td>
+                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block3" onclick="buttonFunction(this)" name="save_block3" value="Save&Home">{% trans 'Block 3' %}</button></td>
+                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block4" onclick="buttonFunction(this)" name="save_block4" value="Save&Home">{% trans 'Block 4' %}</button></td>
+                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block5" onclick="buttonFunction(this)" name="save_block5" value="Save&Home">{% trans 'Block 5' %}</button></td>
+                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block6" onclick="buttonFunction(this)" name="save_block6" value="Save&Home">{% trans 'Block 6' %}</button></td>
+                <td style="background-color: green; text-align: center"> <button type="button" class="btn btn-block btn-outline-success" id="block7" onclick="buttonFunction(this)" name="save_block7" value="Save&Home">{% trans 'Block 7' %}</button></td>
             </tr>
         </table>
         </div>
 
         </form>
 
-    <p> Legende:
-    Roter Block: Block belegt
-    Grüner Block: Block frei
-    </p>
+     <caption>{% trans 'Grüne Felder sind frei, Rote Felder sind belegt.' %}</caption>
 </container>
 {% endblock %}

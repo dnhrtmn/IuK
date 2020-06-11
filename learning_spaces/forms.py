@@ -26,7 +26,7 @@ class reservationForm(forms.ModelForm):
             'room',
         ]
         widgets = {
-            'start_time' : forms.DateInput(attrs={'id': 'datepicker12'}),
+            'start_time' : forms.DateInput(attrs={'id': 'datepicker12'}, format=['dd.mm.yyyy']),
 
 
         }
