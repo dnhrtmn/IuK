@@ -4,6 +4,7 @@
 {% load staticfiles %}
 {% block test %}
 
+        {# Anzeige um die Reservierungen nach Räumen zu filtern #}
         <div class="m-2">
             <form method="GET">
                     {{  filter.form.as_p }}
@@ -15,7 +16,7 @@
 
 
 
-
+    {# Anzeige der Reservierungen als Kachel #}
     <div class="row">
     {% for object in filter.qs %}
 
@@ -34,13 +35,11 @@
                         <a class="btn btn-sm btn-outline-secondary" href="{{ object.get_update_url }}">{% trans 'Bearbeiten' %}</a>
                     {% endif %}
                 </div>
-                <small class="text-muted"> {{ object }} Test</small>
+
               </div>
             </div>
           </div>
         </div>
-
-{#    <div class="m-2"><a href="{{object.get_absolute_url}}">{{object}}</a></div>#}
     {% empty %}
         <li>{% trans 'Keine Reservierungen vorhanden.' %}</li>
 

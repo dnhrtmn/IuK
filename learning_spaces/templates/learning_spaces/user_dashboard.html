@@ -3,10 +3,14 @@
 
 {% block test %}
     <div class="btn-group-vertical">
+    {# Zeigt dem User seine Mail Adresse an und eine Option seine Nutzerdaten anzusehen und zu ändern. #}
         {% for object in userObject %}
-            <a>User: {{ object.identifier }}</a>
+            {% if object == user %}
+            <a>User: {{ object }}</a>
         <a class="btn btn-outline-secondary" href="{{ object.get_update_url }}">{% trans 'Userdaten ansehen' %}</a>
+            {% endif %}
 {% endfor %}
+        {# Zeigt dem User seine aktuelle (keine alten!) Reservierung an #}
         <h4>{% trans 'Ihre aktuelle Reservierung:' %}</h4>
         {% for object in reservation_data %}
             <a> {{ object.start_time }}</a>
@@ -16,6 +20,7 @@
             {% empty %}
             <a>{% trans 'Sie haben derzeit keine offenen Reservierungen.' %}</a>
         {% endfor %}
+    {# Zeigt dem User seine aktuellen Kontaktanfragen an (über die Reservierungserstellung oder das Kontaktformular) an #}
 <h4>{% trans 'Ihre aktuellen Kontaktanfragen:' %}</h4>
     {% for object in contact_data %}
         <a> {{ object.subject }}</a>

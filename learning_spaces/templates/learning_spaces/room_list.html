@@ -3,13 +3,14 @@
 {% load staticfiles %}
 
 {% block test %}
+    {# Button um zur Seite für die Funktion der Belegungsanzeige zu gelangen #}
     <a class="btn btn-outline-secondary" href="{% url 'learning_spaces_room_reservations' %}">{% trans 'Belegung anzeigen' %}</a>
     <div class="row">
 
     <link rel="stylesheet" href="{% static 'css/tables.css' %}">
 
 {% for object in object_list %}
-
+        {# Funktion zur Anzeige der Räume als Kachel #}
         <div class="col-md-4">
           <div class="card mb-4 shadow-sm">
             <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"> {{ object }}</text></svg>

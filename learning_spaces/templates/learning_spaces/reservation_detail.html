@@ -6,10 +6,11 @@
     
 <p>
     <a class="btn btn-sm btn-outline-primary" href="{% url 'learning_spaces_reservation_list' %}">
+
     {% trans 'Zurück zur Reservierungsübersicht' %}
     </a>
 </p>
-    
+    {# Tabelle zur Darstellung der vorher ausgewählten Reservierung #}
 <table class="table">
     <tr><td>{% trans 'Datum' %}</td><td>{{ object.start_time }}</td></tr>
     <tr><td>{% trans 'Block' %}</td><td>Block {{ object.block }}</td></tr>
@@ -19,11 +20,18 @@
 
 {% endif %}
 </table>
-<a class="btn btn-sm btn-outline-primary" href="{{object.get_update_url}}">{% trans 'Bearbeiten' %}</a>
-<form action="{% url 'delete_reservation' pk=object.identifier %}" method="POST">
-{% csrf_token %}
-<input class="btn btn-sm btn-danger" type="submit" value="Delete">
-</form>
+    <div class="row">
+        {# Wenn der User ein Admin ist, bekommt er einen Button um die Reservierung zu bearbeiten. Jeder User bekommt #}
+        {# den Button zur Stornierung der Reservierung angezeigt. #}
+        {% if user.is_admin %}
+        <a class="btn btn-sm btn-outline-primary" href="{{object.get_update_url}}">{% trans 'Bearbeiten' %}</a>
+        {% endif %}
+        <form action="{% url 'delete_reservation' pk=object.identifier %}" method="POST">
+        {% csrf_token %}
+        <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+
+        </form>
+    </div>
 
 
 {% endblock %}

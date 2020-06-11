@@ -63,7 +63,9 @@
             $('#id_room').show();
             $('#room-select').show();
 
-
+            {# AJAX Request an den Server (ohne Aktualisierung der Seite) um die Reservierungen für das Datum und den aktuellen User  #}
+            {# zu erhalten. Wenn der Nutzer bereits eine Reservierung für die Woche hat, returnt die Anfrage nichts und es kommt #}
+            {# zu einem Fehler. Danach folgt für den User ein Pop-Up, welches ihn darüber informiert. #}
             $.ajax({
             url:"{% url 'checkReservations' %}",
             data:{
@@ -94,7 +96,8 @@
           });
         });
 
-
+        {# Wenn der Nutzer noch keine Reservierung hat, kann er das gewünschte Datum wählen. Das Datum kann maximale 7 Tage  #}
+        {# in der Zukunft liegen, Sonntage sind ausgeschlossen. Die Anfrage über die Reservierungen erfolgt wieder über eine AJAX-Anfrage #}
         $('#room-select').change(function () {
           var room = $(this).val();
           var date = $('#dateValue').val();
@@ -167,7 +170,10 @@
     <link rel="stylesheet" href="{% static 'css/tables.css' %}">
 
     <container>
+    {# Verborgenes Element, welches den aktuellen User ermittelt, damit JavaScript darauf zugreifen kann #}
     <a hidden id="user"> {{user.is_student}}</a>
+    {# JavaScript Funktionen welche anhand des ausgewählten Blocks verschiedene Pop-Ups anzeigen und die Schließfunktionen #}
+    {# der Pop Ups erstellt (Schließen per x oder klicken außerhalb des Fensters #}
     <script>
          $(document).ready(function () {
              // Get the modal
@@ -183,7 +189,7 @@
 
             });
 
-             // When the user clicks on the button, open the modal
+             // When the user clicks on the button, open the modal based on the value of the button
              function buttonFunction(elem) {
                  if (elem.value === "belegt") {
                      var isUserStudent = document.getElementById("user").innerHTML.toLowerCase().trim()
@@ -247,6 +253,7 @@
 
         <form method="POST", class="reservationForm" id="reservationForm">
         {% csrf_token %}
+        {# PopUp zur Bestätigung der Reservierung #}
         <link rel="stylesheet" href="{% static 'css/modal.css' %}">
             <!-- The Modal -->
             <div id="modalFree" class="modal">
@@ -263,6 +270,7 @@
               </div>
             </div>
 
+            {# PopUp bei belegtem Space und User = Mitarbeiter o.ä. -> Überbuchungsfunktion #}
             <div id="modalReservedOverbooking" class="modal">
               <!-- Modal content -->
               <div class="modal-content">
@@ -277,6 +285,7 @@
               </div>
             </div>
 
+            {# PopUp bei belegtem Space und User = Student -> Anfragefunktion #}
             <div id="modalReservedInquiry" class="modal">
               <!-- Modal content -->
               <div class="modal-content">
@@ -288,6 +297,7 @@
               </div>
             </div>
 
+            {# PopUp bei bereits vorhandener Buchung in der Woche #}
             <div id="userHasReservation" class="modal">
               <!-- Modal content -->
               <div class="modal-content">
@@ -298,6 +308,7 @@
 
                 {{ form.errors }}
 
+            {# Anzeige des Labels und des Datepickers zur Datumsauswahl #}
             <p>
             <div class="row">
                 <div class="col-sm-6">
@@ -317,8 +328,8 @@
             </div>
             </p>
 
+            {# Dropdown Menü zur Auswahl des Raumes #}
             <p>
-
             <div class="row">
                 <div class="col-sm-6">
                     <label id="id_room" for="{{ form.room.id_for_label }}">{% trans 'Welchen Space möchten Sie reservieren?:' %}</label>
@@ -336,6 +347,7 @@
             </div>
             </p>
 
+        {# Anzeige einer Tabelle mit den pro Tag zur Verfügung stehenden sieben Blöcken #}
         <div class="fieldWrapper">
             <label id="table_label">{% trans 'Wählen Sie nun bitte den gewünschten Block aus:' %}</label>
             <table id="t1" class="table" >
