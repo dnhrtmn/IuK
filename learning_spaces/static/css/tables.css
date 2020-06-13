@@ -6,13 +6,15 @@ html,
         /*width: 75%;*/
     text-align: center;
     align-items: center;
-    border: 1px solid black;
+    border-collapse: collapse;
 
     }
 
 /*.th {*/
 /*    min-width: 200px;*/
 /*}*/
+
+
 
 td:hover {
     background-color: darkgray;

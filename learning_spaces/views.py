@@ -1,3 +1,5 @@
+import uuid
+
 from django.views import generic
 from . import models
 from . import forms
@@ -72,45 +74,66 @@ class reservationCreateView(generic.CreateView):
         return context
 
     def form_valid(self, form):
-        reservation = form.save(commit=False)
-        reservation.created_by = self.request.user
-        print(self.request.POST)
-
-        if 'save_block1' in self.request.POST:
-            reservation.block = 1
-        elif 'save_block2' in self.request.POST:
-            reservation.block = 2
-        elif 'save_block3' in self.request.POST:
-            reservation.block = 3
-        elif 'save_block4' in self.request.POST:
-            reservation.block = 4
-        elif 'save_block5' in self.request.POST:
-            reservation.block = 5
-        elif 'save_block6' in self.request.POST:
-            reservation.block = 6
-        elif 'save_block7' in self.request.POST:
-            reservation.block = 7
-
-        subject = render_to_string(
-            template_name='email/subjectConfirmation.txt'
-        ).strip()
-        from_email = 'admin@learning-spaces.com'
-        recipient = [reservation.created_by.email]
 
 
+        if 'overbook' in self.request.POST:
+            model = models.spaceLeftoverRequest
+            reservation = form.save(commit=False)
+            date = reservation.start_time
 
-        message = render_to_string(
-        'email/emailConfirmation.txt', {'user': reservation.created_by.email, 'id': reservation.identifier, 'date': reservation.start_time,
-             'block': reservation.block, 'room': reservation.room}
-        )
-        html_message = render_to_string(
-            'email/email.html', {'user': reservation.created_by.email, 'id': reservation.identifier, 'date': reservation.start_time, 'block':reservation.block, 'room':reservation.room}
-        )
+            reservations = models.Reservation.objects.filter(block__exact=self.request.POST.get("overbook"),start_time__exact=date, room__iexact=self.request.POST.get("room"))
+            print(reservations[0])
+            reservationID = reservations[0]
+            reservationToOverbook = models.Reservation.objects.get(identifier=uuid.UUID('reservationID'))
+
+            reservationToOverbook.created_by = self.request.user
+            reservationToOverbook.save()
 
 
-        mail.send_mail(subject, message, from_email, recipient, html_message=html_message)
+            return render('index.html')
 
-        return super().form_valid(form)
+        elif 'request' in self.request.POST:
+            return
+
+        else:
+            reservation = form.save(commit=False)
+            reservation.created_by = self.request.user
+            print(self.request.POST)
+            if 'save_block1' in self.request.POST:
+                reservation.block = 1
+            elif 'save_block2' in self.request.POST:
+                reservation.block = 2
+            elif 'save_block3' in self.request.POST:
+                reservation.block = 3
+            elif 'save_block4' in self.request.POST:
+                reservation.block = 4
+            elif 'save_block5' in self.request.POST:
+                reservation.block = 5
+            elif 'save_block6' in self.request.POST:
+                reservation.block = 6
+            elif 'save_block7' in self.request.POST:
+                reservation.block = 7
+
+            subject = render_to_string(
+                template_name='email/subjectConfirmation.txt'
+            ).strip()
+            from_email = 'admin@learning-spaces.com'
+            recipient = [reservation.created_by.email]
+
+
+
+            message = render_to_string(
+            'email/emailConfirmation.txt', {'user': reservation.created_by.email, 'id': reservation.identifier, 'date': reservation.start_time,
+                 'block': reservation.block, 'room': reservation.room}
+            )
+            html_message = render_to_string(
+                'email/email.html', {'user': reservation.created_by.email, 'id': reservation.identifier, 'date': reservation.start_time, 'block':reservation.block, 'room':reservation.room}
+            )
+
+
+            mail.send_mail(subject, message, from_email, recipient, html_message=html_message)
+
+            return super().form_valid(form)
 
 
 

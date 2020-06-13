@@ -117,10 +117,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'learning_spaces.User'
 
-AUTHENTICATION_BACKENDS = [
-    "django_auth_ldap.backend.LDAPBackend",
-    "django.contrib.auth.backends.ModelBackend",
-]
+# AUTHENTICATION_BACKENDS = [
+#     "django_auth_ldap.backend.LDAPBackend",
+#     "django.contrib.auth.backends.ModelBackend",
+# ]
 # Hier wird der LDAP Server eingetragen
 # AUTH_LDAP_SERVER_URI = "ldap://ldap.example.com"
 

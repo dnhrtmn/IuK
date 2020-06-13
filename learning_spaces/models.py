@@ -196,3 +196,16 @@ class contactRequests(models.Model):
     def get_absolute_url(self):
         return reverse("contactForm")
 
+class spaceLeftoverRequest(models.Model):
+    subject = models.CharField(max_length=50)
+    message = models.CharField(max_length=400)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete="", null=True, blank=True)
+    targetUser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete="", null=True, blank=True, related_name="+")
+    identifier = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    status = models.BooleanField(default=False)
+
+    def get_absolute_url(self):
+        return reverse("learning_spaces_reservation_list")
+
+
+
