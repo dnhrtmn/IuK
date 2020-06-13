@@ -1,0 +1,12 @@
+Sehr geehrter {{ user }},
+
+Ihre Buchung wurde leider von einem berechtigen Mitarbeiter der htw saar überbucht und somit storniert.
+Sie können eine neue Buchung anlegen.
+
+Reservierungs-ID: {{ id }}
+Datum: {{ date }}
+Raum: {{ room }}
+Block: {{ block }}
+
+
+Viele Grüße

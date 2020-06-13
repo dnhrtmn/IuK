@@ -16,7 +16,7 @@
             <a> {{ object.start_time }}</a>
             <a>Space: {{ object.room }}</a>
             <a>Block: {{ object.block }}</a>
-            <a class="btn btn-outline-secondary" href="{{ object.get_update_url }}">{% trans 'Reservierung ansehen' %}</a>
+            <a class="btn btn-outline-secondary" href="{{ object.get_absolute_url }}">{% trans 'Reservierung ansehen' %}</a>
             {% empty %}
             <a>{% trans 'Sie haben derzeit keine offenen Reservierungen.' %}</a>
         {% endfor %}

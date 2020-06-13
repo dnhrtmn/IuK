@@ -81,16 +81,48 @@ class reservationCreateView(generic.CreateView):
             reservation = form.save(commit=False)
             date = reservation.start_time
 
-            reservations = models.Reservation.objects.filter(block__exact=self.request.POST.get("overbook"),start_time__exact=date, room__iexact=self.request.POST.get("room"))
-            print(reservations[0])
-            reservationID = reservations[0]
-            reservationToOverbook = models.Reservation.objects.get(identifier=uuid.UUID('reservationID'))
+            reservationToOverbook = models.Reservation.objects.get(block__exact=self.request.POST.get("overbook"),start_time__exact=date, room__iexact=self.request.POST.get("room"))
+            print(reservationToOverbook)
 
-            reservationToOverbook.created_by = self.request.user
+            userOverbooking = self.request.user
+            recipient = [reservationToOverbook.created_by.email]
+            recipientOverbooking = [userOverbooking.email]
+            reservationToOverbook.created_by = userOverbooking
             reservationToOverbook.save()
 
+            subject = render_to_string(
+                template_name='email/subjectOverbooked.txt'
+            ).strip()
+            subjectOverbooked = render_to_string(
+                template_name='email/subjectConfirmation.txt'
+            ).strip()
+            from_email = 'admin@learning-spaces.com'
 
-            return render('index.html')
+
+            message = render_to_string(
+                'email/emailOverbooked.txt',
+                {'user': recipient, 'id': reservationToOverbook, 'date': date,
+                 'block': self.request.POST.get("overbook"), 'room': self.request.POST.get("room")}
+            )
+
+            messageOverbooked = render_to_string(
+            'email/emailConfirmation.txt', {'user': userOverbooking, 'id': reservationToOverbook, 'date': date,
+                 'block': self.request.POST.get("overbook"), 'room': self.request.POST.get("room")}
+            )
+
+            html_message = render_to_string(
+                'email/emailOverbooked.html',
+                {'message':message}
+            )
+
+            html_messageOverbooked = render_to_string(
+                'email/email.html', {'user': userOverbooking, 'id': reservationToOverbook, 'date': date, 'block': self.request.POST.get("overbook"), 'room':self.request.POST.get("room")}
+            )
+
+            mail.send_mail(subjectOverbooked, messageOverbooked, from_email, recipientOverbooking, html_message = html_messageOverbooked)
+            mail.send_mail(subject, message, from_email, recipient, html_message=html_message)
+
+            return render(self.request, template_name='index.html')
 
         elif 'request' in self.request.POST:
             return
