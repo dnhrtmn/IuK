@@ -125,7 +125,18 @@ class reservationCreateView(generic.CreateView):
             return render(self.request, template_name='index.html')
 
         elif 'request' in self.request.POST:
-            return
+            reservation = form.save(commit=False)
+            date = reservation.start_time
+            model = models.spaceLeftoverRequest()
+            model.created_by = self.request.user
+            print(self.request.POST)
+            reservationToHandover = models.Reservation.objects.get(block__exact=self.request.POST.get("request"),
+                                                                   start_time__exact=date,
+                                                                   room__iexact=self.request.POST.get("room"))
+            model.targetUser = reservationToHandover.created_by
+
+            model.save()
+            return render(self.request, template_name='index.html')
 
         else:
             reservation = form.save(commit=False)
@@ -310,6 +321,10 @@ class user_dashboard(TemplateView):
         userObject = models.User.object.all()
         reservation_data = models.Reservation.objects.filter(created_by__exact=user, start_time__gte=datetime.date.today())
         contact_data = models.contactRequests.objects.filter(created_by__exact=user)
+        leftoverRequestsTo_data = models.spaceLeftoverRequest.objects.filter(targetUser__exact=user)
+        leftoverRequestsFrom_data = models.spaceLeftoverRequest.objects.filter(created_by__exact=user)
+        context['leftoverRequestsTo_data']  = leftoverRequestsTo_data
+        context['leftoverRequestsFrom_data'] = leftoverRequestsFrom_data
         context['reservation_data'] = reservation_data
         context['contact_data'] = contact_data
         context['userObject'] = userObject
@@ -329,6 +344,13 @@ class UserUpdateView(generic.UpdateView):
         return super().form_valid(form)
 
 
+class leftoverRequestsView(generic.DetailView):
+    model = models.spaceLeftoverRequest
+    template_name = "learning_spaces/requestsDetailView.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 

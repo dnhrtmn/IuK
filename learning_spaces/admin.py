@@ -59,6 +59,7 @@ class roomAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Reservation, reservationAdmin)
 admin.site.register(models.Room, roomAdmin)
+admin.site.register(models.spaceLeftoverRequest)
 
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances

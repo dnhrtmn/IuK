@@ -22,11 +22,36 @@
         {% endfor %}
     {# Zeigt dem User seine aktuellen Kontaktanfragen an (über die Reservierungserstellung oder das Kontaktformular) an #}
 <h4>{% trans 'Ihre aktuellen Kontaktanfragen:' %}</h4>
+    <table class="table">
+            <tr>
+                <th>{% trans 'Betreff' %}</th>
+                <th>{% trans 'Angefragter Nutzer' %}</th>
+                <th>{% trans 'Anfrage ansehen' %}</th>
+            </tr>
     {% for object in contact_data %}
-        <a> {{ object.subject }}</a>
+                <td>{{ object.subject }}</td>
+                <td>{{ object.targetUser }}</td>
+                <td><a href="{{ object.get_absolute_url }}">Anfrage ansehen</a></td>
         {% empty %}
         <a>{% trans 'Sie haben derzeit keine offenen Anfragen.' %}</a>
     {% endfor %}
+    {% for object in leftoverRequestsFrom_data %}
+            <tr>
+                <td>{{ object.subject }}</td>
+                <td>{{ object.targetUser }}</td>
+                <td><a href="{{ object.get_absolute_url }}">Anfrage ansehen</a></td>
+            </tr>
+        {% empty %}
+        <a>{% trans 'Sie haben derzeit keine offenen Anfragen.' %}</a>
+    {% endfor %}
+    {% for object in leftoverRequestsTo_data %}
+                <td>{{ object.subject }}</td>
+                <td>{{ object.targetUser }}</td>
+                <td><a href="{{ object.get_absolute_url }}">Anfrage ansehen</a></td>
+        {% empty %}
+        <a>{% trans 'Sie haben derzeit keine offenen Anfragen.' %}</a>
+    {% endfor %}
+    </table>
     </div>
 
 {% endblock %}

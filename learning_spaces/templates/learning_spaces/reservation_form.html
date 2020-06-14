@@ -202,16 +202,17 @@
                      console.log(modalFree);
                      modalFree.style.display = "block";
                  } else  {
-                     var isUserStudent = document.getElementById("user").innerHTML.toLowerCase().trim()
+                     var isUserStudent = document.getElementById("user").innerHTML.toLowerCase().trim();
                      var room = $('#room-select').val();
                      var date = $('#dateValue').val();
                      console.log(isUserStudent)
                      if (isUserStudent == "true") {
-                         console.log("is student")
+                         console.log("is student");
+                         document.getElementById("requestButton").value = elem.id;
                          modalReservedInquiry.style.display = "block";
                      } else {
-                         console.log("isn't student")
-                         document.getElementById("overbookButton").value = elem.id
+                         console.log("isn't student");
+                         document.getElementById("overbookButton").value = elem.id;
                          modalReservedOverbooking.style.display = "block";
                      }
                  }
@@ -290,7 +291,7 @@
                 <span id="close" class="close" onclick="closeFunction()">&times;</span>
 
                     <label>{% trans 'Leider ist der von Ihnen gewünschte Raum zu diesem Zeitraum schon belegt. Sie haben jedoch die Möglichkeit, eine Anfrage an den Beleger zu senden, mit der Bitte Ihnen den Space zu überlassen. Der Nutzer hat danach 24 Stunden Zeit zu antworten. Tut er dies nicht, wird Ihre Anfrage abgelehnt. Möchten Sie dies tun?'%}</label>
-                    <button class="btn btn-sm btn-outline-secondary" value="request" name="request" type="submit">{% trans 'Anfragen' %}</button>
+                    <button class="btn btn-sm btn-outline-secondary" value="request" name="request" id="requestButton" type="submit">{% trans 'Anfragen' %}</button>
 
               </div>
             </div>

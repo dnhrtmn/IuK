@@ -18,6 +18,7 @@ urlpatterns = (
     # path("learning_spaces/Reservation/create/<Room>/", views.createReservation, name="learning_spaces_reservation_create"),
     path("learning_spaces/reservation/detail/<uuid:pk>/", views.reservationDetailView.as_view(), name="learning_spaces_reservation_detail"),
     path("learning_spaces/reservation/update/<uuid:pk>/", views.reservationUpdateView.as_view(), name="learning_spaces_reservation_update"),
+    path("requests/detail/<uuid:pk>/",views.leftoverRequestsView.as_view(),name="requests_detail"),
     path("learning_spaces/room/", views.roomListView.as_view(), name="learning_spaces_room_list"),
     path("learning_spaces/room/create/", views.roomCreateView.as_view(), name="learning_spaces_room_create"),
     path("learning_spaces/room/detail/<uuid:pk>/", views.roomDetailView.as_view(), name="learning_spaces_room_detail"),

@@ -205,7 +205,7 @@ class spaceLeftoverRequest(models.Model):
     status = models.BooleanField(default=False)
 
     def get_absolute_url(self):
-        return reverse("learning_spaces_reservation_list")
+        return reverse("requests_detail", args=(self.identifier,))
 
 
 
