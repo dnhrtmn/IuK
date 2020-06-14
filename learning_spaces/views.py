@@ -11,7 +11,7 @@ from .filters import reservationFilter
 from django.core import serializers, mail
 from django.test import TestCase
 from django.http import JsonResponse, HttpResponse
-from .models import Reservation
+from .models import Reservation, spaceLeftoverRequest
 from django.views.generic import TemplateView
 from django.views.generic.edit import DeleteView, FormMixin
 from django.contrib import messages
@@ -129,11 +129,14 @@ class reservationCreateView(generic.CreateView):
             date = reservation.start_time
             model = models.spaceLeftoverRequest()
             model.created_by = self.request.user
+            model.subject = "Raumanfrage"
+            model.message = "Sehr geehrter Nutzer, Sie haben eine neue Anfrage."
             print(self.request.POST)
             reservationToHandover = models.Reservation.objects.get(block__exact=self.request.POST.get("request"),
                                                                    start_time__exact=date,
                                                                    room__iexact=self.request.POST.get("room"))
             model.targetUser = reservationToHandover.created_by
+            model.reservation = reservationToHandover
 
             model.save()
             return render(self.request, template_name='index.html')
@@ -321,8 +324,8 @@ class user_dashboard(TemplateView):
         userObject = models.User.object.all()
         reservation_data = models.Reservation.objects.filter(created_by__exact=user, start_time__gte=datetime.date.today())
         contact_data = models.contactRequests.objects.filter(created_by__exact=user)
-        leftoverRequestsTo_data = models.spaceLeftoverRequest.objects.filter(targetUser__exact=user)
-        leftoverRequestsFrom_data = models.spaceLeftoverRequest.objects.filter(created_by__exact=user)
+        leftoverRequestsTo_data = models.spaceLeftoverRequest.objects.filter(targetUser__exact=user, status__exact=False)
+        leftoverRequestsFrom_data = models.spaceLeftoverRequest.objects.filter(created_by__exact=user, status__exact=False)
         context['leftoverRequestsTo_data']  = leftoverRequestsTo_data
         context['leftoverRequestsFrom_data'] = leftoverRequestsFrom_data
         context['reservation_data'] = reservation_data
@@ -351,6 +354,27 @@ class leftoverRequestsView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+def ajax_change_status(request):
+    print(request)
+    request_id = request.GET.get('request_id',None)
+    reservation_id = request.GET.get('reservation_id', None)
+    # first you get your Job model
+    requestToChange = spaceLeftoverRequest.objects.get(identifier=request_id)
+    reservation = Reservation.objects.get(identifier=reservation_id)
+    try:
+        requestToChange.status = True
+        reservation.created_by = request.user
+        requestToChange.save()
+        reservation.save()
+        return JsonResponse({"success": True})
+    except Exception as e:
+        return JsonResponse({"success": False})
+    return JsonResponse(data)
+
+
+
 
 
 

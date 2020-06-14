@@ -29,11 +29,15 @@
                 <th>{% trans 'Anfrage ansehen' %}</th>
             </tr>
     {% for object in contact_data %}
+        <tr>
                 <td>{{ object.subject }}</td>
                 <td>{{ object.targetUser }}</td>
                 <td><a href="{{ object.get_absolute_url }}">Anfrage ansehen</a></td>
+        </tr>
         {% empty %}
-        <a>{% trans 'Sie haben derzeit keine offenen Anfragen.' %}</a>
+        <tr>
+        <td>{% trans 'Sie haben derzeit keine offenen Anfragen.' %}</td>
+        </tr>
     {% endfor %}
     {% for object in leftoverRequestsFrom_data %}
             <tr>
@@ -42,14 +46,20 @@
                 <td><a href="{{ object.get_absolute_url }}">Anfrage ansehen</a></td>
             </tr>
         {% empty %}
-        <a>{% trans 'Sie haben derzeit keine offenen Anfragen.' %}</a>
+        <tr>
+        <td>{% trans 'Sie haben derzeit keine offenen Anfragen.' %}</td>
+        </tr>
     {% endfor %}
     {% for object in leftoverRequestsTo_data %}
+        <tr>
                 <td>{{ object.subject }}</td>
                 <td>{{ object.targetUser }}</td>
                 <td><a href="{{ object.get_absolute_url }}">Anfrage ansehen</a></td>
+        </tr>
         {% empty %}
-        <a>{% trans 'Sie haben derzeit keine offenen Anfragen.' %}</a>
+        <tr>
+                <td>{% trans 'Sie haben derzeit keine offenen Anfragen.' %}</td>
+        </tr>
     {% endfor %}
     </table>
     </div>

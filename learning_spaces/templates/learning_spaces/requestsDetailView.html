@@ -1,15 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends 'home.html' %}
 
-</head>
-<body>
-    <h1>{{ object.subject }}</h1>
-    <p>{{ object.message }}</p>
-    <p>Reporter: {{ object.created_by }}</p>
-    <p>Published: {{ object.targetUser }}</p>
-    <p>Date: {{ object.status }}</p>
 
-</body>
-</html>
+
+{% block test %}
+    <script>
+    $(document).ready(function () {
+        $("#submitButton").on('click', function () {
+          var reservation_id = "{{object.reservation.identifier}}";
+          console.log(reservation_id);
+          var request_id = "{{object.identifier}}";
+
+          $.ajax({
+            url: "{% url 'ajax_change_status' %}",
+            data: {
+              'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+              'reservation_id': reservation_id,
+              'request_id': request_id,
+            },
+            dataType: 'json',
+            success: function (data) {
+              if (data.success) {
+                alert("ajax call success.");
+                location.reload()
+
+                // here you update the HTML to change the active to innactive
+              }else{
+                alert("ajax call not success.");
+              }
+            }
+          });
+        });
+    });
+  </script>
+
+    <h4>Anfrage {{ object.identifier }}</h4>
+    <table class="table">
+    <tr><td>Betreff:</td><td> {{ object.subject }}</td></tr>
+    <tr><td>Nachricht:</td><td> {{ object.message }}</td></tr>
+    <tr><td>Ersteller: </td><td>{{ object.created_by }}</td></tr>
+    <tr><td>Angefragter: </td><td>{{ object.targetUser }}</td></tr>
+    <tr><td>Status:</td><td> {{ object.status }}</td></tr>
+    <tr><td>Reservierungsdatum:</td><td> {{ object.reservation.start_time }}</td></tr>
+    <tr><td>Raum:</td><td> {{ object.reservation.room }}</td></tr>
+    <tr><td>Block: </td><td>{{ object.reservation.block }}</td></tr>
+
+    </table>
+
+
+    {% csrf_token %}
+    <button type="submit" id="submitButton" class="btn btn-sm btn-outline-secondary"> Anfrage annehmen</button>
+
+{% endblock %}

@@ -202,6 +202,10 @@ class spaceLeftoverRequest(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete="", null=True, blank=True)
     targetUser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete="", null=True, blank=True, related_name="+")
     identifier = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    reservation = models.OneToOneField(
+        Reservation,
+        on_delete=models.CASCADE,
+    )
     status = models.BooleanField(default=False)
 
     def get_absolute_url(self):
