@@ -48,6 +48,9 @@
 
 
     {% csrf_token %}
-    <button type="submit" id="submitButton" class="btn btn-sm btn-outline-secondary"> Anfrage annehmen</button>
-
+    {% if user == object.targetUser %}
+        <button type="submit" id="submitButton" class="btn btn-sm btn-outline-secondary"> Anfrage annehmen</button>
+    {% elif user == object.created_by %}
+        <button type="submit" id="deleteButton" class="btn btn-sm btn-outline-secondary"> Anfrage löschen</button>
+    {% endif %}
 {% endblock %}
