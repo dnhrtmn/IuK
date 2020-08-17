@@ -60,7 +60,8 @@ class reservationListView(generic.ListView):
                                                   queryset=self.object_list.filter(created_by=self.request.user))
             return context
 
-
+# View zur Erstellung einer Reservierung inkl. Validierung der Form
+# Hier wird auch geprüft ob der User z.B. eine Buchung überbuchen darf oder eine Buchungsanfrage stellen kann
 class reservationCreateView(generic.CreateView):
     model = models.Reservation
     form_class = forms.reservationForm
@@ -182,24 +183,25 @@ class reservationCreateView(generic.CreateView):
             return super().form_valid(form)
 
 
-
+# View zur Detailansicht einer Reservierung
 class reservationDetailView(generic.DetailView):
     model = models.Reservation
     form_class = forms.reservationForm
 
-
+# View zum Updaten der Reservierung
 class reservationUpdateView(generic.UpdateView):
     model = models.Reservation
     form_class = forms.reservationForm
     pk_url_kwarg = "pk"
 
-
+# View zur Stornierung einer Reservierung
 class reservationDeleteView(SuccessMessageMixin, generic.DeleteView):
     model = models.Reservation
     success_url = '/'
     success_message = "'%(id) deleted..."
     pk_url_kwarg = "pk"
 
+    # Funktion zur Stornierung einer Reservierung inkl. Versenden der Stornierungsbestätigung
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
 
@@ -265,24 +267,26 @@ def home_view(request, *args, **kwargs):
 def login_view(request, *args, **kwargs):
     return render(request, "login.html", {})
 
+# Klasse zur View der Buchungsansicht
 class roomReservationsView(TemplateView):
     model = models.Room
     pk_url_kwarg = "pk"
     template_name = 'room_reservations.html'
 
+    # Abfrage aller Räume in der Datenbank
     def get_context_data(self, **kwargs):
         context = super(roomReservationsView, self).get_context_data(**kwargs)
         room_data = models.Room.objects.all()
         context.update({'room_data': room_data})
         return context
 
+    # Abfrage der Reservierungen die für den ausgewählten Raum vorliegen
     def getReservations(request):
         room = request.GET.get('room', None)
-
         queryset = models.Reservation.objects.filter(room__iexact=room).values()
-
         return JsonResponse({"models_to_return": list(queryset)})
 
+# Klasse zur View der Kontaktform inkl. Form Validation
 class contactForm(generic.CreateView):
     model = models.contactRequests
     form_class = forms.contactForm
@@ -313,7 +317,7 @@ class contactForm(generic.CreateView):
         return super().form_valid(form)
 
 
-
+# Klasse zur View des User Dashboards
 class user_dashboard(TemplateView):
     template_name = "learning_spaces/user_dashboard.html"
 
@@ -333,6 +337,7 @@ class user_dashboard(TemplateView):
         context['userObject'] = userObject
         return context
 
+# Klasse zum Updaten der Userdaten
 class UserUpdateView(generic.UpdateView):
     model = models.User
     form_class = forms.UserAdminChangeForm
@@ -346,7 +351,7 @@ class UserUpdateView(generic.UpdateView):
         user.save()
         return super().form_valid(form)
 
-
+# Klasse für die View der Buchungsübernahme
 class leftoverRequestsView(generic.DetailView):
     model = models.spaceLeftoverRequest
     template_name = "learning_spaces/requestsDetailView.html"
@@ -355,17 +360,22 @@ class leftoverRequestsView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         return context
 
-
+# Ajax Request zur Änderung des Inhabers der Reservierung bei Annahme einer Buchungsanfrage
 def ajax_change_status(request):
     print(request)
+    print(request.user)
+
     request_id = request.GET.get('request_id',None)
     reservation_id = request.GET.get('reservation_id', None)
-    # first you get your Job model
+    print(request_id)
+    print(reservation_id)
     requestToChange = spaceLeftoverRequest.objects.get(identifier=request_id)
+    requestToChangeUser = requestToChange.created_by
     reservation = Reservation.objects.get(identifier=reservation_id)
     try:
         requestToChange.status = True
-        reservation.created_by = request.user
+        reservation.created_by = requestToChangeUser
+        # TODO: Email an beide User versenden zur Bestätigung der Übernahme
         requestToChange.save()
         reservation.save()
         return JsonResponse({"success": True})

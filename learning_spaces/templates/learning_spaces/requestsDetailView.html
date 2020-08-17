@@ -3,6 +3,7 @@
 
 
 {% block test %}
+    {# Javascript Funktion um den Status der Anfrage zu laden #}
     <script>
     $(document).ready(function () {
         $("#submitButton").on('click', function () {
@@ -20,10 +21,11 @@
             dataType: 'json',
             success: function (data) {
               if (data.success) {
-                alert("ajax call success.");
+                  console.log(data.success)
+                alert("Die Anfrage wurde erfolgreich angenommen.");
+                  window.location.href ="../";
                 location.reload()
 
-                // here you update the HTML to change the active to innactive
               }else{
                 alert("ajax call not success.");
               }
@@ -32,7 +34,7 @@
         });
     });
   </script>
-
+{# Anzeige der aktuellen Anfrage #}
     <h4>Anfrage {{ object.identifier }}</h4>
     <table class="table">
     <tr><td>Betreff:</td><td> {{ object.subject }}</td></tr>

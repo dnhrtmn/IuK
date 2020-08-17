@@ -5,6 +5,7 @@
     <h1>{% trans 'Kontaktformular' %}</h1>
 <form method="post">
     {% csrf_token %}
+    {# Anzeige des Formulars zur Kontaktaufnahme #}
   <div class="form-group">
     <label for="formGroupExampleInput">{% trans 'Betreff' %}</label>
     <input type="text"  name="subject" class="form-control" id="formGroupExampleInput" placeholder="{% trans 'Hier bitte den Betreff eingeben' %}">
