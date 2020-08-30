@@ -1,11 +1,8 @@
 from django import forms
-from . import models
 from django.utils import timezone
-from bootstrap_datepicker_plus import DatePickerInput
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
+
+from . import models
 from .models import User
-from datetime import datetime, timedelta
-from django.forms import ValidationError
 
 
 class DateInput(forms.DateInput):

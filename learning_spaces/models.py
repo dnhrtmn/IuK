@@ -10,6 +10,7 @@ class Reservation(models.Model):
     # Fields
     start_time = models.DateField(default=timezone.now)
     room = models.CharField(max_length=5, blank=True, default='', verbose_name="Room")
+    last_updated = models.DateTimeField(auto_now=True, editable=False)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     # created = models.DateTimeField(default=timezone.now)
     block = models.CharField(max_length=1, blank=True, default='')

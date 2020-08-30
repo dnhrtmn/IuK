@@ -1,26 +1,18 @@
-import uuid
+import datetime
 
-from django.views import generic
-from . import models
-from . import forms
-from django.core.exceptions import ValidationError
-from django.shortcuts import render, redirect
-from django.utils import timezone
-from bootstrap_datepicker_plus import DatePickerInput
-from .filters import reservationFilter
-from django.core import serializers, mail
-from django.test import TestCase
-from django.http import JsonResponse, HttpResponse
-from .models import Reservation, spaceLeftoverRequest
-from django.views.generic import TemplateView
-from django.views.generic.edit import DeleteView, FormMixin
-from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy
+from django.core import mail
+from django.http import JsonResponse
+from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.translation import gettext
-import datetime
+from django.views import generic
+from django.views.generic import TemplateView
+
+from . import forms
+from . import models
+from .filters import reservationFilter
+from .models import Reservation, spaceLeftoverRequest
 
 
 def checkReservations(request):

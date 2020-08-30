@@ -8,10 +8,11 @@ class reservationSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Reservation
         fields = [
-            "last_updated",
-            "end_time",
-            "created",
             "start_time",
+            "room",
+            "block",
+            "created_by",
+            "identifier",
         ]
 
 class roomSerializer(serializers.ModelSerializer):

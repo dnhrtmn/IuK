@@ -8,8 +8,7 @@ https://docs.djangoproject.com/
 
 import os
 from django.utils.translation import ugettext_lazy as _
-import ldap
-from django_auth_ldap.config import LDAPSearch
+
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -116,27 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'learning_spaces.User'
-
-# AUTHENTICATION_BACKENDS = [
-#     "django_auth_ldap.backend.LDAPBackend",
-#     "django.contrib.auth.backends.ModelBackend",
-# ]
-# Hier wird der LDAP Server eingetragen
-# AUTH_LDAP_SERVER_URI = "ldap://ldap.example.com"
-
-# Mögliche Verbindungsoptionen werden hier eingetragen
-# AUTH_LDAP_CONNECTION_OPTIONS = {ldap.OPT_REFERRALS: 0}
-
-# Die Option User Search sucht in der Directory anonym nach einem User mit der UID des Users und returnt entweder genau
-# ein Ergebnis oder die Authentifizierung schlägt fehl.
-# AUTH_LDAP_BIND_DN = ""
-# AUTH_LDAP_BIND_PASSWORD = ""
-# AUTH_LDAP_USER_SEARCH = LDAPSearch(
-#    "ou=users,dc=example,dc=com", ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
-# )
-
-# Um eine sichere Verbindung zu dem LDAP Directory zu erstellen, wird TLS benutzt
-# AUTH_LDAP_START_TLS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
