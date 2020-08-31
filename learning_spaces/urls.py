@@ -31,4 +31,5 @@ urlpatterns = (
     path("contact/", views.contactForm.as_view(), name='contactForm'),
     path("dashboard/", views.user_dashboard.as_view(), name='user_dashboard'),
     path("dashboard/user/detail/<uuid:pk>", views.UserUpdateView.as_view(), name='user_update'),
+    url(r'^password/$', views.change_password, name='change_password'),
 )

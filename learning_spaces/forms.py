@@ -111,7 +111,7 @@ class UserAdminChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email','first_name','last_name','postalcode','city','adress')
+        fields = ('email','first_name','last_name','postalcode','city','adress', 'password')
 
 
 
@@ -129,7 +129,7 @@ class contactForm(forms.ModelForm):
         fields = ('message', 'subject')
     # subject = forms.CharField(max_length = 20)
     # message = forms.CharField(label='', widget=forms.Textarea(
-    #     attrs={'placeholder': 'Beschreiben Sie hier bitte Ihr Problem'}))
+    # attrs={'placeholder': 'Beschreiben Sie hier bitte Ihr Problem'}))
 
 
 

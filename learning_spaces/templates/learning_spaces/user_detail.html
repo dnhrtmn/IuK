@@ -30,6 +30,7 @@
 {#    </div>#}
     {{ form.as_p }}
 
+    <a href="{% url 'change_password' %}">Passwort ändern</a>
     <input type="submit"class="btn btn-outline-primary" value="Update">
 </form>
     <caption>{% trans 'Für das Ändern der gesperrten Felder wenden Sie sich bitte an den Studierendenservice' %}</caption>
