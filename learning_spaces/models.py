@@ -203,6 +203,9 @@ class contactRequests(models.Model):
     def get_absolute_url(self):
         return reverse("contactForm")
 
+    def get_update_url(self):
+        return reverse("contactRequest_detail", args=(self.identifier,))
+
 class spaceLeftoverRequest(models.Model):
     subject = models.CharField(max_length=50)
     message = models.CharField(max_length=400)

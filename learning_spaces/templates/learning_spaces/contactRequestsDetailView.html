@@ -1,0 +1,58 @@
+{% extends 'home.html' %}
+
+
+
+{% block test %}
+    {# Javascript Funktion um den Status der Anfrage zu laden #}
+    <script>
+    $(document).ready(function () {
+        $("#submitButton").on('click', function () {
+          var reservation_id = "{{object.reservation.identifier}}";
+          console.log(reservation_id);
+          var request_id = "{{object.identifier}}";
+
+          $.ajax({
+            url: "{% url 'ajax_change_status' %}",
+            data: {
+              'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+              'reservation_id': reservation_id,
+              'request_id': request_id,
+            },
+            dataType: 'json',
+            success: function (data) {
+              if (data.success) {
+                  console.log(data.success)
+                alert("Die Anfrage wurde erfolgreich angenommen.");
+                  window.location.href ="../";
+                location.reload()
+
+              }else{
+                alert("ajax call not success.");
+              }
+            }
+          });
+        });
+    });
+  </script>
+{# Anzeige der aktuellen Anfrage #}
+    <h4>Anfrage {{ object.identifier }}</h4>
+    <table class="table">
+    <tr><td>Betreff:</td><td> {{ object.subject }}</td></tr>
+    <tr><td>Nachricht:</td><td> {{ object.message }}</td></tr>
+    <tr><td>Ersteller: </td><td>{{ object.created_by }}</td></tr>
+    <tr><td>Angefragter: </td><td>{{ object.targetUser }}</td></tr>
+    <tr><td>Status:</td><td> {{ object.status }}</td></tr>
+    <tr><td>Reservierungsdatum:</td><td> {{ object.reservation.start_time }}</td></tr>
+    <tr><td>Raum:</td><td> {{ object.reservation.room }}</td></tr>
+    <tr><td>Block: </td><td>{{ object.reservation.block }}</td></tr>
+
+    </table>
+
+
+    {% csrf_token %}
+    {% if user == object.targetUser %}
+        <button type="submit" id="submitButton" class="btn btn-sm btn-outline-secondary"> Anfrage annehmen</button>
+    {% elif user == object.created_by %}
+        <button type="submit" id="deleteButton" class="btn btn-sm btn-outline-secondary"> Anfrage löschen</button>
+    {% endif %}
+{% endblock %}

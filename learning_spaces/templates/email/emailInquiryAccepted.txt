@@ -1,0 +1,7 @@
+Annahme der Raumübernahmeanfrage von {{ user1 }} an {{ user2 }}
+
+Daten der Reservierung:
+
+Datum: {{ date }}
+Raum: {{ room }}
+Block: {{ block }}

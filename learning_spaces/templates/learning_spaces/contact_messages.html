@@ -1,0 +1,65 @@
+{% extends "home.html" %}
+
+{% block test %}
+<style>
+/* Chat containers */
+.containerNew {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+/* Darker chat container */
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+/* Clear floats */
+.containerNew::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Style time text */
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+/* Style time text */
+.time-left {
+  float: left;
+  color: #999;
+}
+</style>
+ {% for object in requests %}
+ <p>Betreff: {{ object.subject }}</p>
+<div class="containerNew">
+
+
+    <p> {{ object.created_by }}</p>
+    <p> {{ object.message }}</p>
+  <span class="time-left">11:00</span>
+</div>
+
+<div class="containerNew darker">
+<p> {{ object.created_by }}</p>
+  <p>Hier würde jetzt die Antwort stehen, leider hat die Zeit nicht mehr gereicht :)</p>
+  <span class="time-right">11:01</span>
+</div>
+
+     <div id="chatbox"></div>
+
+    <form name="message" action="">
+        <input name="usermsg" type="text" id="usermsg" size="63" placeholder="Bitte geben Sie hier Ihre Antwort ein."/>
+        <input class="btn btn-success" name="submitmsg" type="submit"  id="submitmsg" value="Send" />
+    </form>
+</div>
+
+
+{% endfor %}
+{% endblock %}

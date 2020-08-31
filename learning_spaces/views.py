@@ -355,6 +355,17 @@ class leftoverRequestsView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         return context
 
+# Klasse für die View der Kontaktform
+class contactRequestsView(generic.DetailView):
+    model = models.contactRequests
+    template_name = "learning_spaces/contact_messages.html"
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['requests'] = models.contactRequests.objects.filter(created_by__exact=self.request.user)
+        return context
+
 # Ajax Request zur Änderung des Inhabers der Reservierung bei Annahme einer Buchungsanfrage
 def ajax_change_status(request):
     print(request)
@@ -370,14 +381,17 @@ def ajax_change_status(request):
     try:
         requestToChange.status = True
         reservation.created_by = requestToChangeUser
-        # TODO: Email an beide User versenden zur Bestätigung der Übernahme
+
         requestToChange.save()
         reservation.save()
         return JsonResponse({"success": True})
+
     except Exception as e:
         return JsonResponse({"success": False})
+
     return JsonResponse(data)
 
+# Funktion zum Ändern des Passworts durch den Nutzer
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
