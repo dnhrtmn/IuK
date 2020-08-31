@@ -39,6 +39,12 @@ class roomAdminForm(forms.ModelForm):
 
 class roomAdmin(admin.ModelAdmin):
     form = roomAdminForm
+    fieldsets = (
+
+        ('Raum Informationen', {'fields': ('description', 'location', 'size')}),
+        ('Ressourcen', {'fields': ('beamer', 'whiteboard', 'board')}),
+        (None, {'fields': ['created', 'last_updated', 'created_by', 'identifier']}),
+    )
     list_display = [
         "created",
         "last_updated",
@@ -48,13 +54,11 @@ class roomAdmin(admin.ModelAdmin):
         "created_by",
         "identifier",
     ]
-    readonly_fields = [
-        "created",
-        "last_updated",
-        # "description",
-        # "location",
-        # "size",
-    ]
+    readonly_fields = (
+        'created',
+        'last_updated',
+        'identifier',
+    )
 
 
 admin.site.register(models.Reservation, reservationAdmin)

@@ -44,6 +44,9 @@ class roomForm(forms.ModelForm):
             "description",
             "location",
             "size",
+            "beamer",
+            "whiteboard",
+            "board"
         ]
 
 class RegisterForm(forms.ModelForm):

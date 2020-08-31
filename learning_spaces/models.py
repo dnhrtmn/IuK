@@ -43,6 +43,12 @@ class Room(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete="", null=True, blank=True)
     identifier = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
+    beamer = models.BooleanField(default=False)
+    whiteboard = models.BooleanField(default=False)
+    board = models.BooleanField(default=False)
+
+
+
     class Meta:
         pass
 
