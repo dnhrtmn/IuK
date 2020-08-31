@@ -4,6 +4,10 @@
 {% block test %}
 <form action="" method="post">
     {% csrf_token %}
+    <div >
+
+
+    <a class="btn btn-outline-primary" href="{% url 'change_password' %}">Passwort ändern</a>
 {#    <div class="form-group row">#}
 {#      <label class="col-sm-2 col-form-label" for="id_email">Email Adresse: </label>#}
 {#      <input class="form-control col-sm-10" id="id_email" type="text" name="email" value="{{ object.email }}" disabled>#}
@@ -30,8 +34,9 @@
 {#    </div>#}
     {{ form.as_p }}
 
-    <a href="{% url 'change_password' %}">Passwort ändern</a>
+
     <input type="submit"class="btn btn-outline-primary" value="Update">
+</div>
 </form>
     <caption>{% trans 'Für das Ändern der gesperrten Felder wenden Sie sich bitte an den Studierendenservice' %}</caption>
 {% endblock %}

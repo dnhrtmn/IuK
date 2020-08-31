@@ -111,7 +111,7 @@ class UserAdminChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email','first_name','last_name','postalcode','city','adress', 'password')
+        fields = ('email','first_name','last_name','postalcode','city','adress')
 
 
 
