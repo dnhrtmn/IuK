@@ -8,7 +8,7 @@ django-bootstrap-datepicker-plus==3.0.5
 django-extensions==2.2.9
 django-filter==2.2.0
 django-widget-tweaks==1.4.8
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 fasteners==0.15
 idna==2.9
 monotonic==1.5
